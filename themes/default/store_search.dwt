@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link rel="alternate" type="application/rss+xml" title="RSS|{$page_title}" href="{$feed_url}" />
+
+<link href="css/zyit.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+
+{* 包含脚本文件 *}
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+
+        
+   <!---- content ------>
+      <div class="sx">
+         <div class="container">
+             <div class="local">您的当前位置 > <a href="index.php">首页</a> > <span>本地导购</span></div>
+             <div class="localnav">
+                <a href="dg.php" class="localnav-l">
+                   商品导购
+                </a>
+                <a href="store.php?act=search" class="localnav-r aabg">
+                   店铺导购
+                </a>
+             </div>
+             <div class="clear"></div>
+             
+             <div class="shopsx position">
+                <span class="p3">店铺筛选</span>
+                <a href="store.php?act=search&brand=1" class="{if $brand}aaabg{/if}">品牌店铺</a><a href="store.php?act=search&is_check=1" class="{if $is_check}aaabg{/if}">热搜店铺</a>
+             </div>
+         </div>
+      </div>
+      <div class="clear"></div><div class="clear"></div>
+      <!----- 列表 ------>
+          <div class="container">
+             <ul class="prolist prolist1">                    
+                    <!-- {foreach from=$store_list item=store_data} -->
+                    <li class="position">
+                        <a href="store.php?id={$store_data.id}"><img width="276" height="281" src="data/logo/{$store_data.logo}" /></a>
+                        <a href="store.php?id={$store_data.id}" class="proname">{$store_data.name|escape:html}</a>
+                        <a href="store.php?id={$store_data.id}" class="look">查看店铺</a>
+                    </li>
+                    <!-- {/foreach} -->	
+                </ul>  
+             <div class="clear"></div><div class="clear"></div><div class="clear"></div>                
+          </div>
+      <!----- 列表结束 ------>
+   <!---- content end ----->
+
+<!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

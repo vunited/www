@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body class="bg-c8">
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+
+<script type="text/javascript">
+function checkdd(na,url){
+			document.getElementById('lights').style.display='block';
+            document.getElementById('lightcs').innerHTML = na;
+			document.getElementById("url").href=url;
+		}
+</script>
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <!---- 选项卡 ----->
+            <div class="ub ub-f1 bg-c1 ubb bc-border2">
+               <div class="ub ub-f1 h3 ub-ac">
+                  <div class="ub ub-f1 fs04 ub-pc">
+                     <a href="user.php?act=order_list" class="ub btn1 btn2 {if $order eq -1}btn2bg{/if}" style="border: none;">全部</a>
+                     <a href="user.php?act=order_list&order=0" class="ub btn1 btn2 {if $order eq 0}btn2bg{/if}" style="border: none;">待付款</a>
+                     <a href="user.php?act=order_list&order=1" class="ub btn1 btn2 {if $order eq 1}btn2bg{/if}" style="border: none;">待发货</a>
+                     <a href="user.php?act=order_list&order=4" class="ub btn1 btn2 {if $order eq 4}btn2bg{/if}" style="border: none;">待收货</a>
+                  </div>
+               </div>
+            </div>
+         <!---- 选项卡结束 ----->
+            <div class="h4"></div>
+         <!---- 订单列表 ------>
+            <div class="ub ub-f1 ub-ver">
+               {foreach from=$orders item=order_data name=orderit}
+               <div class="ub ub-f1 ub-ver fs03 c3 lh1 ubb bc-border2 bg-c13 m-b1">
+                  {foreach from=$order_data.goods item=goods name=goods}
+                  <div class="ub ub-f1  p-l4 p-r4 p-b1 p-t1 ubb bc-border2" onclick="javascript:window.location.href='user.php?act=order_detail&order_id={$order_data.order_id}'" >
+                      <div class="ub img16 m-r" style="height:63px"><img src="../{$goods.goods_thumb}" width="100%" height="100%" /></div>
+                      <div class="ub ub-f1">{$goods.goods_name}</div>
+                      <div class="ub ub-ver ">
+                         <div class="ub">{$goods.goods_price}</div>
+                         <div class="ub ub-pe">×{$goods.goods_number}</div>
+                      </div>
+                  </div>
+                  {/foreach}
+                  <div class="ub ub-f1 bg-c1 p-l4 p-r4 h3 ub-ac ub-pe">
+                     <span class="ub fs04 c16">{$order_data.total_fee}</span>
+                  </div> 
+                  <div class="ub ub-f1 bg-c1 p-l4 p-r4 ubt bc-border2 h3 ub-ac ub-pe caozuo">
+                     {$order_data.handler} {if $order_data.pay_status eq 0 and $order_data.order_statu lt 2}<a href="user.php?act=order_detail&order_id={$order_data.order_id}">去付款</a>{/if}{if $order_data.shipping_status eq 2}{if $order_data.is_comment eq '1'}<span>已评价</span>{else}<a href="user.php?act=order_comment&order_id={$order_data.order_id}">待评价</a>{/if} <a href="user.php?act=tuihuo&order_id={$order_data.order_id}">申请退货</a>{/if}
+                  </div>   
+               </div> 
+               {/foreach}
+            </div>
+         <!---- 订单列表结束 ------->
+      </div>
+   <!----- content end ------>
+
+
+{if $pagebar}
+	{$pagebar}
+{/if}
+
+<script type="text/javascript">
+function payEben(orderid){	
+	window.wst.payEben(orderid);
+}
+</script>
+<div class="last"></div>  
+{include file='foot.dwt'}
+
+
+      <div id="lights" class="ts ub-ac ub-pc" style="display:none; padding-top:50%;">
+         <div class="ub ub-f1 ub-ver bg-c1 ts2">
+            <div class="ub ub-f1 h3 bg-c14 ub-ac p-l1 p-r1">
+                <div class="fs04 c13 ub-f1 ub" id="lightcs">信息内容</div>
+                <a href="javascript:void(0)" onClick="document.getElementById('lights').style.display='none';" class="fa fa-times c9"></a>
+            </div> 
+            <div class="ub ub-f1 h3 p-t1 p-b1 ub-ac ub-pc">
+               <a id="url" href="javascript:void(0)" class="ub btn1 bg-c3 c1 fs04" style="padding-left: 20px; padding-right: 20px;">确定</a>
+            </div>
+         </div>
+      </div>
+
+</body>
+</html>

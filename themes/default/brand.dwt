@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link href="css/zyit.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+<link href="css/banner.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+{* 包含脚本文件 *}
+{insert_scripts files='common.js,global.js,compare.js'}
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+      <div class="sx">
+         <div class="container">
+             <div class="local"><!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --></div>             
+           <div class="clear"></div>
+           
+             <div class="sxlist">
+                <b class="sxtitle">筛选：</b>
+
+                    分类
+                    <select name="brand" onchange="javascript:location.href=this.value;">  
+                    <!-- {foreach from=$brand_cat_list item=cat} -->
+                    <option value="{$cat.url}" {if $category eq $cat.cat_id}selected="selected"{/if}>{$cat.cat_name}{if $cat.goods_count}({$cat.goods_count}){/if}</option>					
+                    <!-- {/foreach} -->
+                    </select>
+                    
+                    
+                
+                
+             </div>
+             <div class="shopsx prosx position">
+             <span class="p3">{$brand.brand_name}</span>
+             </div>
+         </div>
+      </div>
+      <div class="clear"></div><div class="clear"></div>
+      
+          <div class="container">
+                <div class="pp">
+                   <div class="pp-l">
+                      <!-- {if $brand.brand_logo} -->
+                      <img src="data/brandlogo/{$brand.brand_logo}" width="154" />
+                      <!-- {/if} -->
+                   </div>
+                   <div class="pp-r">
+                      <b>{$brand.brand_name}</b>
+                      <p class="p7">{$brand.brand_desc|nl2br}</p>
+                      <img src="images/index41.jpg" width="997" height="25" />
+                   </div>
+                </div>
+          
+             <div class="clear"></div><div class="clear"></div>
+             
+             
+             
+             
+             
+             
+          </div>
+      
+      
+        <!-- #BeginLibraryItem "/library/goods_list.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+  
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

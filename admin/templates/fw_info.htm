@@ -1,0 +1,66 @@
+<!-- $Id: brand_info.htm 14216 2008-03-10 02:27:21Z testyang $ -->
+{include file="pageheader.htm"}
+<div class="main-div">
+
+<table cellspacing="1" cellpadding="3" width="100%">
+  <tr>
+    <td class="label">服务单号</td>
+    <td>{$brand.order_sn}</td>
+  </tr>
+  <tr>
+    <td class="label">名称</td>
+    <td>{$brand.name}{$brand.sex}</td>
+  </tr>
+  <tr>
+    <td class="label">电话</td>
+    <td>{$brand.tel}</td>
+  </tr>
+  <tr>
+    <td class="label">项目</td>
+    <td>{$brand.fwfl}</td>
+  </tr>
+  <tr>
+    <td class="label">灯类</td>
+    <td>{$brand.fwdj}</td>
+  </tr>
+  <tr>
+    <td class="label">预约时间</td>
+    <td>{$brand.fw_time}</td>
+  </tr>
+  <tr>
+    <td class="label">收货信息</td>
+    <td>收货人 {$brand.consignee|escape} 地址 [{$brand.region}] {$brand.address|escape} 电话{$brand.tel}
+    </td>
+  </tr>
+  <tr>
+    <td class="label">状态</td>
+    <td>{$brand.statuss}</td>
+  </tr>
+  <tr>
+    <td class="label">服务费</td>
+    <td>{$brand.order_amount}</td>
+  </tr>
+  <tr>
+    <td class="label">发票</td>
+    <td>{$brand.fp}</td>
+  </tr>
+  <tr>
+    <td class="label">支付方式</td>
+    <td>{$brand.pay_id}</td>
+  </tr>
+  <tr>
+    <td class="label">图片</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">{if $brand.pic1}<img src="../{$brand.pic1}" />{/if}{if $brand.pic2}<img src="../{$brand.pic2}" />{/if}{if $brand.pic3}<img src="../{$brand.pic3}" />{/if}{if $brand.pic4}<img src="../{$brand.pic4}" />{/if}</td>
+    </tr>
+  <tr>
+    <td class="label">备注</td>
+    <td>{$brand.desc}</td>
+  </tr>
+</table>
+
+</div>
+
+{include file="pagefooter.htm"}

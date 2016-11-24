@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link rel="alternate" type="application/rss+xml" title="RSS|{$page_title}" href="{$feed_url}" />
+
+<link href="css/zyit.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+
+{* 包含脚本文件 *}
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+
+        
+   <!---- content ------>
+      <div class="sx">
+         <div class="container">
+             <div class="local">您的当前位置 > <a href="index.php">首页</a> > <span>本地导购</span></div>
+             <div class="localnav">
+                <a href="dg.php" class="localnav-l aabg">
+                   商品导购
+                </a>
+                <a href="store.php?act=search" class="localnav-r">
+                   店铺导购
+                </a>
+             </div>
+             <div class="clear"></div>
+             
+             <div class="shopsx position">
+                <span class="p3">商品筛选</span>
+                
+                
+                <a href="{$pager.url}?intro={$intromode}&category={$category}&display={$pager.display}&brand={$brand_id}&min_price={$pager.search.min_price}&max_price={$pager.search.max_price}&filter_attr={$filter_attr}&page={$pager.page}&sort=shop_price&order=ASC#goods_list" {if $pager.search.order eq ASC}class="aaabg"{/if}><span class="img5">价格从低到高</span></a>
+           
+           <a href="{$pager.url}?intro={$intromode}&category={$category}&display={$pager.display}&brand={$brand_id}&min_price={$pager.search.min_price}&max_price={$pager.search.max_price}&filter_attr={$filter_attr}&page={$pager.page}&sort=shop_price&order=DESC#goods_list" {if $pager.search.order eq DESC and $pager.search.sort eq shop_price}class="aaabg"{/if}><span class="img6">价格从高到低</span></a>
+                
+             </div>
+         </div>
+      </div>
+      <div class="clear"></div><div class="clear"></div>
+      <!----- 列表 ------>
+          <div class="container">
+             <ul class="prolist">
+                    <!--{foreach name=goods_list from=$goods_list item=goods}-->
+                    <li class="position">
+                        <a href="{$goods.url}"><img width="276" height="281" src="{$goods.goods_thumb}" /></a>
+                        <a href="{$goods.url}" class="proname">{$goods.goods_name}</a>
+                        <p><span><!-- {if $goods.promote_price neq ""} -->{$goods.promote_price}<!-- {else}-->{$goods.shop_price}<!--{/if}--></span></p>
+                        <div class="img3">
+                           {if $goods.brand_id}<img src="images/index20.png" width="57" height="25" />{/if}
+                           {if $goods.is_new}<img src="images/index21.png" width="57" height="25" />{/if}
+                        </div>
+                    </li>
+                    <!--{/foreach}-->
+                </ul> 
+             <div class="clear"></div><div class="clear"></div><div class="clear"></div>             
+          </div>
+      <!----- 列表结束 ------>
+   <!---- content end ----->
+<!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

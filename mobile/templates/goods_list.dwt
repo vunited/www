@@ -1,0 +1,67 @@
+<!--搜索页-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>{if $type eq 'best'}精品推荐{elseif $type eq 'promote'}商家促销{elseif $type eq 'hot'}热门商品{else}最新商品{/if} - {$shop_name}</title>
+	<meta content="telephone=no" name="format-detection" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/zyit.css"  />	
+
+</head>
+
+<body>
+<div class="top">
+<div style="height:8px"></div>
+<form name="searchForm" method="get" action="search.php">
+	<div class="top_ss"><div class="top_pic"><input type="image" value="商品搜索" src="images/sosuopic.png" height="28"/></div><input name="keywords" type="text" class="sosuo" value="{$keywords}" placeholder="搜索商品关键字"  /></div>
+</form>
+</div>
+<script language="javascript">
+	function form_order(order){
+		listform.sort.value = order;
+		listform.order.value = "{if $pager.search.order == 'DESC'}ASC{else}DESC{/if}";
+		listform.submit();
+	}
+	</script>
+	<form action="search.php" method="post" name="listform" style="display:none">
+    <input type="hidden" name="page" value="{$pager.page}" />
+    {foreach from=$pager.search key=key item=item}
+
+      {if $key eq 'keywords'}
+        <input type="hidden" name="{$key}" value="{$item|escape:decode_url}" />
+      {else}
+        <input type="hidden" name="{$key}" value="{$item}" />
+      {/if}
+
+    {/foreach}
+  </form>
+<div class="main">
+
+
+<div class="cpfl_tit"><font style="width:10%">&nbsp;</font>
+
+<font onClick="window.location.href='goods_list.php?type={$smarty.get.type}&sort=goods_id&order={if $order == 'DESC'}ASC{else}DESC{/if}{if $smarty.get.page}&page={$smarty.get.page}{/if}'" style="width:30%">上市<div class="tit_pic">{if $sort == 'goods_id'}{if $order == 'DESC'}<img src="images/li_pic02.png" ="7" width="7"  />{else}<img src="images/li_pic01.png" ="7" width="7"  />{/if}{/if}</div>丨</font>
+<font onClick="window.location.href='goods_list.php?type={$smarty.get.type}&sort=shop_price&order={if $order == 'DESC'}ASC{else}DESC{/if}{if $smarty.get.page}&page={$smarty.get.page}{/if}'" style="width:30%">价格<div class="tit_pic">{if $sort == 'shop_price'}{if $order == 'DESC'}<img src="images/li_pic02.png" ="7" width="7"  />{else}<img src="images/li_pic01.png" ="7" width="7"  />{/if}{/if}</div>丨</font>
+<font onClick="window.location.href='goods_list.php?type={$smarty.get.type}&sort=click_count&order={if $order == 'DESC'}ASC{else}DESC{/if}{if $smarty.get.page}&page={$smarty.get.page}{/if}'" style="width:30%">人气<div class="tit_pic">{if $sort == 'click_count'}{if $order == 'DESC'}<img src="images/li_pic02.png" ="7" width="7"  />{else}<img src="images/li_pic01.png" ="7" width="7"  />{/if}{/if}</div></font></div>
+
+<div class="xp"> </div>
+
+
+<ul class="cpxh_il">
+    {foreach from=$goods_data item=goods name=goodsit}
+    <li><a  href="goods.php?id={$goods.id}&u={$user_id}"><img src="../{$goods.thumb}" width="100%" /></a><font>{$goods.name|truncate:10}</font><br><font style=" color:#F00">{$goods.price}</font> </li>
+    {foreachelse}
+    没有搜索到相关商品
+    {/foreach}
+    </ul>
+   
+</div>
+<div class="last"></div>  
+
+{include file='foot.dwt'}
+
+</body>
+</html>

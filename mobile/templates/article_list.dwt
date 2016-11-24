@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>{if $cat_name}{$cat_name}{else}服务中心{/if} - {$shop_name}</title>
+	<meta content="telephone=no" name="format-detection" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/zyit.css"  />
+</head>
+<body>
+{include file='heard.dwt'}
+
+
+<div style="line-height:32px; background:#FFF; border-bottom:1px solid #dcdcdc;">
+{foreach from=$helps item=help_cat name=help}
+    <div style="width:33%; float:left; text-align:center" onClick="window.location.href='article.php?cid={$help_cat.cid}'">
+    <font style="{if $cat_id eq $help_cat.cid or $article.cat_id eq $help_cat.cid}border-bottom:1px solid #4b911b; color:#4b911b; padding:9px 5px;{/if}">{$help_cat.cat_name}</font>
+    </div>
+{/foreach}
+<div style="clear:both"></div>
+</div>
+<div style="line-height:30px; padding:10px 7%;">
+{foreach from=$article_array item=article_data}
+	<a href='article.php?act=detail&amp;a_id={$article_data.id}'>{$article_data.title}</a><br/>
+{/foreach}
+{if $pagebar}
+	{$pagebar}
+{/if}
+</div>
+{include file='foot.dwt'}
+</body>
+</html>

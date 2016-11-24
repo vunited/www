@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+{insert_scripts files="../js/transport.js,../js/region.js"}
+<script type="text/javascript">
+region.isAdmin=true;
+</script>
+</head>
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         
+         <!---- 选项卡 ----->
+            <div class="ub ub-f1 ub-ver bg-c1 ubb bc-border2">
+               <div class="ub ub-f1 fs04 h3">
+                  <a href="dg.php" class="ub ub-f1 ub-ac ub-pc c14 tab">商品导购</a>
+                  <a href="" class="ub ub-f1 ub-ac ub-pc c14 tab tabbg">店铺导购</a>
+               </div>
+               <div class="ub ub-f1 h3 ub-ac p-t p-b">
+                  <div class="ub ub-f1 fs04 p-l1">
+                     <a href="store.php?brand=1" class="ub btn1 btn2 {if $brand}btn2bg{/if}">品牌店铺</a>
+                     <a href="store.php?is_check=1" class="ub btn1 btn2 {if $is_check}btn2bg{/if}">热搜店铺</a>
+                  </div>
+                  
+                  <a href="javascript:click_a('shaixuan');" class="ub ub-ac" id="sx">
+                     <div class="sx fs03 m-r4" >筛选</div>
+                  </a>
+                  
+                     
+             <div class="sxnav ub-ver ub-f1" id="shaixuan" style="display:none; margin-top:20px;">
+                <div class="sxlist bg-c1"> 
+                    
+                    <div class="sx1">
+                       <span class="sxtitle">地区</span>
+                       <ul class="fs03">                       
+                          <!--{foreach from=$district_list item=district}-->
+                          <!-- {if $districts eq $district.region_id} -->
+                          <li><a class="sx1bg">{$district.region_name}</a></li>
+                          <!-- {else} -->
+                          <li><a href="store.php?district={$district.region_id}">{$district.region_name}</a></li>
+                          <!-- {/if} -->
+                          <!--{/foreach}-->
+                       </ul>
+                    </div>                   
+                    
+                </div>
+             </div>
+                     
+                                     
+               </div>
+            </div>
+         <!---- 选项卡结束 ----->
+         <!---- 商品列表 ----->
+            <ul class="prolist1">
+              {foreach from=$store_list item=store_data}
+              <li class="m-t2">
+                 <div class="ub ub-ver ub-f1 m-l m-r bg-c1 h0">
+                    <a href="storegoods.php?store_id={$store_data.id}" class="img09"><img src="../data/logo/{$store_data.store_logo}" width="100%" height="100%" /></a>
+                    <a href="storegoods.php?store_id={$store_data.id}" class="fs03 c3 p-l2 ub ub-ac name1">{$store_data.name|escape:html}</a>
+                 </div>
+              </li>
+              {/foreach}
+            </ul>
+         <!---- 商品列表结束 ------>         
+         <div class="ub ub-f1 ub-ac p-t2 p-b3">
+                  {if $pagebar}
+                  <div class="ub ub-f1 ubb bc-border3 m-r1"></div>
+                  <div class="ub fs01 c7">{$pagebar}</div>
+                  <div class="ub ub-f1 ubb bc-border3 m-l1"></div>
+                  {/if}
+         </div>         
+      </div>
+   <!----- content end ------>
+
+
+{include file='foot.dwt'}
+
+</body>
+</html>

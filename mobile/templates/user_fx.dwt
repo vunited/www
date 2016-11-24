@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 h3 ub-ac p-l3 p-r3">
+             <div class="ub ub-f1 fs04 c9">分享盈利&emsp;&emsp;<b class="fs06 c6">{$surplus_amount}</b></div>
+             <div class="ub fs02"><a href="user.php?act=account_raply" class="c1 btn1 bg-c3" style="margin-right: 0;">提现</a></div>       
+         </div>  
+         <div class="h4 bg-c8"></div> 
+         <div class="ub ub-f1 h3 ub-ac p-l3 p-r3  ubb bc-border2">
+             <div class="ub ub-f1 c11">订单号</div>
+             <div class="ub ub-f1 c11">分成金额</div>
+             <div class="ub c3">状态</div>       
+         </div> 
+         {foreach from=$logdb item=val name=logdb}
+         <div class="ub ub-f1 h3 ub-ac p-l3 p-r3 fs03 ubb bc-border2">
+             <div class="ub ub-f1 c11">{$val.order_sn}</div>
+             <div class="ub ub-f1 c11">{$val.money}</div>
+             <div class="ub c3">{if $val.is_separate eq 0}等待处理{/if}{if $val.is_separate eq 1}已分成{/if}{if $val.is_separate eq 2}取消分成{/if}{if $val.is_separate eq 3}已撤销{/if}{if $val.is_separate eq 4}等待买家付款{/if}</div>       
+         </div> 
+         {/foreach}         
+         <div class="ub ub-f1 ub-ac p-t2 p-b3 bg-c5">
+                  {if $pagebar}
+                  <div class="ub ub-f1 ubb bc-border3 m-r1"></div>
+                  <div class="ub fs01 c7">{$pagebar}</div>
+                  <div class="ub ub-f1 ubb bc-border3 m-l1"></div>
+                  {/if}
+         </div>          
+         <div class="ub ub-f1 h3 ub-ac p-l3 p-r3 fs03 ubb bc-border2">
+             <div style="padding:20px 0">点击去分享后使用浏览器自身的分享功能通过微信等平台分享页面给好友</div>   
+         </div>
+         
+         <div class="ub ub-f1 m-t1 ub-pc fs04">
+            <a href="./?u={$user_id}" class="c1 btn1 bg-c3">去分享</a>
+         </div>  
+         
+<div class="ub ub-f1 h3 ub-ac p-l3 p-r3 fs03 ubb bc-border2">
+             <div style="padding:20px 0">分享二维码</div>   
+         </div>
+         
+         <div class="ub ub-f1 m-t1 ub-pc fs04">
+         <img src="../code/code.php?value={$shopurl}" width="300" />
+         </div>
+         
+</div>
+   <!----- content end ------>
+   
+{include file='foot.dwt'}
+</body>
+</html>

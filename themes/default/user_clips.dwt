@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link href="css/zyit.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+<link href="css/user.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+{* 包含脚本文件 *}
+{insert_scripts files='transport.js,common.js,user.js'}
+</head>
+<body>
+<style>
+td,th{ padding:10px;}
+</style>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+      <div class="local1">
+        <div class="container">           
+           <span class="l1"><!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --></span>
+           <span class="r1">我的个人中心</span>
+        </div>   
+      </div>
+      <div class="clear"></div><div class="clear"></div>
+
+<!--当前位置 end-->
+<div class="container">
+
+  <!-- #BeginLibraryItem "/library/user_menu.lbi" --><!-- #EndLibraryItem -->
+
+  <!--right start-->
+  <div class="right">
+         <!-- *用户中心默认显示页面 start-->
+         <!-- {if $action eq 'default'} -->
+          <font class="f5"><b class="f4">{$info.username}</b> {$lang.welcome_to} {$info.shop_name}！</font><br />
+          <div class="blank"></div>
+          {$lang.last_time}: {$info.last_time}<br />
+          <div class="blank5"></div>
+          {$rank_name} {$next_rank_name}<br />
+          <div class="blank5"></div>
+           <!--{if $info.is_validate eq 0} -->
+          {$lang.not_validated} <a href="javascript:sendHashMail()" style="color:#006bd0;">{$lang.resend_hash_mail}</a><br />
+           <!--{/if} -->
+           <div style="margin:5px 0; border:1px solid #a1675a;padding:10px 20px; background-color:#e8d1c9;">
+           <img src="images/note.gif" alt="note" />&nbsp;{$user_notice}
+           </div>
+           <br /><br />
+          <div class="f_l" style="width:350px;">
+          <h5><span>{$lang.your_account}</span></h5>
+          <div class="blank"></div>
+          {$lang.your_surplus}:<a href="user.php?act=account_log" style="color:#006bd0;">{$info.surplus}</a><br />
+          <!-- {if $info.credit_line gt 0} 如果有信用额度 -->
+          {$lang.credit_line}:{$info.formated_credit_line}<br />
+          <!-- {/if} -->
+          {$lang.your_bonus}:<a href="user.php?act=bonus" style="color:#006bd0;">{$info.bonus}</a><br />
+          {$lang.your_integral}:{$info.integral}<br />
+          </div>
+          <div class="f_r" style="width:350px;">
+          <h5><span>{$lang.your_notice}</span></h5>
+          <div class="blank"></div>
+           <!--{foreach from=$prompt item=item}-->
+          {$item.text}<br />
+          <!--{/foreach}-->
+          {$lang.last_month_order}{$info.order_count}{$lang.order_unit}<br />
+          <!-- {if $info.shipped_order} -->
+          {$lang.please_received}<br />
+          <!-- {foreach from=$info.shipped_order item=item}-->
+          <a href="user.php?act=order_detail&order_id={$item.order_id}" style="color:#006bd0;">{$item.order_sn}</a>
+          <!-- {/foreach} -->
+          <!-- {/if}-->
+          {if $countNoComment}<div class="shop_notice notice_box">您有 <a style="color:red;" href="user.php?act=order_list">{$countNoComment}</a> 笔订单需要评价</div>{/if}
+          </div>
+         <!-- {/if} -->
+         <!-- #用户中心默认显示页面 end-->
+         <!-- *我的留言 start-->
+         <!-- {if $action eq 'message_list'} -->
+          <h5><span>{$lang.label_message}</span></h5>
+          <div class="blank"></div>
+           <!--{foreach from=$message_list item=message key=key} -->
+          <div class="f_l">
+          <b>{$message.msg_type}:</b>&nbsp;&nbsp;<font class="f4">{$message.msg_title}</font> ({$message.msg_time})
+          </div>
+          <div class="f_r">
+          <a href="user.php?act=del_msg&amp;id={$key}&amp;order_id={$message.order_id}" title="{$lang.drop}" onclick="if (!confirm('{$lang.confirm_remove_msg}')) return false;" class="f6">{$lang.drop}</a>
+          </div>
+          <div class="msgBottomBorder">
+          {$message.msg_content}
+           <!-- {if $message.message_img} 如果上传了图片-->
+           <div align="right">
+           <a href="data/feedbackimg/{$message.message_img}" target="_bank" class="f6">{$lang.view_upload_file}</a>
+           </div>
+           <!-- {/if} -->
+           <br />
+           <!-- {if $message.re_msg_content} -->
+           <a href="mailto:{$message.re_user_email}" class="f6">{$lang.shopman_reply}</a> ({$message.re_msg_time})<br />
+           {$message.re_msg_content}
+           <!-- {/if} -->
+          </div>
+          <!-- {/foreach} -->
+          <!-- {if $message_list}-->
+          <div class="f_r">
+          <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+          </div>
+          <!-- {/if}-->
+          <div class="blank"></div>
+          <form action="user.php" method="post" enctype="multipart/form-data" name="formMsg" onSubmit="return submitMsg()">
+                  <table width="100%" border="0" cellpadding="3">
+                    {if $order_info}
+                    <tr>
+                      <td align="right">{$lang.order_number}</td>
+                      <td>
+                      <a href ="{$order_info.url}"><img src="images/note.gif" />{$order_info.order_sn}</a>
+                      <input name="msg_type" type="hidden" value="5" />
+                      <input name="order_id" type="hidden" value="{$order_info.order_id}" class="inputBg" />
+                      </td>
+                    </tr>
+                    {else}
+                    <tr>
+                      <td align="right">{$lang.message_type}：</td>
+                      <td><input name="msg_type" type="radio" value="0" checked="checked" />
+                        {$lang.type[0]}
+                        <input type="radio" name="msg_type" value="1" />
+                        {$lang.type[1]}
+                        <input type="radio" name="msg_type" value="2" />
+                        {$lang.type[2]}
+                        <input type="radio" name="msg_type" value="3" />
+                        {$lang.type[3]}
+                        <input type="radio" name="msg_type" value="4" />
+                        {$lang.type[4]} </td>
+                    </tr>
+                    {/if}
+                    <tr>
+                      <td align="right">{$lang.message_title}：</td>
+                      <td><input name="msg_title" type="text" size="30" class="inputBg" /></td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top">{$lang.message_content}：</td>
+                      <td><textarea name="msg_content" cols="50" rows="4" wrap="virtual" class="B_blue"></textarea></td>
+                    </tr>
+                    <tr>
+                      <td align="right">{$lang.upload_img}：</td>
+                      <td><input type="file" name="message_img"  size="45"  class="inputBg" /></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td><input type="hidden" name="act" value="act_add_message" />
+                        <input type="submit" value="{$lang.submit}" class="bnt_bonus" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>
+                      {$lang.img_type_tips}<br />
+                      {$lang.img_type_list}
+                      </td>
+                    </tr>
+                  </table>
+                </form>
+         <!-- {/if} -->
+         <!--#我的留言 end-->
+         <!-- *我的评论 start-->
+          <!-- {if $action eq 'comment_list'} -->
+          <h5><span>{$lang.label_comment}</span></h5>
+          <div class="blank"></div>
+          <!--{foreach from=$comment_list item=comment} -->
+          <div class="f_l">
+          <b>{if $comment.comment_type eq '0'}{$lang.goods_comment}{else}{$lang.article_comment}{/if}: </b><font class="f4">{$comment.cmt_name}</font>&nbsp;&nbsp;({$comment.formated_add_time})
+          </div>
+          <div class="f_r">
+          <a href="user.php?act=del_cmt&amp;id={$comment.comment_id}" title="{$lang.drop}" onclick="if (!confirm('{$lang.confirm_remove_msg}')) return false;" class="f6">{$lang.drop}</a>
+          </div>
+          <div class="msgBottomBorder">
+          {$comment.content|escape}<br />
+          <!--{if $comment.reply_content}-->
+          <b>{$lang.reply_comment}：</b><br />
+          {$comment.reply_content}
+           <!--{/if}-->
+          </div>
+          <!-- {/foreach} -->
+          <!-- {if $comment_list}-->
+          <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+          <!-- {else}-->
+          {$lang.no_comments}
+          <!-- {/if}-->
+          <!--{/if} -->
+    <!--#我的评论 end-->
+    
+    
+    
+    <!--{if $action eq 'fw'} -->    
+               {foreach from=$fw_list item=fw}
+               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="b-t1 m-b">
+                  <tr>
+                    <td width="27" height="44" bgcolor="dfdfdf" class="b-l1 b-b1">&nbsp;</td>
+                    <td colspan="3" bgcolor="dfdfdf" class="b-b1"><p class="p14"><b>{$fw.add_time}</b>&emsp;订单号：{$fw.order_sn}</p></td>
+                    <td width="154" bgcolor="dfdfdf" align="right" class="b-b1 b-r1"><a href="user.php?act=fwdel&id={$fw.id}"><img src="images/index74.png" width="15" height="16" /></a>&emsp;</td>
+                  </tr>
+                  <tr>
+                    <td width="27" height="44" bgcolor="ffffff" class="b-b1 b-l1">&nbsp;</td>
+                    <td width="310" bgcolor="ffffff" class="b-b1 b-r1"><span class="c28">项目：</span><span class="c12">{$fw.fwfl}</span>&emsp;&emsp;&emsp;<span class="c28">灯类：</span><span class="c12">{$fw.fwdj}</span></td>
+                    <td width="116" bgcolor="ffffff" align="center" class="b-b1 b-r1">￥{$fw.order_amount}</td>
+                    <td width="398" bgcolor="ffffff" class="b-b1 b-r1">&emsp;&emsp;&emsp;&emsp;<span class="c26">预约时间：{$fw.fw_time}</span></td>
+                    <td width="140" bgcolor="ffffff" align="center" class="b-b1 b-r1"><span class="c11">{$fw.statuss}</span></td>
+                  </tr>
+               </table>
+               {/foreach}  
+<!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+    <!--{/if} -->
+    
+    
+    <!--#我的标签 start-->
+    <!--{if $action eq 'tag_list'} -->
+    <h5><span>{$lang.label_tag}</span></h5>
+    <div class="blank"></div>
+     <!-- {if $tags} -->
+    <!-- 标签云开始 {foreach from=$tags item=tag}-->
+    <a href="search.php?keywords={$tag.tag_words|escape:url}" class="f6">{$tag.tag_words|escape:html}</a> <a href="user.php?act=act_del_tag&amp;tag_words={$tag.tag_words|escape:url}" onclick="if (!confirm('{$lang.confirm_drop_tag}')) return false;" title="{$lang.drop}"><img src="images/drop.gif" alt="{$lang.drop}" /></a>&nbsp;&nbsp;
+    <!-- 标签云结束 {/foreach}-->
+    <!-- {else} -->
+    <span style="margin:2px 10px; font-size:14px; line-height:36px;">{$lang.no_tag}</span>
+    <!-- {/if} -->
+    <!--{/if} -->
+    <!--#我的标签 end-->
+    <!--*收藏商品列表页面 start-->
+    <!--{if $action eq 'collection_list'} -->
+  {insert_scripts files='transport.js,utils.js'}  
+  
+               <ul class="prolist colllist">
+                    <!--{foreach from=$goods_list item=goods}-->
+                    <li class="position">
+                        <a href="{$goods.url}"><img width="235" height="235" src="{$goods.goods_thumb}" /></a>
+                        <a href="{$goods.url}" class="proname">{$goods.goods_name|escape:html}</a>
+                        <p><span>{$goods.shop_price}</span><a href="javascript:if (confirm('{$lang.remove_collection_confirm}')) location.href='user.php?act=delete_collection&collection_id={$goods.rec_id}'" style="float:right; margin-right:20px;">移除</a></p> 
+                        <div class="img3">
+                           {if $goods.brand_id}<img src="images/index20.png" width="57" height="25" />{/if}
+                           {if $goods.is_new}<img src="images/index21.png" width="57" height="25" />{/if}
+                        </div>
+                    </li>
+                    <!--{/foreach} -->
+                </ul>
+               <div class="clear"></div><div class="clear"></div><div class="clear"></div>
+               
+    <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+
+
+  <!--{/if} -->
+    <!--#收藏商品列表页面 end-->
+    <!--*缺货登记列表页面 start-->
+    <!--{if $action eq 'booking_list'} -->
+    <h5><span>{$lang.label_booking}</span></h5>
+    <div class="blank"></div>
+     <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+      <tr align="center">
+        <td width="20%" bgcolor="#ffffff">{$lang.booking_goods_name}</td>
+        <td width="10%" bgcolor="#ffffff">{$lang.booking_amount}</td>
+        <td width="20%" bgcolor="#ffffff">{$lang.booking_time}</td>
+        <td width="35%" bgcolor="#ffffff">{$lang.process_desc}</td>
+        <td width="15%" bgcolor="#ffffff">{$lang.handle}</td>
+      </tr>
+      <!-- {foreach from=$booking_list item=item} -->
+      <tr>
+        <td align="left" bgcolor="#ffffff"><a href="{$item.url}" target="_blank" class="f6">{$item.goods_name}</a></td>
+        <td align="center" bgcolor="#ffffff">{$item.goods_number}</td>
+        <td align="center" bgcolor="#ffffff">{$item.booking_time}</td>
+        <td align="left" bgcolor="#ffffff">{$item.dispose_note}</td>
+        <td align="center" bgcolor="#ffffff"><a href="javascript:if (confirm('{$lang.confirm_remove_account}')) location.href='user.php?act=act_del_booking&id={$item.rec_id}'" class="f6">{$lang.drop}</a> </td>
+      </tr>
+      <!--{/foreach}-->
+    </table>
+    <!--{/if} -->
+    <div class="blank5"></div>
+   <!--#缺货登记列表页面 -->
+  <!--{if $action eq 'add_booking'} -->
+    {insert_scripts files='utils.js'}
+    <script type="text/javascript">
+    {foreach from=$lang.booking_js item=item key=key}
+    var {$key} = "{$item}";
+    {/foreach}
+    </script>
+    <h5><span>{$lang.add}{$lang.label_booking}</span></h5>
+    <div class="blank"></div>
+     <form action="user.php" method="post" name="formBooking" onsubmit="return addBooking();">
+     <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.booking_goods_name}</td>
+        <td bgcolor="#ffffff">{$info.goods_name}</td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.booking_amount}:</td>
+        <td bgcolor="#ffffff"><input name="number" type="text" value="{$info.goods_number}" class="inputBg" /></td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.describe}:</td>
+        <td bgcolor="#ffffff"><textarea name="desc" cols="50" rows="5" wrap="virtual" class="B_blue">{$goods_attr}{$info.goods_desc|escape}</textarea>
+        </td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.contact_username}:</td>
+        <td bgcolor="#ffffff"><input name="linkman" type="text" value="{$info.consignee|escape}" size="25"  class="inputBg"/>
+        </td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.email_address}:</td>
+        <td bgcolor="#ffffff"><input name="email" type="text" value="{$info.email|escape}" size="25" class="inputBg" /></td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.contact_phone}:</td>
+        <td bgcolor="#ffffff"><input name="tel" type="text" value="{$info.tel|escape}" size="25" class="inputBg" /></td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">&nbsp;</td>
+        <td bgcolor="#ffffff"><input name="act" type="hidden" value="act_add_booking" />
+          <input name="id" type="hidden" value="{$info.id}" />
+          <input name="rec_id" type="hidden" value="{$info.rec_id}" />
+          <input type="submit" name="submit" class="submit" value="{$lang.submit_booking_goods}" />
+          <input type="reset" name="reset" class="reset" value="{$lang.button_reset}" />
+        </td>
+      </tr>
+    </table>
+     </form>
+    <!-- {/if} -->
+    <!-- *我的推荐 -->
+    <!-- {if $affiliate.on eq 1} -->
+     <!-- {if $action eq 'affiliate'} -->
+      
+                <div class="arc7 b-b1 b-l1 b-r1 b-t1">
+                   <b class="t1">分享盈利：</b>&emsp;&emsp;<b class="c14 c17">{$surplus_amount}</b>
+                   <a href="user.php?act=account_raply" class="btn18"></a>
+                </div>
+
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+    <tr align="center">
+      <td bgcolor="#ffffff">{$lang.order_number}</td>
+      <td bgcolor="#ffffff">{$lang.affiliate_money}</td>
+      <td bgcolor="#ffffff">{$lang.affiliate_point}</td>
+      <td bgcolor="#ffffff">{$lang.affiliate_mode}</td>
+      <td bgcolor="#ffffff">{$lang.affiliate_status}</td>
+    </tr>
+    <!-- {foreach from=$logdb item=val name=logdb} -->
+    <tr align="center">
+      <td bgcolor="#ffffff">{$val.order_sn}</td>
+      <td bgcolor="#ffffff">{$val.money}</td>
+      <td bgcolor="#ffffff">{$val.point}</td>
+      <td bgcolor="#ffffff"><!-- {if $val.separate_type == 1 || $val.separate_type === 0} -->{$lang.affiliate_type.$val.separate_type}<!-- {else} -->{$lang.affiliate_type.$affiliate_type}<!-- {/if} --></td>
+      <td bgcolor="#ffffff">{$lang.affiliate_stats[$val.is_separate]}</td>
+    </tr>
+    {foreachelse}
+<tr><td colspan="5" align="center" bgcolor="#ffffff">{$lang.no_records}</td>
+</tr>
+    <!-- {/foreach} -->
+    <!-- {if $logdb} -->
+    <tr>
+    <td colspan="5" bgcolor="#ffffff">
+ <form action="{$smarty.server.PHP_SELF}" method="get">
+  <div id="pager"> {$lang.pager_1}{$pager.record_count}{$lang.pager_2}{$lang.pager_3}{$pager.page_count}{$lang.pager_4} <span> <a href="{$pager.page_first}">{$lang.page_first}</a> <a href="{$pager.page_prev}">{$lang.page_prev}</a> <a href="{$pager.page_next}">{$lang.page_next}</a> <a href="{$pager.page_last}">{$lang.page_last}</a> </span>
+    <select name="page" id="page" onchange="selectPage(this)">
+    {html_options options=$pager.array selected=$pager.page}
+    </select>
+    <input type="hidden" name="act" value="affiliate" />
+  </div>
+</form>
+    </td>
+    </tr>
+    <!-- {/if} -->
+  </table>
+ <script type="text/javascript" language="JavaScript">
+<!--
+{literal}
+function selectPage(sel)
+{
+  sel.form.submit();
+}
+{/literal}
+//-->
+</script>
+
+
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>分享代码</td>
+  </tr>
+</table>
+
+<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+<tr>
+<td colspan="2" bgcolor="#ffffff"><img src="code/code.php?value={$shopurl}?u={$userid}" /></td>
+</tr>
+<tr>
+<td width="30%" bgcolor="#ffffff"><a href="{$shopurl}?u={$userid}" target="_blank" class="f6">{$shopname}</a></td>
+<td bgcolor="#ffffff"><input size="40" onclick="this.select();" type="text" value="&lt;a href=&quot;{$shopurl}?u={$userid}&quot; target=&quot;_blank&quot;&gt;{$shopname}&lt;/a&gt;" style="border:1px solid #ccc;" /> {$lang.recommend_webcode}</td>
+</tr>
+<tr>
+<td bgcolor="#ffffff"><a href="{$shopurl}?u={$userid}" target="_blank" title="{$shopname}"  class="f6"><img src="{$shopurl}{$logosrc}" /></a></td>
+<td bgcolor="#ffffff"><input size="40" onclick="this.select();" type="text" value="&lt;a href=&quot;{$shopurl}?u={$userid}&quot; target=&quot;_blank&quot; title=&quot;{$shopname}&quot;&gt;&lt;img src=&quot;{$shopurl}{$logosrc}&quot; /&gt;&lt;/a&gt;" style="border:1px solid #ccc;" /> {$lang.recommend_webcode}</td>
+</tr>
+<tr>
+<td bgcolor="#ffffff"><a href="{$shopurl}?u={$userid}" target="_blank" class="f6">{$shopname}</a></td>
+<td bgcolor="#ffffff"><input size="40" onclick="this.select();" type="text" value="[url={$shopurl}?u={$userid}]{$shopname}[/url]" style="border:1px solid #ccc;" /> {$lang.recommend_bbscode}</td>
+</tr>
+<tr>
+<td bgcolor="#ffffff"><a href="{$shopurl}?u={$userid}" target="_blank" title="{$shopname}" class="f6"><img src="{$shopurl}{$logosrc}" /></a></td>
+<td bgcolor="#ffffff"><input size="40" onclick="this.select();" type="text" value="[url={$shopurl}?u={$userid}][img]{$shopurl}{$logosrc}[/img][/url]" style="border:1px solid #ccc;" /> {$lang.recommend_bbscode}</td>
+</tr>
+</table>
+
+        <!-- {/if} -->
+
+    <!-- {/if} -->
+
+  <!-- /我的推荐 -->
+
+  </div>
+  <!--right end-->
+</div>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body><script language="javascript" type="text/javascript" src="http://js.users.51.la/18977604.js"></script>
+<noscript><a href="http://www.51.la/?18977604" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/18977604.asp" style="border:none" /></a></noscript>
+<script type="text/javascript">
+{foreach from=$lang.clips_js item=item key=key}
+var {$key} = "{$item}";
+{/foreach}
+</script>
+</html>

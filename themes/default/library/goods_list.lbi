@@ -1,0 +1,34 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+          <div class="container">
+          
+                <!-- {if $brand_info} -->
+                <div class="pp">
+                   <div class="pp-l">
+                      <img src="data/brandlogo/{$brand_info.brand_logo}" width="154"  />
+                   </div>
+                   <div class="pp-r">
+                      <b>{$brand_info.brand_name}</b>
+                      <p class="p7">{$brand_info.brand_desc}</p>
+                      <img src="images/index41.jpg" width="997" height="25" />
+                   </div>
+                </div>
+                <!-- {/if} -->
+          
+             <div class="clear"></div><div class="clear"></div>
+             <ul class="prolist">
+                    <!--{foreach from=$goods_list item=goods}-->
+                    <li class="position">
+                        <a href="{$goods.url}"><img width="276" height="276" src="{$goods.goods_thumb}" /></a>
+                        <a href="{$goods.url}" class="proname">{$goods.goods_name}</a>
+                        <p><span><!-- {if $goods.promote_price neq ""} -->{$goods.promote_price}<!-- {else}-->{$goods.shop_price}<!--{/if}--></span></p>
+                        <div class="img3">
+                           {if $goods.brand_id}<img src="images/index20.png" width="57" height="25" />{/if}
+                           {if $goods.is_new}<img src="images/index21.png" width="57" height="25" />{/if}
+                        </div>
+                    </li>
+                    <!--{/foreach}-->
+                </ul> 
+             <div class="clear"></div><div class="clear"></div><div class="clear"></div>
+
+   
+          </div>

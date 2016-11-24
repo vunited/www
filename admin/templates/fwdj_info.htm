@@ -1,0 +1,57 @@
+<!-- $Id: brand_info.htm 14216 2008-03-10 02:27:21Z testyang $ -->
+{include file="pageheader.htm"}
+<script type="text/javascript">
+region.isAdmin=true;
+</script>
+<div class="main-div">
+<form method="post" action="fwdj.php" name="theForm" onsubmit="return validate()">
+<table cellspacing="1" cellpadding="3" width="100%">
+  <tr>
+    <td class="label">{$lang.brand_name}</td>
+    <td><input type="text" name="brand_name" maxlength="60" value="{$brand.name}" />{$lang.require_field}</td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.brand_price}</td>
+    <td><input type="text" name="price" maxlength="60" value="{$price}" />{$lang.require_field}</td>
+  </tr>
+</table>
+
+
+<table cellspacing="1" cellpadding="3" width="100%">
+  <tr>
+    <td align="center">
+      <input type="submit" class="button" value="{$lang.button_submit}" />
+      <input type="reset" class="button" value="{$lang.button_reset}" />
+      <input type="hidden" name="act" value="{$form_action}" />
+      <input type="hidden" name="old_brandname" value="{$brand.name}" />
+      <input type="hidden" name="id" value="{$brand.id}" />
+      </td>
+  </tr>
+ </table>
+</form> 
+</div>
+{insert_scripts files="../js/utils.js,validator.js"}
+{literal}
+<script language="JavaScript">
+<!--
+document.forms['theForm'].elements['brand_name'].focus();
+onload = function()
+{
+    // 开始检查订单
+    startCheckOrder();
+}
+/**
+ * 检查表单输入的数据
+ */
+function validate()
+{
+    validator = new Validator("theForm");
+    validator.required("brand_name",  no_brandname);
+    return validator.passed();
+}
+
+
+//-->
+</script>
+{/literal}
+{include file="pagefooter.htm"}

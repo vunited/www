@@ -1,0 +1,85 @@
+<!-- 用户中心-修改密码页 -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta content="telephone=no" name="format-detection" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>个人资料 - {$shop_name}</title>
+    <link rel="stylesheet" type="text/css" href="css/zyit.css"  />
+</head>
+<body> 
+{include file='heard.dwt'}
+<style>
+.input input{width: 100%;height: 35px;border: 1px solid #c3c3c3;line-height: 35px;}
+.pass{width: 100%;height: 35px;border: 1px solid #c3c3c3;line-height: 35px;}
+.input p{ line-height:30px}
+.sub_btn{background-color: #F7762E;color: #fff;font: 14px/1.5 微软雅黑;font-weight: bold;border: none;width: 100%;line-height: 35px;}
+</style>
+
+
+            <style>
+			.onp{border-bottom:1px solid #4b911b; color:#4b911b; padding:9px 5px;}
+			</style>
+            <div style="line-height:32px; background:#FFF;">
+            <div style="width:50%; float:left; text-align:center" onClick="document.getElementById('a1').style.display='block';document.getElementById('a11').className='onp';document.getElementById('a2').style.display='none';document.getElementById('a21').className=''"><font id="a11" class="onp">优惠券</font></div>
+            <div style="width:50%; float:right; text-align:center" onClick="document.getElementById('a1').style.display='none';document.getElementById('a2').style.display='block';document.getElementById('a21').className='onp';document.getElementById('a11').className=''"><font id="a21">新增红包</font></div>
+            <div style="clear:both"></div>
+            </div>
+            
+            
+
+	 	<div class="input" style="padding:10px;" id="a1">
+        
+       <table width="100%" border="0" cellpadding="5" cellspacing="5">
+        <tr>
+          <th align="center">序号</th>
+          <th align="center">名称</th>
+          <th align="center">金额</th>
+          <th align="center">最小订单金额</th>
+          <th align="center">截至日期</th>
+          <th align="center">状态</th>
+        </tr>
+        {foreach from=$bonus  item=item}
+        <tr>
+          <td align="center">{$item.bonus_sn|default:N/A}</td>
+          <td align="center">{$item.type_name}</td>
+          <td align="center">{$item.type_money}</td>
+          <td align="center">{$item.min_goods_amount}</td>
+          <td align="center">{$item.use_enddate}</td>
+          <td align="center">{$item.status}</td>
+        </tr>
+        {foreachelse}
+        <tr>
+          <td height="100" colspan="6" align="center">暂时没有优惠券</td>
+         </tr>
+    
+    {/foreach}
+    </table>
+{if $pagebar}
+	{$pagebar}
+{/if}
+</div>	
+
+<div  style="padding:10px; line-height:30px; display:none" id="a2">
+      <form name="addBouns" action="user.php?act=act_add_bonus" method="post" onSubmit="return addBonus()">
+        <table width="100%" border="0" cellpadding="5" cellspacing="5">
+          <tr>
+            <td align="center" height="50">红包序列号
+            <input name="bonus_sn" type="text" size="30"  /></td>
+          </tr>
+          <tr>
+            <td align="center">
+            <input type="submit" class="sub_btn" value="确定" /></td>
+          </tr>
+        </table>
+      </form>
+		</div>
+		
+<div class="last"></div>  
+		
+{include file='foot.dwt'}
+</body>
+</html>

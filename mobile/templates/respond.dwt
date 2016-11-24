@@ -1,0 +1,44 @@
+<!-- 充值返回页面 -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta content="telephone=no" name="format-detection" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>系统提示 - {$shop_name}</title>
+    <link rel="stylesheet" type="text/css" href="css/zyit.css"  />
+</head>
+<body> 
+	{include file='heard.dwt'}
+	<section>
+	<div class="m_cat">
+		<table width=99% cellspacing=5 cellpadding=5 border=0>
+            <tr><td class="red" height="50" align="center" valign="middle">{$message}</td></tr>
+        </table>
+        <!--{if $virtual_card}-->
+        <table width="99%" border="0" cellpadding="5" cellspacing="1" bgcolor="#eee">
+        <!--{foreach from=$virtual_card item=vgoods}-->
+            <!--{foreach from=$vgoods.info item=card}-->
+            <tr align="left">
+                <td bgcolor="#fff" style="padding:15px;">{$vgoods.goods_name}</td>
+                <td bgcolor="#fff" style="padding:15px;line-height:25px;">
+                <!--{if $card.card_sn}--><strong>卡片序号：</strong>{$card.card_sn}<br><!--{/if}-->
+                <!--{if $card.card_password}--><strong>卡片密码：</strong>{$card.card_password}<br><!--{/if}-->
+                <!--{if $card.end_date}--><strong>截至日期：</strong>{$card.end_date}<br><!--{/if}-->
+                </td>
+            </tr>
+            <!--{/foreach}-->
+        <!--{/foreach}-->
+            <tr align="left">
+                <td bgcolor="#fff" height="20" colspan="2"></td>
+                </td>
+            </tr>
+        </table>
+        <!--{/if}-->
+	</div>
+	</section>
+{include file='foot.dwt'}
+</body>
+</html>

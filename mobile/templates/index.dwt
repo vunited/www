@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+
+<script type="text/javascript" src="js/hhSwipe.js"></script> 
+</head>
+
+<body>
+{if $show eq yes}
+<div style=" position:absolute;">
+<img src="images/logo1.png"/>
+</div>
+<div style=" position:absolute; height:300px; width:100%; background:#FFF"></div>
+	<style type="text/css">
+	#guide{ float:right;z-index:9999999999;}
+	#guide img{width:260px;height:180px;}
+    </style>
+	<div class="ts" onClick="javascript:this.style.display = 'none'">
+	<div id="guide"><img src="images/guide1.png"></div>
+	</div>
+{/if}
+{include file='heard.dwt'}
+
+   <!----- banner ------>
+      <div class="re m-t">
+         <div class="addWrap" style="overflow:hidden">
+            <div class="swipe" id="mySwipe">
+                <div class="swipe-wrap">
+                    {foreach from=get_advlist_position_name('banner_wap',0,3) item=ad name=index_image}
+                    <div><a href="{$ad.url}"><img class="img-responsive" src="{$ad.image}"/></a></div>
+                    {/foreach}
+                </div>
+            </div>
+            <ul id="position">
+                {foreach from=get_advlist_position_name('banner_wap',0,3) item=ad name=index_image}
+                <li {if $smarty.foreach.index_image.first}class="cur"{/if}></li>
+                {/foreach}
+            </ul>
+        </div>
+		<script type="text/javascript">
+		  var bullets = document.getElementById('position').getElementsByTagName('li');
+		  var banner = Swipe(document.getElementById('mySwipe'), {
+			  auto: 4000,
+			  continuous: true,
+			  disableScroll:false,
+			  callback: function(pos) {
+				  var i = bullets.length;
+				  while (i--) {
+					  bullets[i].className = ' ';
+				  }
+				  bullets[pos].className = 'cur';
+			  }
+		  })
+
+
+function test()
+{
+    document.getElementById("forms").submit();
+}
+</script>
+        <!----- 搜索框 ------>
+           <div class="search ab">
+           <form name="searchForm" id="forms" method="get" action="search.php">
+              <div class="ub ub-f1 m-l1 m-r1 sear bg-c1">                
+                <div class="ub fa fa-search ub-ac m-l m-r c8"></div>
+                <input type="text" name="keywords"value="{$keywords}" placeholder="搜索商品关键字" class="ub ub-f1 h3 fs04"/>
+                <span class="ub btn3 c1 h3 p-l2 p-r2" style="line-height:35px;" onClick="test()"/>搜索</span>
+              </div>  
+           </form>        
+           </div>
+        <!----- 搜索框结束 ------> 
+      </div>
+   <!----- banner end ------>
+   <!----- content ------>
+     <div class="ub ub-ver m-l2 m-r2 m-t1">
+         <!---- 我们的服务 ------>
+            <div class="ub ub-ver">
+               <div class="ub ub-f1 ub-ac">
+                 <div class="ub ub-img1 icon05 m-r"></div>
+                 <div class="ub ub-f1 fs03 c5">我们的服务</div>
+               </div>
+               <div class="m-t2">
+                  <ul class="prolist">
+                     {foreach from=get_advlist_position_name('首页服务_wap',0,2) item=ad}
+                     <li>
+                        <div class="m-l2 m-r2 re">
+                          <a href="{$ad.url}"><img name="ad_img" src="{$ad.image}" width="100%" height="100%"/></a>
+                        </div>  
+                     </li>
+                     {/foreach}
+                  </ul>
+               </div>
+            </div>   
+         <!---- 我们的服务结束 ------>
+         <!---- 最佳商品 ----->
+            {foreach from=$template item=template_data}
+            {if $template_data.goods}
+            <div class="ub ub-ver m-t3">
+               <div class="ub ub-f1 ub-ac">
+                 <div class="ub ub-img1 icon06 m-r"></div>
+                 <div class="ub ub-f1 fs03 c6">{$template_data.name}</div>
+                 <a href="search.php?intro={$template_data.library}" class="fs03 c6">查看更多</a>
+               </div>
+               <div class="m-t2">
+                  <ul class="prolist">
+                     {foreach from=$template_data.goods item=best_data}   
+                     <li class="m-b1">
+                        <div class="m-l2 m-r2 re">
+                          <a href="goods.php?id={$best_data.id}"><img src="{if strpos($best_data.thumb,'ttp')>0}{else}../{/if}{$best_data.thumb}" width="100%" height="100%" /></a>
+                          <a href="goods.php?id={$best_data.id}" class="ub ub-ver proname ub-pc h2">
+                             <div class="fs02 c1 m-l">{$best_data.name|truncate:9}</div>
+                          </a>
+                        </div>  
+                     </li>
+                     {/foreach}
+                  </ul>
+               </div>
+            </div>
+            {/if}
+            {/foreach}
+         <!---- 最佳商品结束 ----->
+      </div>
+	 
+   <!----- content end ------>
+{include file='foot.dwt'}
+<script language="javascript" type="text/javascript" src="http://js.users.51.la/18977604.js"></script>
+<noscript><a href="http://www.51.la/?18977604" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/18977604.asp" style="border:none" /></a></noscript>
+</body>
+</html>

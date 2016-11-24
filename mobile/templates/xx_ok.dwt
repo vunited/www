@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body class="bg-c8">
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+
+   <!----- content ------>
+      <div class="ub ub-f1 m-t4 ub-ver">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 ub-ver ub-ac bg-c1 ubt bc-border2 p-b5">
+             <div class="ub m-t1">
+                <div class="ub img20"><img src="images/img22.png" width="100%" height="100%" /></div>
+             </div>
+             <div class="ub c16 fs04 p-t5">您的预约已成功提交！</div>
+             <div class="ub fs01 c13 p-t3">安装大师会尽快和您联系，请保持电话畅通。</div>
+             <div class="ub m-t1 m-b3"><a href="index.php" class="fs04 c16 btn1 btn2">返回首页</a></div>
+         </div>		
+      </div>
+   <!----- content end ------>
+   
+{include file='foot.dwt'}
+</body>
+</html>

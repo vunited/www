@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+<body class="bg-c8">
+    <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <!---- 商品列表 ----->
+            <ul class="prolist1">
+              
+              {foreach from=$goods_list item=goods name=goodsit}
+              <li class="m-t2">
+                 <div class="ub ub-ver ub-f1 m-l m-r bg-c1 h0 re">
+                    <a href="goods.php?id={$goods.goods_id}" class="img05"><img src="../{$goods.goods_thumb}" width="100%" height="100%" /></a>
+                    <a href="goods.php?id={$goods.goods_id}" class="fs02 c3 p-l2">{$goods.goods_name|truncate:10}</a>
+                    <span class="fs04 c6 p-l2 p-t3">{$goods.shop_price}</span>
+                    <div class="ub img6">
+                       {if $goods.brand_id}<div class="ub ub-img1 img8"></div>{/if}
+                       {if $goods.is_new}<div class="ub ub-img1 img7"></div>{/if}
+                    </div>
+                    <a href="favorites.php?act=delete_collection&collection_id={$goods.rec_id}" class="ub heart ub-img1"></a>
+                 </div>
+              </li>
+              {/foreach}
+            </ul>            
+         <div class="ub ub-f1 ub-ac p-t2 p-b3">
+                  {if $pagebar}
+                  <div class="ub ub-f1 ubb bc-border3 m-r1"></div>
+                  <div class="ub fs01 c7">{$pagebar}</div>
+                  <div class="ub ub-f1 ubb bc-border3 m-l1"></div>
+                  {/if}
+               </div>
+      </div>
+   <!----- content end ------>
+		
+
+
+{include file='foot.dwt'}
+</body>
+</html>

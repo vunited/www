@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+<script type="text/javascript">
+function checkdd(na,url){
+			document.getElementById('lights').style.display='block';
+            document.getElementById('lightcs').innerHTML = na;
+			document.getElementById("url").href=url;
+		}
+</script>
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <!---- 选项卡 ----->
+            <div class="ub ub-f1 bg-c1 ubb bc-border2">
+               <div class="ub ub-f1 h3 ub-ac">
+                  <div class="ub ub-f1 fs04 p-l4">
+                     <a href="user.php?act=th" class="ub btn1 btn2 {if $casea eq ''}btn2bg{/if}" style="border: none;">全部</a>
+                     <a href="user.php?act=th&casea=退货" class="ub btn1 btn2 {if $casea eq '退货'}btn2bg{/if}" style="border: none;">退货</a>
+                     <a href="user.php?act=th&casea=换货" class="ub btn1 btn2 {if $casea eq '换货'}btn2bg{/if}" style="border: none;">换货</a>
+                  </div>
+               </div>
+            </div>
+         <!---- 选项卡结束 ----->
+            <div class="h4"></div>
+         <!---- 订单列表 ------>
+            <div class="ub ub-f1 ub-ver">
+               <!--{foreach from=$backs item=item}-->
+               <div class="ub ub-f1 ub-ver fs03 c3 lh1 ubb bc-border2 bg-c13 m-b1">
+                  {foreach from=$item.goodss item=goods}
+                  <div class="ub ub-f1  p-l4 p-r4 p-b1 p-t1 ubb bc-border2">
+                      <div class="ub img16 m-r" style="height:63px"><img src="../{$goods.goods_thumb}" width="100%" height="100%" /></div>
+                      <div class="ub ub-f1">{$goods.goods_in1}<br>{$goods.goods_in2}</div>
+                      <div class="ub ub-ver ">
+                         <div class="ub">￥{$goods.goods_in3}</div>
+                         <div class="ub ub-pe">*{$goods.goods_in4}</div>
+                      </div>
+                  </div>
+                  {/foreach}
+                  <div class="ub ub-f1 bg-c1 p-l4 p-r4 h3 ub-ac ub-pe">
+                     <span class="ub fs04 c16">合计￥{$item.subtotal}</span>
+                  </div> 
+                  <div class="ub ub-f1 bg-c1 p-l4 p-r4 ubt bc-border2 h3 ub-ac ub-pe">
+            <!--{if $item.status == 1 || $item.status == 2}-->	
+            	<span class="ub btn1 btn2 ">待审核</span> <a href="javascript:void(0)" onclick="checkdd('真的确定取消本次申请吗？','user.php?act=back_del&back_sn={$item.back_sn}')" class="ub btn1 btn2 ysbg">取消</a>
+            <!--{elseif $item.status == 3}-->
+                <span class="ub btn1 btn2 ">已收货</span>
+            <!--{elseif $item.status == 4}-->
+                <span class="ub btn1 btn2 ">已退款</span>
+            <!--{else}-->
+            	<span class="ub btn1 btn2 ">审核未通过</span> <a href="javascript:void(0)" onclick="checkdd('真的确定取消本次申请吗？','user.php?act=back_del&back_sn={$item.back_sn}')"  class="ub btn1 btn2 ysbg">取消</a>
+            <!--{/if}-->
+                  </div>   
+               </div> 
+               <!--{/foreach}-->
+         <!---- 订单列表结束 ------->
+         <div class="ub ub-f1 ub-ac p-t2 p-b3">
+                  {if $pagebar}
+                  <div class="ub ub-f1 ubb bc-border3 m-r1"></div>
+                  <div class="ub fs01 c7">{$pagebar}</div>
+                  <div class="ub ub-f1 ubb bc-border3 m-l1"></div>
+                  {/if}
+               </div>
+      </div></div>
+   <!----- content end ------>
+   
+{include file='foot.dwt'}
+      <div id="lights" class="ts ub-ac ub-pc" style="display:none; padding-top:50%;">
+         <div class="ub ub-f1 ub-ver bg-c1 ts2">
+            <div class="ub ub-f1 h3 bg-c14 ub-ac p-l1 p-r1">
+                <div class="fs04 c13 ub-f1 ub" id="lightcs">信息内容</div>
+                <a href="javascript:void(0)" onClick="document.getElementById('lights').style.display='none';" class="fa fa-times c9"></a>
+            </div> 
+            <div class="ub ub-f1 h3 p-t1 p-b1 ub-ac ub-pc">
+               <a id="url" href="javascript:void(0)" class="ub btn1 bg-c3 c1 fs04" style="padding-left: 20px; padding-right: 20px;">确定</a>
+            </div>
+         </div>
+      </div>
+</body>
+</html>

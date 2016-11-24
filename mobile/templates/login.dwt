@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body class="bg-c5">
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+{if $login_faild eq 1} 
+<table border="0" cellpadding="0" cellspacing="0" style="margin:auto">
+  <tr>
+    <td height="15">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="46" align="center">您所输入的帐号密码有误,<a href="user.php" class=" c5 ">请重新输入</a></td>
+  </tr>
+</table>
+{else}
+
+         <div class="h4"></div>
+         <form action="user.php?act=do_login" method="post">
+         <div class="bg-c1 ub ub-ver login m-b2">
+           <div class="ub h3 ub-f1 ub-ac ubb bc-border1">
+             <div class="ub fs04 c10 w2 ub-pc">账&emsp;&ensp;号</div>
+              <input name="username" type="text" class="ub ub-f1 ub-ac h0" id="username" placeholder="用户名"/>
+            </div>
+           <div class="ub h3 ub-f1 ub-ac ubb bc-border1">
+             <div class="ub fs04 c10 w2 ub-pc">密&emsp;&ensp;码</div>
+              <input name="pwd" type="password" class="ub ub-f1 ub-ac h0" id="pwd" placeholder="请输入密码"/>
+            </div>
+            <div class="ub h3 ub-f1">
+               <a href="user.php?act=zhaohui" class="ub ub-f1 fs03 c5 forget h3 ub-ac">忘记密码，立即找回</a>
+            </div>
+         </div> 
+         <div>
+            <button type="submit" class="bg-c7 btn c1 fs06 h3" style="width:100%;">登&emsp;录</button><input name="remember" type="checkbox" id="remember" value="1" checked style="display:none" />
+      <input name="gourl" type="hidden" id="gourl" value="{$gourl}">
+         </div>
+         </form>         
+         <div class="ub ub-f1 h3 bg-c1">
+            <a href="user.php?act=register" class="h3 ub ub-ac register fs04 c11">没有账号,<span class="c6">新用户注册</span></a>
+         </div>
+         <div class="ub ub-f1 ub-ac p-t p-b m-t2">
+            <div class="ub ub-f1 ubb bc-border3 m-r2"></div>
+            <div class="ub fs01 c10">绑定第三方账号,可以直接登录</div>
+            <div class="ub ub-f1 ubb bc-border3 m-l2"></div>
+         </div> 
+         <div class="ub ub-f1 ub-pc m-t3">
+            <a href="user.php?act=oath&type=qq" class="ub img">
+               <img src="images/img01.png" width="100%" height="100%" />
+            </a>
+            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={$url}&scope=snsapi_userinfo&state=123&response_type=code#wechat_redirect" class="ub img">
+               <img src="images/img02.png" width="100%" height="100%" />
+            </a>
+         </div><script language="javascript" type="text/javascript" src="http://js.users.51.la/18977604.js"></script>
+<noscript><a href="http://www.51.la/?18977604" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/18977604.asp" style="border:none" /></a></noscript>
+      </div>
+   <!----- content end ------>
+
+{/if}
+
+
+        
+        
+{include file='foot.dwt'}
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+{insert_scripts files='../js/transport.js,../js/utils.js'}
+{insert_scripts files="shopping_flow.js"}
+
+
+
+    <script type="text/javascript">
+        function submit(obj){
+            obj.submit();
+        }
+        function check(theForm){            
+			
+			var consignee = '{$consignee.consignee}';  
+			
+            if (!consignee){
+				document.getElementById('light').style.display='block';
+                document.getElementById('lightc').innerHTML = '未填写收货地址';   
+                return false;
+            }			
+			
+			var paymentSelected = false;
+            var shippingSelected = false;
+            for (i = 0; i < theForm.elements.length; i ++ ){
+                if (theForm.elements[i].name == 'shipping' && theForm.elements[i].checked){
+                    shippingSelected = true;
+                }
+                if (theForm.elements[i].name == 'payment' && theForm.elements[i].checked){
+                    paymentSelected = true;
+                }
+            }
+            var flow_no_shipping = "必须选定一个配送方式。";
+            var flow_no_payment = "必须选定一个支付方式。";            
+            if ( ! paymentSelected){
+                //alert(flow_no_payment);
+				document.getElementById('light').style.display='block';
+                document.getElementById('lightc').innerHTML = flow_no_payment;   
+                return false;
+            }
+			if ( !shippingSelected){
+                //alert(flow_no_shipping);
+				document.getElementById('light').style.display='block';
+                document.getElementById('lightc').innerHTML = flow_no_shipping;   
+                return false;
+            }
+            theform.submit();
+        }
+		
+		
+		
+function changeNeedInv()
+{
+  var obj        = document.getElementById('ECS_NEEDINV');
+  var objType    = document.getElementById('ECS_INVTYPE');
+  var objPayee   = document.getElementById('ECS_INVPAYEE');
+  var objContent = document.getElementById('ECS_INVCONTENT');
+  var needInv    = obj.checked ? 1 : 0;
+  var invType    = obj.checked ? (objType != undefined ? objType.value : '') : '';
+  var invPayee   = obj.checked ? objPayee.value : '';
+  var invContent = obj.checked ? objContent.value : '';
+  objType.disabled = objPayee.disabled = objContent.disabled = ! obj.checked;
+  if(objType != null)
+  {
+    objType.disabled = ! obj.checked;
+  }
+
+  Ajax.call('order.php?act=change_needinv', 'need_inv=' + needInv + '&inv_type=' + encodeURIComponent(invType) + '&inv_payee=' + encodeURIComponent(invPayee) + '&inv_content=' + encodeURIComponent(invContent), orderSelectedResponse, 'GET');
+}
+/* *
+ * 回调函数
+ */
+function orderSelectedResponse(result)
+{
+  if (result.error)
+  {
+    alert(result.error);
+    location.href = './';
+  }
+
+  try
+  {
+    var layer = document.getElementById("ECS_ORDERTOTAL");
+
+    layer.innerHTML = (typeof result == "object") ? result.content : result;
+
+    if (result.payment != undefined)
+    {
+      var surplusObj = document.forms['theForm'].elements['surplus'];
+      if (surplusObj != undefined)
+      {
+        surplusObj.disabled = result.pay_code == 'balance';
+      }
+    }
+  }
+  catch (ex) { }
+}
+
+    </script>
+</head>
+<body> 
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+<form onSubmit="javascript:return check(theForm);" action="order.php?act=done" method="post" name="theForm" id="theForm" >
+<!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="ub ub-ver ubt bc-border2">
+            <div class="ub ub-f1 ub-ver h3 ubb ubt bc-border2">
+                <div class="ub ub-f1 bg1"></div>
+                <div class="ub p-t p-b ub-ac">
+                   <div class="ub ub-f1 ub-ver m-l3 ub-pc">
+                     <div class="ub ub-ac">
+                        <div class="fs03 c3 m-r3 ub ub-ac"><div class="ub ub-img icon13 m-r2"></div><div class="ub">{$consignee.consignee|escape}</div></div>
+                        <div class="fs03 c3 ub ub-ac"><div class="ub fa fa-mobile c6 m-r2" style="font-size: 22px;"></div><div class="ub">{$consignee.tel}</div></div>
+                     </div>
+                     <div class="ub c14 fs03 ub-ac p-t"><div class="ub fa fa-map-marker c6 m-r2" style="font-size: 18px;"></div><div class="ub">{$consignee.addressd|escape}</div></div>
+                   </div>
+                   <a href="buy.php?act=checkout" class="ub ub-ac c1 bg-c3 fs03 m-r gg">更改</a>
+                </div>
+                <div class="ub ub-f1 bg1" style="background-position: bottom left;"></div>              
+            </div>            
+            <div class="ub ub-f1 ub-ver">
+               <!-- {foreach from=$goods_list item=goods} -->
+               <div class="ub ub-f1 fs03 c3 p-b1 p-t1 lh1 p-l4 p-r4 ubb bc-border2">
+                  <div class="ub img16 m-r" style="height:63px"><img src="../{$goods.goods_thumb}" width="100%" height="100%" /></div>
+                  <div class="ub ub-f1">{$goods.goods_name|truncate:12}</div>
+                  <div class="ub ub-ver">
+                     <div class="ub">{$goods.formated_goods_price}</div>
+                     <div class="ub ub-pe">×{$goods.goods_number}</div>
+                  </div>
+               </div> 
+               <!-- {/foreach} --> 
+            </div>            
+            <div class="ub ub-f1 ub-pe ub-ac bg-c13 h3 ubb bc-border2 p-r4">
+               <span class="fs02 c3">{$goods.goods_number}件商品</span>　　<span class="fs04 c16" id="cart_amount_desc">{$shopping_money}</span>
+            </div>
+            
+            
+            
+            
+            
+            <div class="ub ub-f1 ub-ver h3 p-t p-b1 m-l3">
+                <div class="fs04 c3">选择支付方式</div> 
+                <div class="ub ub-f1 m-t3" id="ul1">
+                   <!-- {foreach from=$payment_list item=payment} -->
+                   <li {if $order.pay_id eq $payment.pay_id}class="fs03 m-r pay paybg"{else}class="fs03 m-r pay"{/if} onClick="selectPayment({$payment.pay_id},this,'{$payment.pay_name}')"> <input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if} style="display:none"/>{$payment.pay_name}</li>
+                   <!-- {/foreach} -->
+                   <li class="fs03 m-r pay" onClick="javascript:window.location.href='xx.php'">线下体验</li>        
+                </div>
+                
+                
+                
+                <div class="ub ub-f1 m-t3 ub-ac check ubb bc-border2 h3">
+                   <div class="ub"><input name="ECS_NEEDINV" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="1" {if $order.need_inv}checked="true"{/if} /></div>
+                   <div class="ub c3 fs03">需要提供发票</div>           
+                
+                </div> 
+                <!-- {if $inv_type_list} -->
+                <div class="ub ub-f1 ub-ac check ubb bc-border2 h3 fs03">
+                发票类型
+                <select name="inv_type" id="ECS_INVTYPE" {if $order.need_inv neq 1}disabled="true"{/if} onchange="changeNeedInv()" style="border:1px solid #ccc;">
+                {html_options options=$inv_type_list selected=$order.inv_type}</select>
+                发票内容
+                <select name="inv_content" id="ECS_INVCONTENT" {if $order.need_inv neq 1}disabled="true"{/if}  onchange="changeNeedInv()" style="border:1px solid #ccc;">
+
+                {html_options values=$inv_content_list output=$inv_content_list selected=$order.inv_content}
+
+                </select>
+                </div>
+                <!-- {/if} -->
+                <div class="ub ub-f1 ub-ac check ubb bc-border2 h3 fs03">
+                发票抬头
+                <input name="inv_payee" type="text"  id="ECS_INVPAYEE" size="30" {if !$order.need_inv}disabled="true"{/if} value="{$order.inv_payee}" onblur="changeNeedInv()" style="border:1px solid #CCC;" />                
+                </div>
+                
+                <div class="ub ub-f1 ub-ac check ubb bc-border2 h3 fs03">
+                选择红包
+                <select name="bonus" onchange="changeBonus(this.value)" id="ECS_BONUS" style="border:1px solid #ccc;">
+                  <option value="0" {if $order.bonus_id eq 0}selected{/if}>请选择</option>
+                  <!-- {foreach from=$bonus_list item=bonus} -->
+                  <option value="{$bonus.bonus_id}" {if $order.bonus_id eq $bonus.bonus_id}selected{/if}>{$bonus.type_name}[{$bonus.bonus_money_formated}]</option>
+                  <!-- {/foreach} -->
+                </select>
+                </div>
+                
+                <div class="ub ub-f1 ub-ac check ubb bc-border2 h3 fs03">
+                输入红包
+                <input name="bonus_sn" type="text" class="inputBg" size="15" style="border:1px solid #ccc; " />
+                <input name="validate_bonus" type="button" class="c1 bg-c3 gg" value="验证红包" onclick="validateBonus(document.forms['theForm'].elements['bonus_sn'].value)" />      
+                </div>
+                
+                {foreach from=$shipping_list item=shipping name=shipping}
+                <div class="ub ub-f1 ub-ac check ubb bc-border2 h3">
+                   <div class="ub"><input name="shipping" id="shipping" type="radio" value="{$shipping.shipping_id}"{if $order.shipping_id eq $shipping.shipping_id } checked{/if} supportCod="{$shipping.support_cod}" insure="{$shipping.insure}" onClick="selectShipping(this)" /></div>
+                   <div class="ub c3 fs03 ub-f1">{$shipping.shipping_name}:<span class="c6">{$shipping.format_shipping_fee}</span>  <span class="fs01 c3">仅<span class="c5">在线下单并成功付款</span>用户可享受此优惠</span></div>
+                </div>  
+                {/foreach}  
+                <input name="need_insure" id="ECS_NEEDINSURE" type="checkbox"  style="display:none"  onclick="selectInsure(this.checked)" value="1" {if $order.need_insure}checked="true"{/if} {if $insure_disabled}disabled="true"{/if} />       
+            </div>
+         </div>
+         <div class="h3"></div>                   
+         <div class="ub ub-f1 footerserv bg-c9 ub-ac" style="bottom: 0;"> 
+            <div class="ub ub-f1 m-l3 c1 fs04" id="ECS_ORDERTOTAL">实付款：<span style="font-size: 18px;">{$total.amount_formated}</span></div>
+            <div class="ub btn4 h0"><button class="h0 bg-c2 c1 fs04 p-l1 p-r1">提交订单</button></div>
+         </div>
+      </div>
+   <!----- content end ------>
+
+
+
+
+
+
+</form>
+
+
+<div id="light" class="ts ub-ac ub-pc" style="display:none; padding-top:50%;"> 
+    <div class="ub ub-f1 ub-ver bg-c1 ts2">
+            <div class="ub ub-f1 h3 bg-c14 ub-ac p-l1 p-r1">
+                <div class="fs04 c13 ub-f1 ub" id="lightc">信息内容</div>
+                <a href="javascript:void(0)" onClick="document.getElementById('light').style.display='none';" class="fa fa-times c9"></a>
+            </div> 
+            <div class="ub ub-f1 h3 p-t1 p-b1 ub-ac ub-pc">
+               <a href="javascript:void(0)" onClick="document.getElementById('light').style.display='none';" class="ub btn1 bg-c3 c1 fs04" style="padding-left: 20px; padding-right: 20px;">确定</a>
+            </div>
+         </div> 
+</div> 
+</body>
+</html>

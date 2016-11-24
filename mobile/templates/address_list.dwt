@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+{insert_scripts files="../js/transport.js,../js/region.js"}
+
+	<script type="text/javascript">
+    region.isAdmin=true;
+    </script>
+    <script type="text/javascript">
+    function doValidate() {		
+		if(document.theForm.consignee.value==""){
+			//alert("请输入收货人姓名!");theForm.consignee.focus();
+			document.getElementById('light').style.display='block';
+			document.getElementById('lightc').innerHTML = "请输入收货人姓名!";   
+			return false;
+		}
+		if(document.theForm.tel.value==""){
+			//alert("请输入收货人电话!");theForm.tel.focus();
+			document.getElementById('light').style.display='block';
+			document.getElementById('lightc').innerHTML = '请输入收货人电话!';      
+			return false;
+		}
+		if(document.theForm.tel.value!=""){			
+			var mobileReg = /^1[3|4|5|7|8]\d{9}$/; //手机号码不是合法号码
+            if(!mobileReg.test(document.theForm.tel.value)) {
+                //alert('请填写正确手机号码!!');
+				//document.theForm.mobile.focus();
+				document.getElementById('light').style.display='block';
+				document.getElementById('lightc').innerHTML = '请填写正确手机号码!!';                
+                return false;
+            }		
+		}		
+		if(document.theForm.selDistricts.value == 0){
+			//alert("请选择市");theForm.selCities.focus();
+			document.getElementById('light').style.display='block';
+			document.getElementById('lightc').innerHTML = "请选择区";   
+			return false;
+		}
+		if(document.theForm.address.value==""){
+			//alert("请输入您的详细地址!");theForm.address.focus();
+			document.getElementById('light').style.display='block';
+			document.getElementById('lightc').innerHTML = "请输入您的详细地址!";   
+			return false;
+		}
+		
+			
+
+                return true;
+    }
+    </script>
+</head>
+<body class="bg-c8">
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+<!--{if $fun == "list"}-->
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <!--{foreach from=$consignee item=consignee name=con}-->
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-ver ub-f1">
+             <div class="ub ub-f1 bg-c13 ubt bc-border2 h3 ub-ac">
+                <div class="ub ub-f1 fs04 c9 m-l3">送货地址</div>
+                <div class="ub ub-ac check ub-ac m-r">
+                {if $consignee.address_ids eq 1}<div  class="ub fs04 c13">默认地址</div>{else}<a class="ub fs04 c13" href="user.php?act=act_moren_address&id={$consignee.address_id}">设为默认</a>{/if}&nbsp;<a class="ub fs04 c13" href="user.php?act=drop_address&id={$consignee.address_id}">删除</a>
+                </div>
+             </div>
+             <div class="ub ub-f1 ub-ver h3 ubb ubt bc-border2 bg-c1">
+                <div class="ub p-t p-b ub-ac">
+                   <div class="ub ub-f1 ub-ver m-l3 ub-pc">
+                     <div class="ub ub-ac">
+                        <div class="fs03 c3 m-r3 ub ub-ac"><div class="ub ub-img icon13 m-r2"></div><div class="ub">{$consignee.consignee|escap}</div></div>
+                        <div class="fs03 c3 ub ub-ac"><div class="ub fa fa-mobile c6 m-r2" style="font-size: 22px;"></div><div class="ub">{$consignee.tel|escape}</div></div>
+                     </div>
+                     <div class="ub c14 fs03 ub-ac p-t"><div class="ub fa fa-map-marker c6 m-r2" style="font-size: 18px;"></div><div class="ub"> {$consignee.address|escape}</div></div>
+                   </div>
+                   <a href="user.php?act=add_address&id={$consignee.address_id}" class="ub ub-ac c1 bg-c3 fs03 m-r gg">更改</a>
+                </div>            
+              </div>
+            </div>
+         <!--{/foreach}--> 
+         <div class="ub ub-f1 ub-ac ub-pc m-t3">
+            <a href="user.php?act=add_address" class="ub add ub-img1"></a>            
+         </div>   
+      </div>
+   <!----- content end ------>
+
+<!--{/if}-->
+<!--{if $fun == "add"}-->
+<!-- {foreach from=$consignee_list item=consignee key=sn name=cn} -->
+<!-- {if $smarty.foreach.cn.index eq 0} -->
+<form action="{$action}" method="post" name="theForm" id="theForm" onsubmit="return doValidate()">
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 ub-ver bg-c1 ubt ubb bc-border2 p-l3 p-r3 p-t1" style="padding-bottom: 42px;">
+            <div class="ub ub-f1 h3 ub-ac">
+               <div class="ub ub-img1 icon24"></div>
+               <div class="fs04 c14 m-l4">收货人&emsp;</div>
+               <div class="ub ub-f1">
+                  <div class="ub ub-f1 ub-ac text1">
+                     <input name="consignee" type="text" class="ub ub-f1 h0" id="consignee" value="{$consignee.consignee|escape}"/>
+                  </div> 
+               </div>
+            </div>
+            <div class="ub ub-f1 h3 ub-ac">
+               <div class="ub ub-img1 icon25"></div>
+               <div class="fs04 c14 m-l4">手机号&emsp;</div>
+               <div class="ub ub-f1">
+                  <div class="ub ub-f1 ub-ac text1">
+                     <input name="tel" type="text" class="ub ub-f1 h0" id="tel" value="{$consignee.tel|escape}"/>
+                  </div> 
+               </div>
+            </div>
+            <div class="ub ub-f1 h3 ub-ac">
+               <div class="ub ub-img1 icon26"></div>
+               <div class="fs04 c14 m-l4">地&emsp;址&emsp;</div>
+               <div class="ub ub-f1 ub-ac">
+                  
+          <input type="hidden" name="country" value="1">
+          
+          
+          <div class="ub ub-ac text1  m-r">
+          <select name="province" id="selProvinces" onchange="region.changed(this, 2, 'selCities')" style="width:70px;">
+            <option value="0">请选择省</option>
+            <!-- {foreach from=$province_list item=province} -->
+            <option value="{$province.region_id}" {if $consignee.province == $province.region_id}selected="selected"{/if}>{$province.region_name}</option>
+            <!-- {/foreach} -->
+          </select>
+          </div><div class="ub ub-ac text1  m-r">
+          <select name="city" id="selCities" onchange="region.changed(this, 3, 'selDistricts')" style="width:70px;">
+            <option value="0">请选择市</option>
+            <!-- {foreach from=$city_list item=city} -->
+            <option value="{$city.region_id}" {if $consignee.city == $city.region_id}selected="selected"{/if}>{$city.region_name}</option>
+            <!-- {/foreach} -->
+          </select>
+          </div><div class="ub ub-ac text1  m-r">
+          <select name="district" id="selDistricts" style="width:70px;">
+            <option value="0">请选择区</option>
+            <!-- {foreach from=$district_list item=district} -->
+            <option value="{$district.region_id}" {if $consignee.district == $district.region_id}selected="selected"{/if}>{$district.region_name}</option>
+            <!-- {/foreach} -->
+          </select>
+          </div>
+          
+                  
+               </div>
+            </div>
+            <div class="ub ub-f1 h3 ub-ac">
+                  <div class="ub ub-f1 ub-ac text1" style="margin-left: 80px;">
+                     <input name="address" type="text" class="ub ub-f1 h0" id="address" value="{$consignee.address|escape}"/>
+                  </div>  
+           </div>
+            </div>
+         </div>
+      </div>
+   <!----- content end ------>
+      <div class="clear"></div>
+   <!----- 保存 ------>
+      <div class="ub ub-f1 ub-ver js" style="bottom: 34px;">
+         <div class="ub ub-f1 h3 bg-c9 ub-ac">
+         <!--<div class="bg-c9">                
+              <button class="fs04 c1 h3" style="width:100%;">保存</button>-->
+              <button class="ub fs04 c1 h3 p-l3 p-r3 ub-f1 ub-ac">保存</button>
+              <input name="address_id" type="hidden" value="{$consignee.address_id}" />
+         </div>
+      </div>
+   <!----- 保存结束 ------>
+</form>
+<!--{/if}-->
+<!-- {/foreach} -->
+<!--{/if}-->
+
+{include file='foot.dwt'}
+
+</body>
+</html>

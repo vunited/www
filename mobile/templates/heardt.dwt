@@ -1,0 +1,12 @@
+   <!----- 标题 ------>
+      <div class="nav-t h2 bg-c1 ubb bc-border2">
+          <div class="ub ub-f1">
+             <a href="javascript:history.go(-1);" class="ub ub-ac ub-pc back">
+               <b class="ub fa fa-angle-left c9" style="font-size: 35px;"></b>
+             </a>
+             <div class="ub ub-f1 ub-ac c3 fs05">
+                 {$titleh}
+             </div>
+          </div>
+      </div>
+   <!----- 标题结束 ------>

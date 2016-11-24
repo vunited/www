@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+{include file='heard.dwt'}
+<form name="formPassword" action="user.php?act=act_edit_password" method="post" >
+   <!----- 标题 ------>
+      <div class="nav-t h2 bg-c1 ubb bc-border2">
+          <div class="ub ub-f1">
+             <a href="javascript:history.go(-1);" class="ub ub-ac ub-pc back">
+               <b class="ub fa fa-angle-left c9" style="font-size: 35px;"></b>
+             </a>
+             <div class="ub ub-f1 ub-ac c3 fs05">
+                 {$titleh}
+             </div>
+            <div class="ub ub-ac">               
+              <input type="submit" class="ub ub-ac fs02 btn1 c1 bg-c2" value="保存">
+             </div>
+          </div>
+      </div>
+   <!----- 标题结束 ------>
+
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4"></div>
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3 ubb bc-border2">
+            <div class="fs04 c10">输入原密码</div>
+            <input name="old_password" type="password" class="ub ub-f1 h3 m-l1" id="old_password"/>
+         </div> 
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3 ubb bc-border2">
+            <div class="fs04 c10">设置新密码</div>
+            <input name="new_password" type="password" class="ub ub-f1 h3 m-l1" id="new_password"/>
+         </div>
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3">
+            <div class="fs04 c10">确认新密码</div>
+            <input name="comfirm_password" type="password" class="ub ub-f1 h3 m-l1" id="comfirm_password"/>
+         </div>       
+      
+            {if $f eq 1}
+            <table width=90% border=0 style="margin:auto" cellpadding=5 cellspacing=5>
+            <tr><td height="100" align="center">资料修成功！</td></tr>
+            </table>
+            {elseif $f eq 3}
+            <table width=90% border=0 style="margin:auto" cellpadding=5 cellspacing=5>
+            <tr><td height="100" align="center">密码不正确！请确认密码为6位数以上</td></tr>
+            </table>
+            {elseif $f eq 4}
+            <table width=90% border=0 style="margin:auto" cellpadding=5 cellspacing=5>
+            <tr><td height="100" align="center">原密码不正确！请输入正确的原密码</td></tr>
+            </table>
+            {elseif $f eq 5}
+            <table width=90% border=0 style="margin:auto" cellpadding=5 cellspacing=5>
+            <tr><td height="100" align="center">密码不能少于 6 个字符。</td></tr>
+            </table>
+            {elseif $f eq 6}
+            <table width=90% border=0 style="margin:auto" cellpadding=5 cellspacing=5>
+            <tr><td height="100" align="center">两次输入的密码不一致，请重新输入！</td></tr>
+            </table>
+            {/if}
+            
+      </div>
+   <!----- content end ------>
+</form>
+
+{include file='foot.dwt'}
+</body>
+</html>

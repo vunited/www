@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+<body> 
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+		<table width=90% border=0 style="margin:auto" cellpadding=5 cellspacing=5>
+            <tr><td class="red" height="50" align="center" valign="middle">{$tips}</td></tr>
+            <tr><td height="50" align="center" valign="middle" class="onlinepay">{$pay_online}</td></tr>
+        </table>
+      </div>
+   <!----- content end ------>
+{include file='foot.dwt'}
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+
+
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-ver ubb bc-border2 p-b1">
+            <div class="fs03 m-l1 p-t">订单编号：{$order.order_sn}</div>
+            <div class="fs03 m-l1 p-t">订单状态：{$order.order_status} {$order.confirm_time}</div>
+            <div class="fs03 m-l1 p-t paybtn">支付状态：{$order.pay_status} {$order.pay_time}{if $order.order_amount gt 0}{$order.pay_online}{/if}</div>            
+            <div class="fs03 m-l1 p-t">配送状态：{$order.shipping_status} {$order.shipping_time}</div>
+            {if $order.invoice_no}<div class="fs03 m-l1 p-t">发货单号：{$order.invoice_no}</div>{/if}
+         </div>
+         
+         
+            <div class="ub ub-f1 ub-ver bg-c13 ">
+               <!-- {foreach from=$goods_list item=goods} -->
+               <div class="ub ub-f1 fs03 c3 p-b1 p-t1 lh1 p-l4 p-r4 ubb bc-border2">
+                  <div class="ub img16 m-r" style="height:63px"><img src="../{$goods.goods_thumb}" width="100%" height="100%" /></div>
+                  <div class="ub ub-f1">{$goods.goods_name|truncate:12}</div>
+                  <div class="ub ub-ver">
+                     <div class="ub">{$goods.subtotal}</div>
+                     <div class="ub ub-pe">×{$goods.goods_number}</div>
+                  </div>
+               </div> 
+               <!-- {/foreach} --> 
+            </div>            
+            <div class="ub ub-f1 ub-pe ub-ac h3  p-r4 fs04 c16">
+               合计：<span id="cart_amount_desc">{$order.formated_goods_amount}
+              <!-- {if $order.bonus > 0} -->
+              - 红包: {$order.formated_bonus} = {$order.formated_order_amount}
+              <!-- {/if} -->
+              
+               </span>
+            </div>
+         
+            <div class="ub ub-f1 ub-ver h3 ubb ubt bc-border2">
+                <div class="ub ub-f1 bg1"></div>
+                <div class="ub p-t p-b ub-ac">
+                   <div class="ub ub-f1 ub-ver m-l3 ub-pc">
+                     <div class="ub ub-ac">
+                        <div class="fs03 c3 m-r3 ub ub-ac"><div class="ub ub-img icon13 m-r2"></div><div class="ub">{$order.consignee|escape}</div></div>
+                        <div class="fs03 c3 ub ub-ac"><div class="ub fa fa-mobile c6 m-r2" style="font-size: 22px;"></div><div class="ub">{$order.tel}</div></div>
+                     </div>
+                     <div class="ub c14 fs03 ub-ac p-t"><div class="ub fa fa-map-marker c6 m-r2" style="font-size: 18px;"></div><div class="ub">{$order.addressd|escape}</div></div>
+                   </div>
+                </div>
+                <div class="ub ub-f1 bg1" style="background-position: bottom left;"></div>              
+            </div>     
+         
+         
+
+      
+         
+         
+      </div>
+ 
+ 
+
+{include file='foot.dwt'}
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="牛模式NIUMOS官网 ECShop-TB ecshop淘宝客 shopnc采集 京东采集 淘宝采集 天猫采集 ecshop淘宝客 ecshop淘宝商品采集 淘宝api采集 数据采集 淘宝客程序 淘宝评论采集" />
+<meta name="Description" content="牛模式采集安装程序，牛模式NIUMOS官网：牛模式团队专注开发ecshop等电商平台采集插件，集采集、发布等多个功能，主要用于ecshop采集淘宝商品，是目前基于ecshop最强大的采集器，多种采集方式，可以采集到淘宝、天猫的所有卖家商品，傻瓜式操作，简单易用，采集速度快，即采即得。" />
+<title>牛模式 ECShop-TB v5安装设置</title>
+<style>
+div, input, th ,td,h6, select{font-family:'微软雅黑'; font-size:12px}
+th,td{padding: 4px 0;}
+th{text-align:right}
+.hh{text-align:center; width:100%; line-height:30px; height:30px; font-size:16px; color: #009999;}
+input, select{height: 23px;padding: 0 4px;vertical-align: middle;}
+#caij_btns a{display:block;width:117px; height:35px; text-align:center;background:#FF8800;line-height:35px; font-size:16px; color:#FFFFFF;  color:#FFFFFF;text-decoration:none;width: 117px;}
+#caij_btns a:hover{text-decoration:none;background:#F00;}
+.shuoming{margin:5px 5px 20px 5px; overflow:hidden; background:#FFFFFF; padding:10px; border:1px solid #FF9900; color: #339933;}
+.tab-div{width: 678px;}
+.tbbg{background: #FFFDEA!important; border:#CCCCCC 1px solid;padding: 20px;}
+.albg{background: #FFEAEA!important;}
+#yxn{text-align:center; overflow:hidden;}
+#yxn p {font: 14px "微软雅黑","sans-serif", "Arial", "Verdana"; color:#666666;}
+#yxn p a{color:#666666;text-decoration:none;}
+#yxn p a:hover{color:#f00;}
+</style>
+</head>
+<body style="width: 680px;margin: 40px auto;">
+<div class="tab-div">
+  <div id="tabbody-div" class="tbbg" >
+    <div id="yxn">
+      <p><a href="https://item.taobao.com/item.htm?id=19474502166"><img src="https://img.alicdn.com/imgextra/i1/619666972/TB2FCmrhXXXXXcLXpXXXXXXXXXX-619666972.jpg" width="60"></a></p>
+      <p style=" font-size:18px;">牛模式 ECShop-TB v5安装设置</p>
+    </div>
+    <form enctype="multipart/form-data" action="nms_install.php" method="post" name="theForm" >
+      <table width="100%" id="general-table" >
+        <tr class="act">
+          <th>&nbsp;</th>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <th width="150">输入授权码：</th>
+          <td><input type="text" value="" class="textinput" name="session_key" size="65">
+          </td>
+        </tr>
+        <tr>
+          <th width="50%" align="right">选择安装模块：</th>
+          <td><select name="mk">
+              <option value="1." selected="selected">淘宝 </option>
+              <option value="1.1." >阿里 </option>
+              <option value="1.1.1.">淘宝+阿里 </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding: 16px 66px;">注意：
+          请根据你购买的插件类型选择；如果你购买的是淘宝采集，只能选择“淘宝”，只购买阿里采集就选“阿里”，两个都购买的就选择“淘宝+阿里”。</td>
+        </tr>
+        <tr style="display:none">
+          <th align="right">ECSHOP版本：</th>
+          <td><select name="bb">
+              <option value="1" selected="selected">普通ECSHOP </option>
+              <option value="2">商之翼小京东4.2 </option>
+              <option value="3">模板堂大京东 </option>
+              <option value="4">模板堂大商创 </option>
+            </select>
+          </td>
+        </tr>
+        <tr class="act">
+          <td colspan="2"><div style="width:100%;"><div id="caij_btns" style="width:117px;margin: 0 auto;"><a class="caiji" href="javascript:colltaobao();" >开始安装</a></div> </div></td>
+        </tr>
+        <tr class="act">
+          <th>&nbsp;</th>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+        <div class="shuoming"> <b>安装说明：</b><br />
+          1、请确保互联网连接畅通；<br />
+          2、安装前请设置网站根目录为可写权限777；<br />
+          3、安装前请做好网站的备份，切记！<br />
+        </div>
+    <div id="yxn">
+      <p>官方网站：<a target="_blank" href="https://www.niumos.com">www.niumos.com</a></p>
+</div>
+    </form>
+  </div>
+</div>
+<div class="blank5"></div>
+</div>
+</div>
+</div>
+<div class="blank5"></div>
+</body>
+<script type="text/javascript">
+function colltaobao()
+{
+ 	document.getElementById('caij_btns').innerHTML = '正在安装：<img src="https://img.alicdn.com/imgextra/i1/619666972/TB2PCZjjVXXXXXxXpXXXXXXXXXX-619666972.gif" />';
+	var targetForm = document.forms[ "theForm" ];
+	targetForm.submit();
+}
+</script>
+</html>

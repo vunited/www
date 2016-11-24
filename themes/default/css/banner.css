@@ -1,0 +1,132 @@
+@charset "utf-8";
+/* CSS Document */
+
+.fullSlide {
+	width: 100%;
+	position: relative;
+	height: 500px;
+	z-index: 9;
+}
+.fullSlide .bd {
+	margin: 0 auto;
+	position: relative;
+	z-index: 0;
+	overflow: hidden;
+}
+.fullSlide .bd ul {
+	width: 100% !important;
+}
+.fullSlide .bd li {
+	width: 100% !important;
+	height: 500px;
+	overflow: hidden;
+	text-align: center;
+}
+.fullSlide .bd li a {
+	display: block;
+	height: 500px;
+}
+.fullSlide .hd {
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
+	left: 0;
+	height: 42px;
+	background-color: #000;
+	filter: alpha(opacity=45);
+	opacity: 0.45;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	padding-top:28px;
+}
+.fullSlide .hd ul {
+	text-align: right;
+	margin-top: 28px;
+	margin-right: 22px;
+}
+.fullSlide .hd ul li {
+	cursor: pointer;
+	display: inline-block;
+*display:inline;
+	zoom: 1;
+	width: 16px;
+	height: 16px;
+	margin-right: 16px;
+	border-radius: 50%;
+	overflow: hidden;
+	background: #fff;
+	line-height: 999px;
+}
+.fullSlide .hd ul .on {
+	background: #ff6600;
+}
+/*   图片滚动    */
+a.abtn {
+	display: block;
+	height: 100px;
+	width: 41px;
+	overflow: hidden;
+}
+a.aleft {
+	background: url(../images/left.png) top center no-repeat;
+	position: absolute;
+	left: -80px;
+	top: 147px;
+}
+a.aright {
+	background: url(../images/right.png) top center no-repeat;
+	position: absolute;
+	right: -80px;
+	top: 147px;
+}
+.scrolllist {
+	width: 100%;
+	height: 397px;
+}
+.scrolllist .imglist_w {
+	width: 100%;
+	height: 397px;
+	overflow: hidden;
+	float: left;
+	position: relative;/*必要元素*/
+}
+.scrolllist .imglist_w ul {
+	width: 20000px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+.scrolllist .imglist_w li {
+	width: 276px;
+	height: 395px;
+	border: 1px solid #e4e4e4;
+	float: left;
+	margin: 0 11px;
+	background-color: #fff;
+}
+.scrolllist .imglist_w li a {
+	display: block;
+}
+.scrolllist .imglist_w li .proname {
+	padding-left: 25px;
+	line-height: 32px;
+	margin-top: 27px;
+	color: #555;
+	font-size: 16px;
+}
+.scrolllist .imglist_w li p {
+	padding-left: 25px;
+	line-height: 32px;
+	color: #777;
+}
+.scrolllist .imglist_w li p span {
+	color: #ff6600;
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.scrolllist .imglist_w li p .s {
+	display: inline-block;
+	background: url(../images/index19.png) right center no-repeat;
+	padding-right: 30px;
+}

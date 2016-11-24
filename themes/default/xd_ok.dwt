@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link rel="alternate" type="application/rss+xml" title="RSS|{$page_title}" href="{$feed_url}" />
+
+<link href="css/zyit.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+
+{* 包含脚本文件 *}
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+<form onSubmit="javascript:return check(formUser);" action="xd.php?act=add" method="post" enctype="multipart/form-data" name="formUser">
+   <!---- content ------>
+      <div class="content">
+         <div class="container position">
+            <div class="local">您的当前位置 > <a href="index.php">首页</a> > <span>预约服务支付</span></div>
+            <div class="title5">
+               <span class="p6">预约服务支付中心</span>
+           </div>
+         </div>
+          <div class="container">
+             <div class="b-b b-l b-r arc2">
+                <div class="arc3 b-b b-bs">
+                  <b>感谢您！ 预约服务订单已生成，应支付金额 <span class="c14">{$fw.order_amount}</span></b>
+                </div>
+                <div class="arc3">                  
+                  <p><b>订&ensp;单&ensp;号：</b>{$fw.order_sn}</p>
+                  <p><b>服务项目：</b>{$fw.fwfl}-{$fw.fwdj}</p>
+                  <p><b>预约时间：</b>{$fw.fw_time}</p>
+                  <p><b>服务总价：</b>{$fw.order_amount}</p>
+                  <p><b>创建时间：</b>{$fw.add_time}</p>
+                  <!-- {if $pay_online} --><p class="paybtn">{$pay_online}</p><!-- {/if} -->
+                </div>
+             </div> 
+             <div class="clear"></div>
+             <div class="b-b b-l b-r b-t arc6">
+                <a href="user.php?act=fw" class="btn12bg">查看订单</a><a href="xd.php">继续预约</a><a href="index.php">返回首页</a>
+             </div>             
+          </div> 
+          <div class="clear"></div><div class="clear"></div>
+          <div class="clear"></div><div class="clear"></div>
+          <div class="clear"></div><div class="clear"></div>
+      </div>
+        
+
+   <!---- content end ----->
+</form>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

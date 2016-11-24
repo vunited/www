@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <!---- 选项卡 ----->
+            <div class="ub ub-f1 bg-c1 ubb bc-border2">
+               <div class="ub ub-f1 h3 ub-ac">
+                  <div class="ub ub-f1 fs04 p-l3">
+                     <a href="user.php?act=fw" class="ub btn1 btn2 {if $status eq ''}btn2bg{/if}" style="border: none;">全部</a>
+                     <a href="user.php?act=fw&status=1" class="ub btn1 btn2 {if $status eq 1}btn2bg{/if}" style="border: none;">已预约</a>
+                     <a href="user.php?act=fw&status=2" class="ub btn1 btn2 {if $status eq 2}btn2bg{/if}" style="border: none;">已服务</a>
+                  </div>
+               </div>
+            </div>
+         <!---- 选项卡结束 ----->
+            <div class="h4"></div>
+         <!---- 预约列表 ------>
+            <div class="ub ub-f1 ub-ver">
+                {foreach from=$fw_list item=fw}
+                <div class="ub ub-f1 ub-ver">
+                  <div class="ub h3 ub-ac bg-c13 ub-f1 ubt bc-border2 fs03 p-l3 c14">
+                     <div class="ub ub-f1">项目：<span class="c6">{$fw.fwfl}</span>&emsp;&emsp;灯类：<span class="c6">{$fw.fwdj}</span></div>
+                     <div class="ub p-r3 c3">
+                        ￥{$fw.order_amount}
+                     </div>
+                  </div>
+                  <div class="ub h3 ub-ac bg-c1 ub-f1 ubt ubb bc-border2 fs03 p-l3 c14">
+                     <div class="ub ub-f1">预约时间：<span class="c13">{$fw.fw_time}</span></div>
+                     <div class="ub p-r3 c5">
+                        {$fw.statuss}
+                     </div>
+                        <a href="user.php?act=fwdel&id={$fw.id}" class="ub p-r3 c14">删除</a>
+                  </div>
+                </div> 
+                <div class="h4"></div>
+                {/foreach}     
+            </div>
+         <!---- 预约列表结束 ------->         
+         <div class="ub ub-f1 ub-ac p-t2 p-b3">
+                  {if $pagebar}
+                  <div class="ub ub-f1 ubb bc-border3 m-r1"></div>
+                  <div class="ub fs01 c7">{$pagebar}</div>
+                  <div class="ub ub-f1 ubb bc-border3 m-l1"></div>
+                  {/if}
+         </div>         
+      </div>
+   <!----- content end ------>
+   
+{include file='foot.dwt'}
+</body>
+</html>

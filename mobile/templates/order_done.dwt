@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+<body class="bg-c8">
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+   <!----- content ------>
+      <div class="ub ub-ver m-t4">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 ub-ver bg-c1 ubt ubb bc-border2">
+            <div class="ub ub-f1 ub-ac ub-pc h3 ubb bc-border3 c2 fs02">
+                {$tips}
+            </div>
+            <div class="ub ub-f1 h3 ub-ver p-b2">
+               <div class="fs03 m-l1 m-t2 m-b1">订  单  号：<span class="c14">{$order.order_sn}</span></div>
+               <div class="fs03 m-l1">应付金额：<span class="c6">{$total.amount_formated}</span></div>
+            </div> 
+            {if $pay_online}
+            <div class="ub ub-f1 h3 ub-ver p-b2 fs03 p-t1 p-b2 c3">
+            <div class="fs03 m-l1 paybtn">{$pay_online}</div>
+            </div> 
+            {/if}
+         </div>         
+         <div class="ub ub-f1 m-t1 ub-pc fs04">
+            <a href="user.php?act=order_list" class="c1 btn1 bg-c3">查看订单</a>
+            <a href="index.php" class="c1 btn1 bg-c2">继续购买</a>
+         </div>
+         
+                  
+      </div>
+   <!----- content end ------>
+{include file='foot.dwt'}
+</body>
+</html>

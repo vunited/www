@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link rel="alternate" type="application/rss+xml" title="RSS|{$page_title}" href="{$feed_url}" />
+
+<link href="css/zyit.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<!-- 百度地图API-->
+ <script src="http://api.map.baidu.com/api?v=1.2" type="text/javascript"></script>  
+    <script type="text/javascript">  
+    function initialize() {  
+        //创建地图实例  
+        var map = new BMap.Map('map');  
+        //创建一个坐标
+        var point =new BMap.Point({$brand.position});
+        //地图初始化，设置中心点坐标和地图级别  
+        map.centerAndZoom(point,15);  
+		 map.disableDragging();
+    }  
+    window.onload = initialize;  
+
+function $(o){ //获取对象
+ if(typeof(o) == "string")
+ return document.getElementById(o);
+ return o;
+}
+
+function changeAtt(t) {
+t.lastChild.checked='checked';
+for (var i = 0; i<t.parentNode.childNodes.length;i++) {
+        if (t.parentNode.childNodes[i].className == 'fs03 sex sexbg') {
+            t.parentNode.childNodes[i].className = 'fs03 sex';
+        }
+    }
+t.className = "fs03 sex sexbg";
+}
+
+function check(theForm){
+		if(theForm.name.value == ""){
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "姓名不可为空!"; 
+			return false;
+		}
+		if(theForm.tel.value == ""){
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "联系电话不可为空!"; 
+			return false;
+		}		
+		theform.submit();
+	}
+
+  </script>
+
+<!-- 百度地图地图容器-->
+    
+   <!---- content ------>
+      <div class="content">
+         <div class="container">
+            <div class="local">您的当前位置 > <a href="">首页</a> > <span>本地导购</span></div>
+            <div class="title5"><span class="p6">店铺详细</span></div>
+         </div>
+         <div class="clear"></div><div class="clear"></div>
+         <!---- 详细介绍 ----->
+            <div class="container">
+              <!----- 地图 -----> 
+                <div class="content-l">
+                   <div id="map" style="width:100%;height:100%"></div>
+                </div>
+              <!----- 地图结束 ----->
+              <!----- 内容 ----->
+                <div class="content-r">
+                   <div class="title6">{$brand.suppliers_name}</div>
+                   <div class="contact">
+                      <p>店铺地址：{$brand.address}</p>
+                      <p>咨询电话：{$brand.tel}</p>
+                   </div>
+                   <div class="arc">
+                      <b>店铺详情</b>
+                      {$brand.suppliers_desc}
+                   </div>
+                </div>
+              <!----- 内容结束 ------> 
+              <div class="clear"></div><div class="clear"></div><div class="clear"></div>
+                 <div class="title7"><span>线下体验</span></div>  
+            </div>
+         <!---- 详细介绍结束 ----->
+      </div>
+         <!---- 线下体验 ----->
+            <div class="container">
+               <div class="clear"></div><div class="clear"></div>
+                  <table width="705" border="0" cellspacing="0" cellpadding="0" class="form1">
+                    <tr>
+                      <td width="90" height="60"><b>姓&emsp;&emsp;名</b>：</td>
+                      <td width="615"><input type="text" name="" id="" class="text1"/></td>
+                    </tr>
+                    <tr>
+                      <td width="90" height="60"><b>性&emsp;&emsp;别</b>：</td>
+                      <td width="615"><input type="radio"  checked="checked"/>&ensp;先生&emsp;&emsp;<input type="radio"/>&ensp;女士</td>
+                    </tr>
+                    <tr>
+                      <td width="90" height="60"><b>联系电话</b>：</td>
+                      <td width="615"><input type="text" name="" id="" class="text1"/></td>
+                    </tr>
+                    <tr>
+                      <td width="90" height="158" valign="top" style="padding-top:20px;"><b>体验商品</b>：</td> 
+                      <td width="615" valign="top" style="padding-top:20px;">
+                         <img src="resource/t15.jpg" width="81" height="81" class="img4"/>
+                         <span class="p5">灯具名称 / 型号</span>
+                         <div class="clear"></div>
+                         <div class="title8">
+                            <span>商品提供商：</span>大连甘井子区友谊桥灯饰城1-1雷士旗舰店
+                         </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="90" height="60"><b>到店时间</b>：</td>
+                      <td width="615">
+                         <input type="text" value="2015" class="text2"/>年<input type="text" value="12" class="text3"/>月<input type="text" value="25" class="text4"/>日<input type="text" value="09：00" class="text5"/>至<input type="text" value="10：00" class="text6"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="90" height="90"></td>
+                      <td width="615" valign="bottom"><input type="button" class="btn4" value="" /></td>
+                    </tr>
+                  </table>
+               <div class="clear"></div><div class="clear"></div>
+            </div>
+         <!---- 线下体验结束 ----->
+   <!---- content end ----->
+
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<style>
+.modal-open {position: fixed;}
+</style>
+<script>
+//document.getElementsByTagName("body")[0].setAttribute("style","position:fixed");
+//document.body.style.position = 'fixed';
+</script>
+	<script language="javascript" type="text/javascript">
+	var scrollTop = 0;
+        function click_a(divDisplay)
+        {
+            if(document.getElementById(divDisplay).style.display != "block")
+            {
+				document.body.style.position = 'fixed';	
+				document.body.style.width='100%';				
+				document.getElementById(divDisplay).style.display = "block";
+				//document.getElementsByTagName("body")[0].setAttribute("style","overflow:hidden")
+                scrollTop = document.scrollingElement.scrollTop;
+                //document.body.classList.add('modal-open');
+                document.body.style.top = -scrollTop + 'px';
+                //document.getElementById('testD').style.display = 'block';
+            }
+            else
+            {
+                document.body.style.position = '';
+				document.getElementById(divDisplay).style.display = "none";
+				//document.getElementById('testD').style.display = 'none';
+				document.body.classList.remove('modal-open');
+				document.scrollingElement.scrollTop = scrollTop;
+            }
+        }
+    </script>
+    
+    
+    
+    
+    
+    
+   <!----- 广告 ------>
+      <div class="adv bg-c1 fi bg-c6">
+         <a href="javascript:click_a('testD');" class="c3 fs02">{$cookcity}&ensp;<i class="fa fa-caret-down c4"></i></a>
+         <a href="" class="c2 fs02">&ensp;质量优选 & 本地服务</a>
+      
+      </div>
+      <div id="testD" style="display:none; width:100%">{$city}</div>
+   <!----- 广告结束 ------>
+   <!----- header ----->
+      <div class="ub header w1 bg-c2" style="top: 36px;">
+         <a href="javascript:click_a('dropdown');" class="c1 ubr bc-border ub ub-ac ub-pc" >
+           <div class="fa fa-bars nav-btn nav" style="font-size: 30px;"></div>
+           <div class="fa fa-angle-up nav-btn nav01" style="font-size: 40px; display: none;"></div>
+         </a>
+         <div class="ub ub-f1">
+          <div class="ub logo ub-ac m-l1"><a href="index.php"><img src="images/logo.png" width="100%"/></a></div>
+            <a href="user.php" class="ub ub-f1 ub-pe ub-ac">
+               {if $user_name}
+               <div class="ub icon03 icon09 ub-img1"></div>
+               <div class="ub ub-img1 icon04 icon10"></div>
+               {else}
+               <div class="ub icon03 ub-img1"></div>
+               <div class="ub ub-img1 icon04"></div>               
+               {/if}               
+            </a>
+         </div>
+         <a href="cart.php" class="ub nav-btn ub-ac ub-pc">
+            <div class="ub ub-img1 icon02">
+               <div class="num c1">{insert name='cart_info'}</div>
+            </div>
+         </a> 
+         
+         <div class="dropdown bg-c1" id="dropdown">
+           <ul class="navlist ub ub-ver">
+               <li class="ub ub-ac"><a href="search.php?intro=new" class="ub ub-f1"><span class="ub ub-f1">新品</span><div class="ub ub-img1"></div></a></li>               
+               {foreach from=$pcat_array item=cat}
+               <li class="ub ub-ac"><a href="{$cat.url}" class="ub ub-f1"><span class="ub ub-f1">{$cat.name|escape:html}</span><div class="ub ub-img1"></div></a></li>
+               {/foreach}
+               <li class="ub ub-ac"><a href="search.php?intro=best" class="ub ub-f1"><span class="ub ub-f1">热销</span><div class="ub ub-img1"></div></a></li>
+            </ul>
+         </div>
+      </div>
+   <!----- header end ----->

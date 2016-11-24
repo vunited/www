@@ -1,0 +1,86 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta property="qc:admins" content="3731175170620516745676654" />
+<meta name="baidu-site-verification" content="Em8JVKO5Ai" />
+<meta property="wb:webmaster" content="b0714e9688d66db1" />
+<meta property="wb:webmaster" content="3eeec789707ba69c" />
+<script type="text/javascript">
+var process_request = "{$lang.process_request}";
+</script>
+{insert_scripts files='utils.js'}
+   <!---- header ------>
+      <div class="header">
+         <div class="container">
+            <div class="header-t">
+              <div class="logo"><a href="index.php" name="top"><img src="../images/logo.gif" /></a></div>
+              <div class="search">
+                 <div class="user">                 
+                     {* ECSHOP 提醒您：根据用户id来调用member_info.lbi显示不同的界面  *}{insert name='member_info'}<a href="flow.php" class="shopcar"><span id="ECS_CARTINFO_flows">{insert name='cart_info'}</span></a>
+                 </div>
+                 <div class="sear">                   
+    <script type="text/javascript">
+    {literal}
+    
+    function checkSearchForm()
+    {
+        if(document.getElementById('keyword').value)
+        {
+            return true;
+        }
+        else
+        {
+            alert("{$lang.no_keywords}");
+            return false;
+        }
+    }
+    
+    {/literal}
+    </script>  
+    
+    
+<script type="text/javascript">
+function testDisplay()
+{
+
+    var divD = document.getElementById("testD");
+    if(divD.style.display=="none")
+    {
+        divD.style.display = "block";
+    }
+    else
+    {
+        divD.style.display = "none";
+    }
+
+}
+</script>
+    
+    
+   
+                   <form id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()">
+                   <input name="keywords" id="keyword" type="text" value="{$search_keywords|escape}" class="text"/>
+                   <input type="submit" value="" class="btn">
+                   </form>
+                   
+                 </div>
+              </div>
+            </div>
+            <div class="header-b">
+                  <div class="nav-l">
+                    <a href="javascript:;" class="downdrop"  onMouseUp="testDisplay()">{insert name='cookcity'}</a>质量优选 & 本地服务 <a href="xd.php" class="img"><img src="images/index06.png" width="145" height="29" /></a>                  
+                  </div>                  
+               <!---- 菜单 ----->
+                  <div class="nav-r">
+                     <a href="index.php" style="background: none" {if $navigator_list.config.index eq 1}class="abg"{/if}>{$lang.home}</a>
+                     <!-- {foreach name=nav_top_list from=$navigator_list.top item=nav} -->
+                     <a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank"{/if} {if $nav.active eq 1}class="abg"{/if}>{$nav.name}</a>
+                     <!-- {/foreach} -->
+                     
+                  </div>
+               <!---- 菜单结束 ------>
+            </div>            
+            <div id="testD" style="display:none; line-height:24px">{insert name='city'}</div>
+            
+         </div>
+      </div>
+   <!---- header end ------>
+   

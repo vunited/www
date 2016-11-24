@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta content="telephone=no" name="format-detection" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>用户反馈 - {$shop_name}</title>
+    <link rel="stylesheet" type="text/css" href="css/zyit.css"  />
+</head>
+<body> 
+{include file='heard.dwt'}
+<style>
+.btn{background-color: #F7762E;color: #fff;font: 14px/1.5 微软雅黑;font-weight: bold;border: 0;width: 100%;height: 35px;}
+</style>
+	<div  style="padding:0 5%; padding-top:10px; line-height:30px;">
+
+<!--评论表单 start-->
+      <div class="commentsubmit">
+      <form action="user.php?act=add_comment" onsubmit="javascript:return submitComment(this);"  method="post" name="commentForm" id="commentForm">
+<p style="line-height:20px">
+欢迎您提出宝贵的意见和，您留下的每个字都将用来改善我们的软件。
+</p> 
+<p style="margin-top:10px;">
+      <input name="msg_title" type="text" style="width:100%; border:1px solid #dcdcdc; line-height:30px; height:30px" />
+</p>    
+<p style="margin-top:10px;">
+      <textarea name="msg_content" class="inputBorder" style="height:100px; width:100%; border:1px solid #dcdcdc;"></textarea>
+</p>
+<p style="margin-top:10px; font-size:16px;">
+<input type="hidden" name="act" value="act_add_message" />
+<input type="hidden" name="msg_type" value="1" />
+<input name="" type="submit"  value="提交评论" class="btn" >
+</p>
+      </form>
+	 </div>
+<script type="text/javascript">
+//<![CDATA[
+var cmt_empty_content = "您没有输入评论的内容";
+
+/**
+ * 提交评论信息
+*/
+function submitComment(frm)
+{
+  var cmt = new Object;
+
+  cmt.content = frm.elements['msg_content'].value;
+   if (cmt.content.length == 0)
+   {
+      //alert(cmt_empty_content);
+	  document.getElementById('light').style.display='block';
+	  document.getElementById('lightc').innerHTML = cmt_empty_content;   
+      return false;
+   }
+}
+//]]>
+</script>     
+<!--评论表单 end-->
+    </div>
+{include file='foot.dwt'}	
+</body>
+</html>

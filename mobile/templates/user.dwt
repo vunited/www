@@ -1,0 +1,97 @@
+<!-- 用户中心首页 -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 p-l3 p-r3 h3 ub-ac">
+            <div class="fs04 c9 ub ub-f1">我的头像</div>
+            <div class="ub p-t1 p-b1">
+               <a href="user.php?act=profile" class="ub img17">
+						<!-- {if $info.user_img} 如果上传了图片-->             
+                            <img id="preview1" src="../{$info.user_img}" width="100%" height="100%" style=" border-radius:100%;" />
+						<!-- {else} 如果没有上传图片-->    
+						    <img id="preview1" src="images/t18.png" width="100%" height="100%" />
+                        <!-- {/if}-->
+               </a>
+            </div>            
+         </div>
+         <div class="h4 bg-c8"></div> 
+         <div class="ub ub-ver">
+            <a href="user.php?act=profile" class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">昵&emsp;&emsp;称</div>
+               <div class="ub fs04 c3 m-r5"><b>{$smarty.session.user_name}</b></div>
+               <div class="ub ub-img1 icon27"></div>
+            </a>
+           <div class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">账号密码</div>
+               <div class="ub fs04 c3 m-r2">
+                  <div class="yuan"></div><div class="yuan"></div><div class="yuan"></div><div class="yuan"></div><div class="yuan"></div><div class="yuan"></div>
+               </div>
+               <div class="ub"><a href="user.php?act=profilepw" class="ub ub-ac fs03 btn1 c1 bg-c2" style="margin-right: 0; margin-left: 0;">更改</a></div>
+            </div>
+            <a href="user.php?act=address_list" class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">地址管理</div>
+               <div class="ub ub-img1 icon27"></div>
+            </a>
+            <a href="user.php?act=order_list" class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+         <div class="ub ub-f1 fs04 c9">订单管理</div>
+               <div class="ub ub-img1 icon27"></div>
+            </a>
+            <a href="user.php?act=fw" class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">服务预约</div>
+               <div class="ub ub-img1 icon27"></div>
+            </a>
+           <a href="user.php?act=th" class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">退换货管理</div>
+           <div class="ub ub-img1 icon27"></div>
+           </a>
+             <a href="favorites.php" class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">我的收藏</div>
+               <div class="ub fs04 c3 m-r5 ub-ac">
+                  <div class="icon15 ub ub-img1"></div>
+                  <div class="fs04 m-l c17">{$favorites_count}</div>
+               </div>
+               <div class="ub ub-img1 icon27"></div>
+            </a>
+            <div class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">账户余额</div>
+               <div class="ub fs04 c6 m-r2">
+                  <b>{$surplus_amount}</b>
+               </div>
+               <div class="ub"><a href="user.php?act=account_deposit" class="ub ub-ac fs03 btn1 c1 bg-c2" style="margin-right: 0; margin-left: 0;">充值</a></div>
+           </div>
+            <a href="user.php?act=fx" class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">分享好友</div>
+               <div class="ub ub-img1 icon27"></div>
+            </a>
+            <a href="user.php?act=logout" class="ub ub-f1 h3 ubb  p-l3 p-r3 bc-border2 ub-ac">
+               <div class="ub ub-f1 fs04 c9">安全退出</div>
+               <div class="ub ub-img1 icon27"></div>
+            </a>
+         </div>
+         <div class="h4 bg-c8"></div> 
+<script language="javascript" type="text/javascript" src="http://js.users.51.la/18977604.js"></script>
+<noscript><a href="http://www.51.la/?18977604" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/18977604.asp" style="border:none" /></a></noscript>		 
+      </div>
+   <!----- content end ------>
+ 
+
+{include file='foot.dwt'}
+
+</body>
+</html>

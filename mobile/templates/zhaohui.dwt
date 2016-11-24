@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+<script type="text/javascript">
+	function submit(obj){
+		obj.submit();
+	}
+	function Isyx(yx){
+	 var reyx= /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+	 return(reyx.test(yx));
+	}
+	function check(theForm){
+		if(theForm.user_name.value == ""){
+			//alert("用户名至少为4位!");theForm.username.focus();
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "用户名不能为空!"; 
+			return false;
+		}
+		if(theForm.email.value == ""){
+			//alert("请输入Email!");theForm.email.focus();
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "请输入邮箱!"; 
+			return false;
+		}
+		if(!Isyx(theForm.email.value)){ 
+			//alert("请输入正确的Email地址!");theForm.email.focus();
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "请输入正确的邮箱地址!"; 
+			return false; 
+		} 
+		theform.submit();
+	}
+</script>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+   
+   
+<form onSubmit="javascript:return check(formUser);" action="user.php?act=send_pwd_mobile" method="post" name="formUser">   
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c6"></div>
+         <div class="bg-c1 ub ub-ver login m-b2">
+            <div class="ub h3 ub-f1 ub-ac ubb bc-border1">
+             <div class="ub fs04 c10 w3 ub-pc">注册用户名</div>
+              <input name="user_name" type="text"  class="ub ub-f1 ub-ac h0" id="user_name"/>
+            </div>
+            <!--<div class="ub h3 ub-f1 ub-ac ubb bc-border1">
+             <div class="ub fs04 c10 w3 ub-pc">注册邮箱</div>
+              <input name="email" type="text" class="ub ub-f1 ub-ac h0" id="email"/>
+            </div>-->
+			<div class="ub h3 ub-f1 ub-ac ubb bc-border1">
+               <div class="ub fs04 c10 w3 ub-pc">注册手机号</div>
+               <input type="text" name="extend_field5" id="extend_field5" placeholder="手机号" class="ub ub-f1 ub-ac h0"/>
+               <a href="javascript:void(0)" id="zphone" onclick="sendsms_get();" class="ub fs03 c1 bg-c2 yzm m-r1">发送验证码</a>
+            </div>
+            <div class="ub h3 ub-f1 ub-ac ubb bc-border1">
+               <div class="ub fs04 c10 w3 ub-pc">输入验证码</div>
+               <input type="text" name="mobile_code" id="mobile_code" placeholder="验证码" class="ub ub-f1 ub-ac h0"/>
+            </div>
+            <div class="ub h3 ub-f1 ub-ac ubb bc-border1">
+               <div class="ub fs04 c10 w3 ub-pc">设置新密码</div>
+               <input type="password" name="password" id="password1" placeholder="" value="新密码" class="ub ub-f1 ub-ac h0"/>
+            </div>
+            <div class="ub h3 ub-f1 ub-ac">
+               <div class="ub fs04 c10 w3 ub-pc">确认新密码</div>
+               <input name="confirm_password" type="password" id="conform_password" placeholder="" value="确认密码" class="ub ub-f1 ub-ac h0"/>
+            </div>
+         </div>
+         <div class="h4 bg-c6"></div>
+         <div>
+            <button type="submit" class="bg-c3 btn c1 fs06 h3" style="width:100%;">完&emsp;成</button>
+         </div>
+      </div>
+   <!----- content end ------>        
+</form>
+        
+{include file='foot.dwt'}
+</body>
+</html>

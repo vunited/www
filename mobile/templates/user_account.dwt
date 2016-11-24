@@ -1,0 +1,259 @@
+<!-- 用户中心-修改密码页 -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+<body> 
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+
+      
+{if $act eq "account_log"}    
+            
+<div style="line-height:32px; background:#FFF;">
+            <div style="width:25%; float:left; text-align:center"><font id="a11" class="onp"><a href="user.php?act=account_log">申请记录</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a21"><a href="user.php?act=account_detail">账户明细</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a31"><a href="user.php?act=account_raply">提现</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a31"><a href="user.php?act=account_deposit">充值</a></font></div>
+            <div style="clear:both"></div>
+</div>
+            
+            
+
+	 	<div class="input" style="padding:10px;line-height:22px">
+        
+       <table width="100%" border="0" cellpadding="5" cellspacing="5">
+        <tr>
+          <th align="center">操作时间</th>
+          <th align="center">类型</th>
+          <th align="center">金额</th>
+          <th align="center">状态</th>
+          <th align="center">操作</th>
+         </tr>
+        {foreach from=$account_log item=item}
+        <tr>
+          <td align="center">{$item.add_time}</td>
+          <td align="center">{$item.type}</td>
+          <td align="center">{$item.amount}</td>
+          <td align="center">{$item.pay_status}</td>
+          <td align="center">{$item.handle} {if ($item.is_paid eq 0 && $item.process_type eq 1) || $item.handle}<a href="user.php?act=cancel&id={$item.id}" >取消</a>{/if}</td>
+         </tr>
+    {/foreach}
+        <tr>
+          <td colspan="5" align="right">余额{$surplus_amount}</td>
+         </tr>
+    </table>
+{if $pagebar}
+	{$pagebar}
+{/if}
+</div>	
+{/if}
+
+
+
+{if $act eq "account_detail"}    
+            
+            <div style="line-height:32px; background:#FFF;">
+            <div style="width:25%; float:left; text-align:center"><font id="a11"><a href="user.php?act=account_log">申请记录</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a21" class="onp"><a href="user.php?act=account_detail">账户明细</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a31"><a href="user.php?act=account_raply">提现</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a31"><a href="user.php?act=account_deposit">充值</a></font></div>
+            <div style="clear:both"></div>
+            </div>
+            
+<div class="input" style="padding:10px;line-height:22px">
+        
+       <table width="100%" border="0" cellpadding="5" cellspacing="5">
+        <tr>
+          <th width="70" align="center">操作时间</th>
+          <th width="50" align="center">类型</th>
+          <th width="100" align="center">金额</th>
+          <th align="center">备注</th>
+         </tr>
+        {foreach from=$account_log item=item}
+        <tr>
+          <td align="center" valign="top">{$item.change_time}</td>
+          <td align="center" valign="top">{$item.type}</td>
+          <td align="center" valign="top">{$item.amount}</td>
+          <td align="left" valign="top">{$item.short_change_desc}</td>
+         </tr>
+    {/foreach}
+        <tr>
+          <td colspan="4" align="right">余额{$surplus_amount}</td>
+         </tr>
+    </table>
+{if $pagebar}
+	{$pagebar}
+{/if}
+	 	</div>	
+{/if}
+
+
+{if $act eq "account_raply"}    
+        <form name="formSurplus" method="post" action="user.php?act=act_account" onSubmit="return submitSurplus()">
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 ub-ver">
+            <div class="ub ub-f1 h3 ub-ac p-l3 p-r3 ubb bc-border2">
+               <div class="ub fs04 c13">提取现金&nbsp;</div>
+               <div class="c13 fs04 ub ub-f1"><input type="text" name="amount" class="ub ub-f1 h3">&nbsp;</div>  
+               <div class="ub c17 fs02">最多可提现{$surplus_amount}</div>   
+            </div>
+         </div>
+         <input type="hidden" name="surplus_type" value="1" />
+         
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 ub-ver">
+            <div class="ub ub-f1 h3 ub-ac p-l3 p-r3 ubb bc-border2">
+               <div class="ub ub-f1 fs04 c13">会员备注</div>     
+            </div>
+            <div class="ub ub-f1">
+              <textarea name="user_note" id="user_note"  class="ub ub-f1 m-l1 m-r1 m-t3 m-b3" ></textarea>
+            </div>
+            <div class="ub ub-f1 h3 ub-ac p-t2 p-b3 ub-pc">
+               <a href="" class="ub bg-c2 ub-ac btn5">
+                  <div class="ub ub-img1 icon14"></div>
+                  <input type="submit" name="submit"  class="fs04 c1" value="提交申请" />
+               </a>
+            </div>
+         </div>
+      </div>
+   <!----- content end ------>            
+          
+
+
+        
+        </form>
+
+
+{/if}
+
+{if $act eq "account_deposit"}  
+<script type="text/javascript">
+function testsub()
+{
+    document.getElementById("formsub").submit();
+}
+</script>  
+<form name="formSurplus" id="formsub" method="post" action="user.php?act=act_account">        
+   <!----- content ------>
+      <div class="ub ub-ver m-t4">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 ub-ver bg-c1 ubt ubb bc-border2">
+            <div class="ub ub-f1 h3 ub-ac ubb bc-border2">
+               <div class="m-l1 fs04 c3">账户余额：<span class="c20">{$surplus_amount}</span></div>
+            </div>            
+            <div class="ub ub-f1 h3 ub-ac p-r3">
+               <div class="m-l1 fs04 c3">充值金额：</div>
+               <div class="c13 fs04 ub ub-f1"><input type="text" name="amount" value="{$order.amount|escape}" class="ub ub-f1 h3" style="border:1px solid #CCC" /></div>   
+            </div>
+            
+         </div>
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 ub-ver bg-c1 ubt  bc-border2">
+            <div class="fs03 c3 p-t1 m-l1">选择支付方式</div>
+            <div class="ub ub-f1 ub-ver p-t1 m-l1">
+            <!-- {foreach from=$payment item=list} -->
+            {if $list.pay_code neq cod} 
+               <div class="ub ub-f1 h3 ub-ac ubb bc-border4">
+                  <div class="ub ub-img1 img02  m-r"><img src="images/pay{$list.pay_id}.png" width="100%"></div>
+                  <div class="ub ub-f1 ub-ver">
+                     <div class="fs02 c3">{$list.pay_name}</div>
+                     <div class="fs01 c14">{$list.pay_desc}</div>
+                  </div>
+                  <div class="ub check m-r4"><input type="radio" name="payment_id" value="{$list.pay_id}" /></div>
+               </div>
+            {/if}
+            <!-- {/foreach} -->
+               
+            </div> 
+         </div> 
+         <div class="ub ub-f1 m-t1 ub-pc fs04">
+            <span class="c1 btn1 bg-c3" onClick="testsub()"/>提交</span>
+         </div>        
+      </div>
+   <!----- content end ------>
+   <input type="hidden" name="surplus_type" value="0" />
+   <input type="hidden" name="rec_id" value="{$order.id}" />
+  </form>
+
+</div>
+
+{/if}
+
+{if $act eq "pay"}    
+            
+            <div style="line-height:32px; background:#FFF;">
+            <div style="width:25%; float:left; text-align:center"><font id="a11" class="onp"><a href="user.php?act=account_log">申请记录</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a21"><a href="user.php?act=account_detail">账户明细</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a31"><a href="user.php?act=account_raply">提现</a></font></div>
+            <div style="width:25%; float:left; text-align:center"><font id="a31"><a href="user.php?act=account_deposit">充值</a></font></div>
+            <div style="clear:both"></div>
+            </div>
+            
+<div style="padding:10px;line-height:22px">
+        <table width="100%" border="0" cellpadding="5" cellspacing="5">
+          <tr>
+            <td width="150" align="right" valign="top">您的充值金额为：</td>
+            <td valign="top">{$amount}</td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">您选择的支付方式为：</td>
+            <td valign="top">{$payment.pay_name}</td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">支付手续费用为：</td>
+            <td valign="top">{$pay_fee}</td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">支付方式描述：</td>
+            <td valign="top">{$payment.pay_desc}</td>
+          </tr>
+          <tr>
+            <td colspan="2">{$payment.pay_button}</td>
+          </tr>
+        </table>
+</div>
+
+{/if}
+
+
+
+{if $act eq "act_account"}    
+            
+<!----- content ------>
+      <div class="ub ub-ver m-t4">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 ub-ver bg-c1 ubt ubb bc-border2">
+            <div class="ub ub-f1 h3 ub-ver p-b2 fs03 p-t1 p-b2 c3">
+               <div class="fs03 m-l1">您的充值金额为：{$amount}</div>
+               <div class="fs03 m-l1 p-t">您选择的支付方式为：{$payment.pay_name}</div>
+               <div class="fs03 m-l1 p-t">支付手续费用为：{$pay_fee}</div>
+            </div>
+            {if $payment.pay_button}
+            <div class="ub ub-f1 h3 ub-ver p-b2 fs03 p-t1 p-b2 c3">
+               <div class="fs03 m-l1 paybtn">{$payment.pay_button}</div>
+            </div> 
+            {/if}
+         </div>
+         <div class="ub ub-f1 m-t1 ub-pc fs04">
+            <a href="user.php" class="c1 btn1 bg-c9">返回用户中心</a> 
+         </div>       
+      </div>
+   <!----- content end ------>
+
+{/if}
+
+		
+{include file='foot.dwt'}
+</body>
+</html>

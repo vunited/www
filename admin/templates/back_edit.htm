@@ -1,0 +1,43 @@
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,listtable.js"}
+<div class="tab-div">
+<form name="admin_back" action="order.php" method="post">
+  <table width="100%" align="center" cellpadding="3" cellspacing="5">
+    <tr>
+      <th colspan="2" align="center" height="24">退换货信息详情</th>
+    </tr>
+    <tr>
+      <td> 商品信息</td>
+      <td> {$back.goods} </td>
+    </tr>
+    <tr>
+      <td> 类型 </td>
+      <td> {$back.casea} </td>
+    </tr>
+    <tr>
+      <td>理由</td>
+      <td> {$back.liyou} </td>
+    </tr>
+    <tr>
+      <td> 备注 </td>
+      <td> {$back.beizhu} </td>
+    </tr>
+    <tr>
+      <td> 退换货金额 </td>
+      <td> ￥{$back.subtotal} </td>
+    </tr>
+    <tr>
+      <td> 返还金额 </td>
+      <td> <input type="text" name="back_money" {if $back.case eq "退货" and $back.status lt 4 } value="{$back.subtotal}" {/if} /> <font color="#FF0000">（此处退款金额为退款商品总金额，不含邮费，可以自行调整退款的金额）</font> </td>
+    </tr>
+    <tr>
+      <td> 回复 </td>
+      <td> <textarea name="receve" rows="5" cols="50"></textarea> <input type="hidden" name="act" value="back_money" /><input type="hidden" name="user_id" value="{$back.user_id}" /><input type="hidden" name="back_sn" value="{$back.back_sn}" /><input type="hidden" name="goods" value="{$back.goods}" /></td>
+    </tr>
+    <tr>
+    	<td colspan="2" style="padding-left:200px"><input type="submit" name="sub" value="确定" /> <input type="reset" name="res" value="重置" /></td>
+    </tr>
+  </table>
+  </form>
+</div>
+{include file="pagefooter.htm"}

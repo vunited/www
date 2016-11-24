@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta content="telephone=no" name="format-detection" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>红包领取 - {$shop_name}</title>
+    <link rel="stylesheet" type="text/css" href="css/zyit.css"  />
+    <style>
+	.address1{ width:80px;}
+	</style>
+</head>
+<body>
+{include file='heard.dwt'}
+
+
+{foreach from=$bonus_list item=bonus_data}
+
+<table width="298" border="0" cellpadding="0" cellspacing="0" style="margin:auto; margin-top:10px; background:#FFF">
+  <tr>
+    <td width="100" height="100" align="center"><table width="80" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="80" align="center" style="border:1px solid #CCC"><span style="color:#6c5547">￥</span><span style="font-size:24px; color:#6c5547">{$bonus_data.type_money}</span></td>
+      </tr>
+    </table></td>
+    <td><table border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="80" valign="top"> 
+          <div style="line-height:25px; font-size:14px; color:#6c5547">{$bonus_data.type_name}</div>
+          数量:{$bonus_data.use_count}/{$bonus_data.send_count}<br>
+          最低消费:{$bonus_data.min_goods_amount}          </td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="30" align="center" style="border-top:1px dashed #CCC">{if $bonus_data.zt eq 0}<a href="?act=add&type_id={$bonus_data.type_id}" style="padding:2px 26px; background:#F99; color:#FFF; border-right:1px solid #CCC; border-bottom:1px solid #CCC">领取</a>{else}已领取{/if}</td>
+    <td style="border-top:1px dashed #CCC">有效期:{$bonus_data.use_start_date}至{$bonus_data.use_end_date}</td>
+  </tr>
+</table>
+{/foreach}
+{if $pagebar}
+{$pagebar}
+{/if}
+<div class="last"></div>  
+
+{include file='foot.dwt'}
+
+</body>
+</html>

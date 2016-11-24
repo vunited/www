@@ -1,0 +1,1 @@
+实付款：<span style="font-size: 18px;">{$total.amount_formated}</span>

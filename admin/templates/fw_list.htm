@@ -1,0 +1,79 @@
+<!-- $Id: brand_list.htm 15898 2009-05-04 07:25:41Z liuhui $ -->
+
+{if $full_page}
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,listtable.js"}
+<!-- 品牌搜索 -->
+
+<form method="post" action="" name="listForm">
+<!-- start brand list -->
+<div class="list-div" id="listDiv">
+{/if}
+
+  <table cellpadding="3" cellspacing="1">
+    <tr>
+      <th>服务单号</th>
+      <th>姓名</th>
+      <th>电话</th>
+      <th>项目</th>
+      <th>灯类</th>
+      <th>预约时间</th>
+      <th>地址</th>
+      <th>服务费</th>
+      <th>状态</th>
+      <th>{$lang.handler}</th>
+      </tr>
+    {foreach from=$brand_list item=brand}
+    <tr>
+      <td align="center">{$brand.order_sn|escape:html}</td>
+      <td align="center">{$brand.name|escape:html}{$brand.sex|escape:html}</td>
+      <td align="center">{$brand.tel|escape:html}</td>
+      <td align="center">{$brand.fwfl|escape:html}</td>
+      <td align="center">{$brand.fwdj|escape:html}</td>
+      <td align="center">{$brand.fw_time|escape:html}</td>
+      <td align="center">{$brand.address|escape:html}</td>
+      <td align="center">{$brand.order_amount|escape:html}</td>
+      <td align="center">{$brand.statuss|escape:html}</td>
+      <td align="center">
+      {if $brand.status==0}<a href="javascript:if(confirm('真的确定已经收到货款吗？')){window.location.href='fw.php?act=status&id={$brand.id}&status=1'}">确认支付</a>{/if}
+      {if $brand.status==1}<a href="javascript:if(confirm('真的确定完成本次服务吗？')){window.location.href='fw.php?act=status&id={$brand.id}&status=2'}">确认服务</a>{/if}
+      <a href="javascript:if(confirm('真的取消此次服务申请吗？')){window.location.href='fw.php?act=status&id={$brand.id}&status=3'}">拒绝申请</a>
+      <a href="fw.php?act=edit&fw_id={$brand.id}">查看</a>
+      </td>
+      
+      </tr>
+    {foreachelse}
+    <tr><td class="no-records" colspan="6">{$lang.no_records}</td></tr>
+    {/foreach}
+    <tr>
+      <td align="right" nowrap="true" colspan="2">
+      {include file="page.htm"}
+      </td>
+    </tr>
+  </table>
+
+{if $full_page}
+<!-- end brand list -->
+</div>
+</form>
+
+<script type="text/javascript" language="javascript">
+  <!--
+  listTable.recordCount = {$record_count};
+  listTable.pageCount = {$page_count};
+
+  {foreach from=$filter item=item key=key}
+  listTable.filter.{$key} = '{$item}';
+  {/foreach}
+
+  {literal}
+  onload = function()
+  {
+      // 开始检查订单
+      startCheckOrder();
+  }
+  {/literal}
+  //-->
+</script>
+{include file="pagefooter.htm"}
+{/if}

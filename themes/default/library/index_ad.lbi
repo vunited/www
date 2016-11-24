@@ -1,0 +1,56 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+#JINGDONGBox{ width:1900px;  margin:0 calc(50% - 950px);}
+
+#JINGDONGNumID li:hover,#JINGDONGNumID li.active{background-color:#f96906;}
+</style>
+
+
+
+<div class="banner">
+<div class="fullSlide" style="width:100%; overflow:hidden">
+
+            <div id="JINGDONGBox">
+                <ul id="JINGDONGContentID">
+                <!--{foreach from=$playerdb item=play}-->
+                <li><a href="{$play.url}"><img src="{$play.src}" width="1900" height="500"/></a></li>
+                <!--{/foreach}-->
+                </ul>                
+            </div>
+            
+            <div class="container position">
+                <div class="hd">
+                <ul id="JINGDONGNumID">
+                <!--{foreach from=$playerdb item=play name=play}-->
+                <li>{$smarty.foreach.play.iteration}</li>
+                <!--{/foreach}-->
+                </ul>
+                </div>
+                <a href="#next" class="btn1" name="a"></a>
+            </div>  
+
+</div>   
+</div>
+      <div class="clear"></div><div class="clear"></div>      
+    
+
+<script type="text/javascript">
+new Marquee(
+{
+	MSClassID : "JINGDONGBox",
+	ContentID : "JINGDONGContentID",
+	TabID	  : "JINGDONGNumID",
+	Direction : 2,
+	Step	  : 0.2,
+	Width	  : 1900,
+	Height	  : 500,
+	Timer	  : 20,
+	DelayTime : 5000,
+	WaitTime  : 5000,
+	ScrollStep: 0,
+	SwitchType: 0,
+	AutoStart : 1
+})
+
+</script>
+  

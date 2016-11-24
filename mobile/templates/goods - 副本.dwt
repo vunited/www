@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+<script type="text/javascript" src="js/hhSwipe.js"></script> 
+{insert_scripts files='scroll.js,common.js,../js/transport.js,../js/utils.js'}
+
+{* 包含脚本文件 *}
+<!--{if !$goods.is_taobao}-->
+{insert_scripts files='transport.js'}
+<!--{/if}-->
+{insert_scripts files='common.js'}
+
+<script type="text/javascript">
+function del(){
+        var num = document.getElementById("number");        
+        var n = parseInt(num.value);        
+        if(n-1<=0){
+        }else{
+                num.value = n-1;
+        }
+		changePrice()
+}
+function add(){        
+        var num = document.getElementById("number");        
+        var n = parseInt(num.value);        
+        num.value = n+1;  
+		changePrice()
+}
+
+function checkAttendance(title, url, imgurl) {
+	MainActivity.Share(title, url, imgurl);
+}
+/*
+*选择信息处理
+*/
+function changeP(b, c) {
+	var frm=document.forms['ECS_FORMBUY'];
+	var cur_id="";
+    document.getElementById('spec_value_' + c).checked=true;
+	document.getElementById('url_' + c).className="ysbg";
+	for (var i = 0; i < frm.elements[b].length; i++) {
+		cur_id=frm.elements[b][i].id.substr(11);
+        document.getElementById('url_' + cur_id).className="";
+		if (frm.elements[b][i].checked)
+		{
+		   document.getElementById('url_' + c).className="ysbg";
+		}
+    }
+	changePrice();
+}
+</script>
+</head>
+<body>
+{include file='heard.dwt'}
+   <!----- 标题 ------>
+      <div class="nav-t h2 bg-c1 ubb bc-border2">
+          <div class="ub ub-f1">
+             <a href="javascript:history.go(-1);" class="ub ub-ac ub-pc back">
+               <b class="ub fa fa-angle-left c9" style="font-size: 35px;"></b>
+             </a>
+             <div class="ub ub-f1 ub-ac c3 fs05">
+                 {$titleh|truncate:15}
+             </div>
+             <div class="ub ub-ac">
+             
+             </div>
+          </div>
+      </div>
+   <!----- 标题结束 ------>
+   <!----- content ------>
+      <div class=" ub-ver m-t4 ubt bc-border2">
+         <div class="addWrap" style="overflow:hidden">
+            <div class="swipe" id="mySwipe">
+                <div class="swipe-wrap">
+                    {foreach from=$pictures item=picture}
+                    <div><a href="javascript:void(0);"><img class="img-responsive" src="../{$picture.img_url}" style="margin:auto" /></a></div>
+                    {/foreach}                    
+                </div>
+            </div>
+            <ul id="position">
+                {foreach from=$pictures item=picture name=index_image}
+                <li {if $smarty.foreach.index_image.first}class="cur"{/if}></li>
+                {/foreach} 
+            </ul>
+         </div>
+         <style>
+		   #position li.cur { background-color: #4bccce; }
+		 </style>
+         <script type="text/javascript">
+		  var bullets = document.getElementById('position').getElementsByTagName('li');
+		  var banner = Swipe(document.getElementById('mySwipe'), {
+			  auto: 4000,
+			  continuous: true,
+			  disableScroll:false,
+			  callback: function(pos) {
+				  var i = bullets.length;
+				  while (i--) {
+					  bullets[i].className = ' ';
+				  }
+				  bullets[pos].className = 'cur';
+			  }
+		  })
+		</script>
+        <form action="javascript:addToCart({$goods_info.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
+        <div class="ub ub-f1 ub-ver ubt bc-border2 m-t">
+            <div class="fs04 ub c3 ubb bc-border2 p-t2 p-b3 p-l3 p-r3">
+               {$goods_info.goods_name}
+            </div>            
+            <div class="ub ub-f1 ubb bc-border2 p-t1 p-b1 ub-ac p-l3 p-r3">
+               <div class="ub ub-f1 c6 fs08">{if $goods_info.promote_price and $goods_info.gmt_end_time}{$goods_info.promote_price}{else}{$goods_info.shop_price}{/if}</div>
+               <div class="ub">
+                  <a href="javascript:void(0);" onClick="add()" class="ub ub-img1 num1 jia"></a><input type="text" id='number' name="number" onBlur="changePrice()" value="1" class="ub num2 ub-img1"><a href="javascript:void(0);" onClick="del()" class="ub ub-img1 num1 jian"></a>
+               </div>
+            </div>
+            <div class="ys fs04 ubb bc-border2 p-l3 p-r3 p-t1 p-b1">
+{foreach from=$specification item=spec key=spec_key}
+
+        <!-- {* 判断属性是复选还是单选 *} -->
+                    <!-- {if $spec.attr_type eq 1} -->
+                      <!-- {if $cfg.goodsattr_style eq 1} -->
+                        <!-- {foreach from=$spec.values item=value key=key} -->
+                        <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
+                        {$value.label} [{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}] <br />
+                        <!-- {/foreach} -->
+                        <input type="hidden" name="spec_list" value="{$key}" />
+                        <!-- {else} -->
+
+                          <!-- {foreach from=$spec.values item=value key=key} -->
+  <a onclick="changeP('spec_{$spec_key}','{$value.id}')" name="sp_url_{$spec_key}" id="url_{$value.id}"  title="{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}" {if $key eq 0}class="ysbg"{/if}>{$value.label}<input style="display:none" id="spec_value_{$value.id}" type="radio" name="spec_{$spec_key}" value="{$value.id}" {if $key eq 0}checked{/if} /></a>
+                          <!-- {/foreach} -->
+                          
+                        <input type="hidden" name="spec_list" value="{$key}" />
+                      <!-- {/if} -->
+                    <!-- {else} -->
+                      <!-- {foreach from=$spec.values item=value key=key} -->
+ 	<p class="detial clearfix">
+                      <label for="spec_value_{$value.id}"><input type="checkbox" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
+                      {$value.label} [{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]</label><br />
+	</p>
+                      <!-- {/foreach} -->
+                      <input type="hidden" name="spec_list" value="{$key}" />
+                    <!-- {/if} -->
+      <!-- {* 结束循环可选属性 *} -->
+
+{/foreach}
+        
+                 
+            </div>            
+        </div>  
+        </form>   
+        <!-- {if $brand_info} -->
+        <div class="h4 bg-c8"></div>
+        <a href="category.php?id={$goods_info.cat_id}&brand={$brand_info.brand_id}" class="ub ub-f1 bg-c1 p-l3 p-r3 p-t2 p-b3 ub-ver">
+            <div class="ub ub-f1 p-b3 ub-ac">
+               <div class="ub fs04 c3"><b>品牌介绍</b></div>
+               <div class="ub ub-pe ub-f1 ub-ac">
+                  <div class="ub img13"><img src="../data/brandlogo/{$brand_info.brand_logo}" height="100%" /></div>
+               </div>
+            </div>
+            <div class="ub fs02 c13 lh1">{$brand_info.brand_desc}</div>
+         </a>
+        <!-- {/if} -->
+        {if $goods_info.suppliers_id}
+        <div class="h4 bg-c8"></div>
+        <div class="ub ub-f1 h3 ub-ac p-l3 p-r3 ubb ubt bc-border2">
+            <a href="store.php?id={$goods_info.suppliers_id}" class="ub ub-f1 h0 ub-ac">
+               <div class="ub ub-f1 c3 fs04"><b>店铺详细</b></div>
+               <div class="ub fa fa-angle-right fa-2x c18"></div>
+            </a>
+        </div>
+        {/if}
+        {if $goods_info.goods_brief}
+        <div class="h4 bg-c8"></div>
+        <div class="ub ub-f1 p-t1 ubb ubt bc-border2 ub-ver p-l3 p-r3 p-b">
+           <div class="ub ub-f1 h3 ub-ac">
+              <div class="ub ub-f1 c3 fs04 h0 ub-ac"><b>商品描述</b></div>
+           </div>
+           <div class="ub ub-f1 lh1">
+             <p class="fs02 c13">{$goods_info.goods_brief}</p>
+           </div>
+        </div>
+        {/if}
+        <!-- {if $properties} -->
+        <div class="h4 bg-c8"></div>
+        <div class="ub ub-f1 p-t1 ubb ubt bc-border2 ub-ver p-l3 p-r3 p-b">
+           <div class="ub ub-f1 h3 ub-ac">
+              <div class="ub ub-f1 c3 fs04 h0 ub-ac"><b>商品属性</b></div>
+           </div>
+           <div class="ub ub-f1 lh1">
+             <p class="fs02 c13">
+                <!-- {foreach from=$properties item=property_group key=key} -->
+                <!-- {foreach from=$property_group item=property} -->
+                {$property.name|escape:html}：{$property.value}<br>
+                <!-- {/foreach}-->
+                <!-- {/foreach}-->
+             </p>
+           </div>
+        </div>
+        <!-- {/if} -->
+        <div class="h4 bg-c8"></div>
+        <div class="ub ub-f1 h3 ub-ac p-l3 p-r3 ubb ubt bc-border2">
+            <a href="comment.php?g_id={$goods_id}" class="ub ub-f1 h0 ub-ac">
+               <div class="ub ub-f1 c3 fs04"><b>商品评价&emsp;<span class="c5">{$goods_info2.comment_count}</span></b></div>
+               <div class="ub fa fa-angle-right fa-2x c18"></div>
+            </a>
+        </div>
+        {if $goods_info.goods_desc}
+        <div class="h4 bg-c8"></div>
+        <div class="ub ub-f1 ubb ubt bc-border2 ub-ver p-b neirong">
+           {$goods_info.goods_desc}        
+        </div>
+        {/if}
+        <div class="ub ub-f1 ub-ac p-t1 p-b1 bg-c8">
+                  <div class="ub ub-f1 ubb bc-border2 m-r1"></div>
+                  <div class="ub fs01 c7"></div>
+                  <div class="ub ub-f1 ubb bc-border2 m-l1"></div>
+        </div>
+        <div class="ub ub-f1 p-t1 ubt bc-border2 ub-ver p-b">
+           <div class="ub ub-f1 h3 ub-ac p-l3 p-r3">
+              <div class="ub ub-f1 c3 fs04 h0 ub-ac"><b>猜你喜欢</b></div>
+           </div>
+           <div class="ub" style="width: 100%; overflow-x: scroll;">
+             <ul class="prolist2 ub">
+              {foreach from=$best_goods item=best_data}   
+              <li class="m-t2 p-b1">
+                 <div class="ub ub-ver ub-f1 bg-c1 h0 re">
+                    <a href="goods.php?id={$best_data.id}&u={$user_id}" class="img05"><img src="../{$best_data.thumb}" width="100%"/></a>
+                    <a href="goods.php?id={$best_data.id}&u={$user_id}" class="fs01 c4 p-l2" style="display:block">{$best_data.name|truncate:8}</a>
+                    <span class="fs04 c6 p-l2 p-t3">{$best_data.shop_price}</span>
+                 </div>
+              </li>
+              {/foreach}         
+            </ul>
+           </div>
+        </div>
+      </div>
+   <!----- content end ------>
+
+
+      <div class="clear"></div>
+   <!----- footer ------>
+      <div class="ub ub-f1 bg-c12 h3 ub-ac ub-pc p-t p-b footer1">
+         <div class="ub ub-f1 w4 ub-pc">
+            <a href="javascript:void(0)" onClick="javascript:collect({$goods_info.goods_id});" class="ub btn5  bg-c1 ub-pc ub-ac">
+               <div class="ub ub-img1 icon15 m-r2"></div>
+               <div class="ub fs04 c3">收藏宝贝</div>
+            </a>
+         </div>
+         <div class="ub ub-f1 w4 ub-pc">
+            <a href="javascript:void(0)" onClick="javascript:addToCart({$goods_info.goods_id}, 'add_cart');" class="ub btn5  bg-c2 ub-pc ub-ac">
+               <div class="ub ub-img1 icon16 m-r2"></div>
+               <div class="ub fs04 c1">购物车</div>
+            </a>
+         </div>
+         <div class="ub ub-f1 w4 ub-pc">
+            <a href="javascript:void(0)" onClick="javascript:addToCart({$goods_info.goods_id}, 'quk_buy');" class="ub btn5  bg-c3 ub-pc ub-ac">
+               <div class="ub ub-img1 icon17 m-r2"></div>
+               <div class="ub fs04 c1">立即购买</div>
+            </a>   
+         </div>
+      </div>
+   <!----- footer end ------>
+   <!----- 返回头部 ------>
+      <a href="javascript:scroll(0,0)" class="backtop ub ub-img1">
+         
+      </a>
+   <!----- 返回头部结束 ------->
+
+      <div id="light" class="ts ub-ac ub-pc" style="display:none; padding-top:50%;">
+         <div class="ub ub-f1 ub-ver bg-c1 ts2">
+            <div class="ub ub-f1 h3 bg-c14 ub-ac p-l1 p-r1">
+                <div class="fs04 c13 ub-f1 ub" id="lightc">信息内容</div>
+                <a href="javascript:void(0)" onClick="document.getElementById('light').style.display='none';" class="fa fa-times c9"></a>
+            </div> 
+            <div class="ub ub-f1 h3 p-t1 p-b1 ub-ac ub-pc">
+               <a href="javascript:window.location.reload();" onClick="document.getElementById('light').style.display='none';" class="ub btn1 bg-c3 c1 fs04" style="padding-left: 20px; padding-right: 20px;">确定</a>
+            </div>
+         </div>
+      </div>
+<script type="text/javascript">
+var addto_cart_success = "该商品已添加到购物车。";
+var goods_id = {$goods_info.goods_id};
+var goodsattr_style = {$cfg.goodsattr_style|default:1};
+var goodsId = {$goods_info.goods_id};
+var now_time = {$now_time};
+onload = function(){
+  changePrice();
+  try {onload_leftTime();}
+  catch (e) {}
+}
+/**
+ * 点选可选属性或改变数量时修改商品价格的函数
+ */
+function changePrice()
+{
+  var attr = getSelectedAttributes(document.forms['ECS_FORMBUY']);
+  var qty = document.forms['ECS_FORMBUY'].elements['number'].value;
+  Ajax.call('goods.php', 'act=price&id=' + goodsId + '&attr=' + attr + '&number=' + qty, changePriceResponse, 'GET', 'JSON');
+}
+/**
+ * 接收返回的信息
+ */
+function changePriceResponse(res)
+{
+  if (res.err_msg.length > 0)
+  {
+    //alert(res.err_msg);
+	document.getElementById('light').style.display='block';
+	document.getElementById('lightc').innerHTML = res.err_msg;   
+  }
+  else
+  {
+    document.forms['ECS_FORMBUY'].elements['number'].value = res.qty;
+    if (document.getElementById('ECS_GOODS_AMOUNT'))
+      document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
+  }
+}
+</script>
+</body>
+</html>

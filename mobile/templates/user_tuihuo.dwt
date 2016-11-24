@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+<script>
+function $(o){ //获取对象
+ if(typeof(o) == "string")
+ return document.getElementById(o);
+ return o;
+}
+
+function setImagePreview(a) {
+var docObj=document.getElementById("pic"+a); 
+var imgObjPreview=document.getElementById("preview"+a);
+if(docObj.files &&docObj.files[0])
+{
+//火狐下，直接设img属性
+imgObjPreview.style.display = 'block';
+imgObjPreview.style.width = '60px';
+imgObjPreview.style.height = '60px'; 
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+ 
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+}
+else
+{
+//IE下，使用滤镜
+docObj.select();
+var imgSrc = document.selection.createRange().text;
+var localImagId = document.getElementById("localImag"+a);
+//必须设置初始大小
+localImagId.style.width = "60px";
+localImagId.style.height = "60px";
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+try{
+localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+}
+catch(e)
+{
+alert("您上传的图片格式不正确，请重新选择!");
+return false;
+}
+imgObjPreview.style.display = 'none';
+document.selection.empty();
+}
+return true;
+}
+ 
+
+
+  </script>
+   <!----- content ------>
+   <form name="back_order" action="user.php?act=back_submit" method="post" enctype="multipart/form-data" onsubmit="return checkBack()">
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <ul class="bg-c1 p-l3 p-r3 ubb bc-border2">
+          <script language="javascript">var total = 0;</script>
+          <!--{foreach from=$goods_list item=goods_list key=key}-->
+           <li class="ub ub-f1 ub-ac ubb bc-border2 p-t1 p-b1">
+               <div class="ub check m-r"><input type="checkbox" name="goods[]" value="{$goods_list.goods_name}-{$goods_list.goods_attr}-{$goods_list.goods_prices}" id="cbox{$key}" /></div>
+               <div class="ub img15 m-r" style="height:81px"><img src="../{$goods_list.goods_thumb}" width="100%" height="100%"></div>
+               <div class="ub ub-f1 ub-ver fs03 c3 lh2">
+                  <div class="">{$goods_list.goods_name}</div>
+                  <div class="">{$goods_list.goods_attr}</div>
+                  <div class="">总价：￥{$goods_list.subtotal}</div>
+                  <div class="" id="number{$key}">购买数：{$goods_list.goods_number} 退货数：<input type="hidden" name="goodsid[]" value="{$goods_list.goods_id}" /><input type="hidden" name="subtotal[]" value="{$goods_list.goods_price}" /><input type="text" name="number[]" style="width:50px" id="putnum{$key}" onchange="checkNum({$key},this.value)" /><input type="hidden" name="order_id" value="{$order_id}" /></div>
+               </div>
+           </li>
+          <script language="javascript">total++;</script>
+          <!--{/foreach}-->
+         </ul>          
+         <div class="ub ub-ver ubt bc-border2 serv">
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">快递公司：</div>
+               <div class="ub ub-f1 h0"><input name="shipping_name" type="text" class="ub ub-f1 h0" id="shipping_name"></div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">快递单号：</div>
+               <div class="ub ub-f1 h0"><input name="invoice_no" type="text" class="ub ub-f1 h0" id="invoice_no"></div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">选择类型：</div>
+               <div class="ub ub-f1 h0 ub-ac">
+            	<select name="casea">
+                	<option value="退货">退货</option>
+                	<option value="换货">换货</option>
+                </select>            
+               </div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">退货原因：</div>
+               <div class="ub ub-f1 h0"><input name="liyou" type="text" class="ub ub-f1 h0" id="liyou"></div>
+            </div>            
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">备注留言：</div>
+               <div class="ub ub-f1 m-r"><textarea name="beizhu" class="ub ub-f1 h0 p-t1" id="beizhu" ></textarea></div>
+            </div>            
+            <div class="ub ub-f1 ub-ac h3 p-t1 p-b1">
+                <a  href="javascript:;" class="ub img01 m-l3" style="position:relative" id="localImag1"><img id="preview1" src="images/img16.png" width="100%" height="100%" /><input type="file" style="width:100%; height:100%; position: absolute; top:0px; left:0px;  filter:alpha(opacity:0); opacity:0;" name="pic1" id="pic1" onchange="javascript:setImagePreview(1);" accept="image/*" ></a>
+                <a  href="javascript:;" class="ub img01 m-l3" style="position:relative" id="localImag2"><img id="preview2" src="images/img16.png" width="100%" height="100%" /><input type="file" style="width:100%; height:100%; position: absolute; top:0px; left:0px;  filter:alpha(opacity:0); opacity:0;" name="pic2" id="pic2" onchange="javascript:setImagePreview(2);" accept="image/*" ></a>
+                <a  href="javascript:;" class="ub img01 m-l3" style="position:relative" id="localImag3"><img id="preview3" src="images/img16.png" width="100%" height="100%" /><input type="file" style="width:100%; height:100%; position: absolute; top:0px; left:0px;  filter:alpha(opacity:0); opacity:0;" name="pic3" id="pic3" onchange="javascript:setImagePreview(3);" accept="image/*" ></a>
+            </div>            
+         </div>
+         
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-f1 m-t1 ub-pc fs04">
+            <input type="submit" class="c1 btn1 bg-c3" value="提交申请">
+         </div> 
+      </div>
+   </form>
+   <script language="javascript">
+	   		var pase = false;
+	   		function checkBack(){
+				var shipping_name = document.back_order.shipping_name.value;
+				var invoice_no = document.back_order.invoice_no.value;
+				var liyou = document.back_order.liyou.value;
+				
+				if(shipping_name == ""){
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "请填写快递公司!"; 
+					return false;
+				}
+				if(invoice_no == ""){
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "请填写快递单号!"; 
+					return false;
+				}
+				if(liyou == ""){
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "请填写退款理由!"; 
+					return false;
+				}
+			
+				var j = true;
+				var k = 0;
+				var l = true;
+				for(i=0;i<total;i++){
+					if(document.getElementById("cbox"+i).checked){
+						k = k + 1;								
+					}
+					if(document.getElementById("cbox"+i).checked && (document.getElementById("putnum"+i).value == "" || parseInt(document.getElementById("putnum"+i).value) == 0)){
+						j = false;
+					}
+					if(!document.getElementById("cbox"+i).checked && parseInt(document.getElementById("putnum"+i).value) > 0){
+						l = false;
+					}
+				}
+				if(k == 0){
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "请至少选择一个要退货的商品!"; 
+					return false;						
+				}				
+				if(!j){
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "请填写退货商品的退货量!"; 
+					return false;						
+				}	
+				if(!l){
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "您选择了退货量，请选择对应的商品!"; 
+					return false;						
+				}					
+				if(!pase){
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "退款数量不能超过购买数量!"; 
+					return false;						
+				}				
+			}
+			
+			function checkNum(key,num){
+				if(parseInt(document.getElementById("number"+key).innerHTML) < num){
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "退款数量不能超过购买数量!"; 
+					pase = false;
+					return false;						
+				}else{
+					pase = true;	
+				}
+			}
+	   </script>
+   <!----- content end ------>
+   
+{include file='foot.dwt'}
+</body>
+</html>

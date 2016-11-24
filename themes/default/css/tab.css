@@ -1,0 +1,19 @@
+@charset "utf-8";
+/* CSS Document */
+
+.tabbtn{height:30px;}
+.tabbtn li{float:left;position:relative; margin: 0 1px; }
+.tabbtn li a{display:block;float:left;height:60px;line-height:60px;overflow:hidden;width:598px;text-align:center;font-size:20px; color:#ff6600;cursor:pointer; border-bottom: 5px solid #ff6600; }
+.tabbtn li.current a{ color: #333; border-bottom: 5px solid #bdbdbd; }
+/* tabcon */
+.tabcon{position:relative;/*必要元素*/overflow:hidden;}
+.tabcon .subbox{position:absolute;/*必要元素*/left:0;top:0;}
+.tabcon .arc2 { padding: 60px 35px 0 60px; }
+.pllist li { padding: 0 48px 0 28px; background-color: #fff; border: 1px solid #ebebeb; margin-bottom: 10px; }
+.pllist li .pllist-l { float: left; width: 49px; }
+.pllist li .pllist-r { float: right; width: 1055px; }
+.pllist li .pllist-r b { display: block; color: #4bccce; font-size: 16px; }
+.pllist li .pllist-r span { display: block; color: #a0a0a0; font-size: 13px; line-height: 25px; }
+.pllist li .pllist-r .p11 { color: #888; line-height: 20px; }
+
+.none{display:none;}

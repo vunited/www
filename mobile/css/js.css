@@ -1,0 +1,95 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*   banner 轮播   */
+.addWrap {
+	position: relative;
+	width: 100%;
+	background: #fff;
+	margin: 0;
+	padding: 0;
+}
+.addWrap .swipe {
+	overflow: hidden;
+	visibility: hidden;
+	position: relative;
+}
+.addWrap .swipe-wrap {
+	overflow: hidden;
+	position: relative;
+}
+.addWrap .swipe-wrap > div {
+	float: left;
+	width: 100%;
+	position: relative;
+}
+#position {
+	position: absolute;
+	bottom: -25px;
+	padding-right: 8px;
+	margin: 0;
+	width: 100%;
+	text-align: center;
+}
+#position li {
+	width: 10px;
+	height: 10px;
+	margin: 0 2px;
+	display: inline-block;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #c1c1c1;
+}
+#position li.cur {
+	background-color: #ff6600;
+}
+.img-responsive {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+/*   下拉菜单    */
+.nav, .nav01 {
+	text-align: center;
+}
+.dropdown {
+	width: 50%;
+	position: absolute;
+	z-index: 99999999;
+	top: 46px;
+	left: 0;
+	display:none;
+	overflow-y: auto;
+}
+.navlist li {
+	height: 40px;
+	font-size: 14px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.navlist li a {
+	padding-left: 15px;
+	color: #5d5d5d;
+}
+.navlist li a div {
+	width: 10px;
+	height: 18px;
+	background-image: url(../icon/icon07.png);
+	margin-right: 10px;
+}
+.navlist li a:hover {
+	color: #ff6600;
+}
+.navlist li a:hover div {
+	background-image: url(../icon/icon08.png);
+}
+.navlist li .abg {
+	color: #ff6600;
+}
+.navlist li .abg div {
+	background-image: url(../icon/icon08.png);
+}
+
+
+
+
+

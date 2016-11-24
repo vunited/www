@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{if $keywords}{$keywords}{else}{$titleh}{/if} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body class="bg-c8">
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+	<script language="javascript">
+	function form_order(order){
+		listform.sort.value = order;
+		listform.order.value = "{if $pager.search.order == 'DESC'}ASC{else}DESC{/if}";
+		listform.submit();
+	}
+	</script>
+    
+    
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <!---- 选项卡 ----->
+            <div class="ub ub-f1 ub-ver bg-c1 ubb bc-border2">
+               <div class="ub ub-f1 fs04 h3">
+                  <a href="dg.php" class="ub ub-f1 ub-ac ub-pc c14 tab">商品导购</a>
+                  <a href="store.php" class="ub ub-f1 ub-ac ub-pc c14 tab tabbg">店铺导购</a></div>
+               <div class="ub ub-f1 h3 ub-ac p-t p-b">
+                  <div class="ub ub-f1 fs04 p-l1">
+                     <a href="" class="btn1 btn2 btn2bg">最新商品</a>
+                     <a href="" class="btn1 btn2">销量排序</a>
+                  </div>
+                  <div class="ub m-r1">
+                     <a href="" class="fs03 sx">筛选</a>
+                  </div>
+               </div>
+            </div>
+         <!---- 选项卡结束 ----->
+         <!---- 商品列表 ----->
+            <ul class="prolist1">
+              {foreach from=$goods_data item=goods name=goods}
+              <li class="m-t2">
+                 <div class="ub ub-ver ub-f1 m-l m-r bg-c1 h0 re">
+                    <a href="goods.php?id={$goods.goods_id}&u={$user_id}" class="img05"><img src="../{$goods.goods_thumb}" width="100%" height="100%" /></a>
+                    <a href="goods.php?id={$goods.goods_id}&u={$user_id}" class="fs02 c3 p-l2">{$goods.goods_name|truncate:10}</a>
+                    <span class="fs04 c6 p-l2 p-t3">{$goods.shop_price}</span>
+                    <div class="ub img6">
+                       <div class="ub ub-img1 img8"></div>
+                       <div class="ub ub-img1 img7"></div>
+                    </div>
+                 </div>
+              </li>
+              {/foreach}
+            </ul>
+         <!---- 商品列表结束 ------>         
+         <div class="ub ub-f1 ub-ac p-t2 p-b3">
+                  {if $pagebar}
+                  <div class="ub ub-f1 ubb bc-border3 m-r1"></div>
+                  <div class="ub fs01 c7">{$pagebar}</div>
+                  <div class="ub ub-f1 ubb bc-border3 m-l1"></div>
+                  {/if}
+         </div>         
+      </div>
+   <!----- content end ------>
+
+        
+{include file='foot.dwt'}
+</body>
+</html>

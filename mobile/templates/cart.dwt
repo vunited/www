@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+    {insert_scripts files="../js/utils.js,../js/transport.js"}
+    <script type="text/javascript">
+    function add_num(rec_id,goods_id){
+        document.getElementById("goods_number_"+rec_id+"").value++;
+        var number = document.getElementById("goods_number_"+rec_id+"").value;
+        //Ajax.call('cart.php', 'act=update_group_cart&rec_id=' + rec_id +'&number=' + number+'&goods_id=' + goods_id, changePriceResponse, 'GET', 'JSON');
+        Ajax.call('cart.php?act=update_group_cart', 'rec_id=' + rec_id +'&number=' + number+'&goods_id=' + goods_id, changePriceResponse, 'GET', 'JSON');
+    
+    }
+    
+    function red_num(rec_id,goods_id){
+        if (document.getElementById("goods_number_"+rec_id+"").value>1){
+            document.getElementById("goods_number_"+rec_id+"").value--;
+        }
+        var number = document.getElementById("goods_number_"+rec_id+"").value;
+        Ajax.call('cart.php', 'act=update_group_cart&rec_id=' + rec_id +'&number=' + number+'&goods_id=' + goods_id, changePriceResponse, 'GET', 'JSON');
+    }
+    
+    function change_price(rec_id,goods_id){
+        var number = document.getElementById("goods_number_"+rec_id+"").value;
+        Ajax.call('cart.php','act=update_group_cart&rec_id=' + rec_id +'&number=' + number+'&goods_id=' + goods_id, changePriceResponse, 'GET', 'JSON');
+    }
+    
+    function changePriceResponse(result){
+        if(result.error == 1){
+            //alert(result.content);
+			document.getElementById('light').style.display='block';
+			document.getElementById('lightc').innerHTML = result.content;   
+            document.getElementById("goods_number_"+result.rec_id+"").value =result.number;
+        }else{
+            document.getElementById('cart_amount_desc').innerHTML = result.cart_amount_desc;//购物车商品总价说明
+			document.getElementById('subtotal_'+result.rec_id).innerHTML = result.subtotal;//商品总价
+        }
+    }
+	
+		function checkAll(f){
+			var len=f.elements.length;
+			if (document.getElementById("handler").checked==true)
+			{
+				for(i=0;i<len;i++){
+					var e=f.elements[i];
+					if (e.type=='checkbox') e.checked=true;
+				}
+			}
+			if (document.getElementById("handler").checked==false)
+			{
+				for(i=0;i<len;i++){
+					var e=f.elements[i];
+					if (e.type=='checkbox') e.checked=false;
+				}
+			}
+		}
+	
+    </script>
+</head>
+<body class="bg-c8">
+{include file='heard.dwt'}
+   <!----- 标题 ------>
+      <div class="nav-t h2 bg-c1 ubb bc-border2">
+          <div class="ub ub-f1">
+             <a href="javascript:history.go(-1);" class="ub ub-ac ub-pc back">
+               <b class="ub fa fa-angle-left c9" style="font-size: 35px;"></b>
+             </a>
+             <div class="ub ub-f1 ub-ac c3 fs05">
+                 {$titleh}
+             </div>
+             <div class="ub ub-ac">
+               <a href="carts.php" class="ub ub-ac fs02 btn1 c1 bg-c2">编辑</a>
+             </div>
+          </div>
+      </div>
+   <!----- 标题结束 ------>
+
+<form id="formCart" name="formCart" method="post" action="cart.php">
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <ul class="bg-c1 p-l3 p-r3 ubb bc-border2">
+           {foreach from=$goods_list item=goods}
+           <li class="ub ub-f1 ub-ac ubb bc-border2 p-t1 p-b1">
+               <div class="ub img15 m-r" style="height:81px"><img src="../{$goods.goods_thumb}" width="100%" height="100%"></div>
+               <div class="ub ub-f1 ub-ver fs03 c3 lh2">
+                  <div class="">{$goods.goods_name|truncate:15}</div>
+                  <div class="">单价：{$goods.goods_price}</div>
+                  <div class="">小计：<span class="c16" id="subtotal_{$goods.rec_id}">{$goods.subtotal}</span></div>
+                  <div class="ub ub-ac">
+                      <div class="ub">数量：</div>
+                      <div class="ub ub-f1">
+                          {$goods.goods_number}
+                      </div>            
+                  </div>
+               </div>
+           </li>
+           {/foreach}
+         </ul> 
+      </div>
+   <!----- content end ------>
+<div class="clear"></div>
+<div class="clear"></div>
+   <!----- 结算 ------>
+      <div class="ub ub-f1 ub-ver js">
+         <div class="ub ub-f1 bg-c1 h3 ub-ac p-l3">
+            <div class="ub ub-f1 ub-pe m-r">
+               <div class="fs03 c13">送货安装费用  <span class="c5">线上限免</span>  <span class="c6">￥0.00</span></div>
+            </div>
+         </div>
+         <div class="ub ub-f1 h3 bg-c9 ub-ac">
+            <div class="ub ub-f1 c1 p-l3"><span class="fs04">合计：</span><b class="fs08" id="cart_amount_desc">{$total.goods_price}</b></div>
+            <div class="ub bg-c3 h3">
+              <a class="ub fs04 c1 h3 p-l3 p-r3  ub-ac" href="order.php?act=order_lise">结算（{$total.real_goods_count}）</a>
+            </div>  
+         </div>
+      </div>
+   <!----- 结算结束 ------>
+</form>
+
+</body>
+</html>	

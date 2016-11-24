@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable --><!-- TemplateBeginEditable name="head" --><!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link href="css/zyit.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+<link href="css/banner.css" rel="stylesheet" type="text/css"  charset="utf-8"> 
+{* 包含脚本文件 *}
+{insert_scripts files='common.js,global.js,compare.js'}
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+
+      <div class="sx">
+         <div class="container">
+             <div class="local"><!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --></div>             
+           <div class="clear"></div>
+             <div class="sxlist">
+                <b class="sxtitle">筛选：</b>
+                
+	 <!--组合搜索 开始-->
+	  <!--{if $brands.1 || $price_grade.1 || $filter_attr_list}-->
+      
+			<!--{if $brands.1}-->
+                    {$lang.brand}
+                    <select name="brand" onchange="javascript:location.href=this.value;">  
+                    <!--{foreach from=$brands item=brand}-->
+                    <option value="{$brand.url}" {if $brand.selected}selected="selected"{/if}>{$brand.brand_name}</option>					
+                    <!--{/foreach}-->
+                    </select>
+			<!--{/if}-->
+			<!--{if $price_grade.1}-->
+                    {$lang.price}
+                    <select name="price" onchange="javascript:location.href=this.value;">  
+                    <!--{foreach from=$price_grade item=grade}-->
+                    <option value="{$grade.url}" {if $grade.selected}selected="selected"{/if}>{$grade.price_range}</option>					
+                    <!--{/foreach}-->
+                    </select>
+			<!--{/if}-->
+                    <!--{foreach from=$filter_attr_list item=filter_attr}-->
+                    {$filter_attr.filter_attr_name|escape:html}                    
+                    <select name="attr" onchange="javascript:location.href=this.value;">  
+                    <!--{foreach from=$filter_attr.attr_list item=attr}-->
+                    <option value="{$attr.url}" {if $attr.selected}selected="selected"{/if}>{$attr.attr_value}</option>					
+                    <!--{/foreach}-->
+                    </select>
+                    <!--{/foreach}-->
+      
+      
+      
+	  <!-- {/if} -->
+	 <!--组合搜索 结束-->
+                
+                
+             </div>
+             <div class="shopsx prosx position">
+             <span class="p3">{$catname}</span>            
+             <a href="{$script_name}.php?id={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=shop_price&order=ASC#goods_list" {if $pager.order eq ASC}class="aaabg"{/if}><span class="img5">价格从低到高</span></a>
+             <a href="{$script_name}.php?id={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=shop_price&order=DESC#goods_list" {if $pager.order eq DESC and $pager.sort eq shop_price}class="aaabg"{/if}><span class="img6">价格从高到低</span></a>
+             </div>
+         </div>
+      </div>
+      <div class="clear"></div><div class="clear"></div>
+      
+      
+      <!-- #BeginLibraryItem "/library/goods_list.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+  
+  
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

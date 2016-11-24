@@ -1,0 +1,49 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- {if $best_goods} -->
+            <div class="container">
+               <div class="title title1 position">
+                  {$best_goodsn}
+                  <a href="../search.php?intro=best" class="more">查看更多</a>
+               </div>
+               <div class="clear"></div>
+               <div class="scrolllist s1 position">
+		          <a class="abtn aleft" href="javascript:void(0)" title="左移" id="LeftButton"></a>
+                  <div class="imglist_w" id="Movie_Box">
+                      <ul class="imglist" id="still_scroll_container">
+                      <!--{foreach from=$best_goods item=goods}-->  
+                          <li class="position">
+                              <a href="{$goods.url}"><img width="276" height="276" src="{$goods.thumb}" /></a>
+                              <a href="{$goods.url}" class="proname">{$goods.short_style_name}</a>
+                              <p><span><!-- {if $goods.promote_price neq ""} -->{$goods.promote_price}<!-- {else}-->{$goods.shop_price}<!--{/if}--></span></p>
+                              <div class="img3">
+                                 {if $goods.brand_id}<img src="images/index20.png" width="57" height="25" />{/if}
+                                 {if $goods.is_new}<img src="images/index21.png" width="57" height="25" />{/if}
+                              </div>
+                          </li>
+                      <!--{/foreach}-->
+                      </ul>
+                  </div>
+		          <a class="abtn aright" href="javascript:void(0)" title="右移" id="RightButton"></a>
+	           </div>
+            </div>
+            <div class="clear"></div><div class="clear"></div>            
+<script type="text/javascript">
+/*********DIV + CSS左右交替滚动、缓动、默认静止、跳过等待时间改变方向及样式切换实例(将第WaitTime设置成60000，则第DelayTime会起作用)***************/
+var MarqueeDivControl = new Marquee(
+{
+	MSClass	  : ["Movie_Box","still_scroll_container"],
+	Direction : 2,
+	Step	  : 20,
+	Width	  : 1200,
+	Height	  : 400,
+	Timer	  : 20,
+	DelayTime : 3000,
+	WaitTime  : 100000,
+	ScrollStep: 300,
+	SwitchType: 0,
+	AutoStart : true
+});
+$("LeftButton").onclick = function(){MarqueeDivControl.Run("Right")};	//跳过等待时间向左滚动 可以用MarqueeDiv4Control.Run(2)代替
+$("RightButton").onclick = function(){MarqueeDivControl.Run("Left")};//跳过等待时间向右滚动
+</script> 
+<!-- {/if} -->

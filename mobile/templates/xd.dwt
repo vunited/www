@@ -1,0 +1,326 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+{insert_scripts files='../js/transport.js,../js/utils.js'}
+{insert_scripts files="shopping_flow.js"}
+
+
+</head>
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+<script>
+function $(o){ //获取对象
+ if(typeof(o) == "string")
+ return document.getElementById(o);
+ return o;
+}
+
+function changeAtt(t) {
+t.lastChild.checked='checked';
+for (var i = 0; i<t.parentNode.childNodes.length;i++) {
+        if (t.parentNode.childNodes[i].className == 'fs03 sex sexbg') {
+            t.parentNode.childNodes[i].className = 'fs03 sex';
+        }
+    }
+t.className = "fs03 sex sexbg";
+}
+
+function Selectfw(a) {
+a=a.split(",");
+$("fwfl").innerHTML = a[0];
+$("fw1").value = a[0];
+$("price1").value = a[1];
+$("price").innerHTML = Number($("price1").value)+Number($("price2").value);
+$("prices").innerHTML = Number($("price1").value)+Number($("price2").value);
+}
+function Selectdj(a) {
+a=a.split(",");
+$("fwdj").innerHTML = a[0];
+$("fw2").value = a[0];
+$("price2").value = a[1];
+$("price").innerHTML = Number($("price1").value)+Number($("price2").value);
+$("prices").innerHTML = Number($("price1").value)+Number($("price2").value);
+}
+
+function setImagePreview(a) {
+var docObj=document.getElementById("pic"+a); 
+var imgObjPreview=document.getElementById("preview"+a);
+if(docObj.files &&docObj.files[0])
+{
+//火狐下，直接设img属性
+imgObjPreview.style.display = 'block';
+imgObjPreview.style.width = '60px';
+imgObjPreview.style.height = '60px'; 
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+ 
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+}
+else
+{
+//IE下，使用滤镜
+docObj.select();
+var imgSrc = document.selection.createRange().text;
+var localImagId = document.getElementById("localImag"+a);
+//必须设置初始大小
+localImagId.style.width = "60px";
+localImagId.style.height = "60px";
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+try{
+localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+}
+catch(e)
+{
+alert("您上传的图片格式不正确，请重新选择!");
+return false;
+}
+imgObjPreview.style.display = 'none';
+document.selection.empty();
+}
+return true;
+}
+ 
+
+
+
+
+function check(theForm){
+		if(theForm.name.value == ""){
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "姓名不可为空!"; 
+			return false;
+		}
+		if(theForm.tel.value == ""){
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "联系电话不可为空!"; 
+			return false;
+		}
+		reg = /^1[3|4|5|7|8]\d{9}$/; //手机号码不是合法号码
+		if (reg.test(theForm.tel.value)){
+			//return true;
+		}else{
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "请输入正确手机号!"; 
+			return false;
+		};
+		if(theForm.fwfl_id.value == ""){
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "请选择服务!"; 
+			return false;
+		}
+		if(theForm.fwdj_id.value == ""){
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "请选择灯具类型!"; 
+			return false;
+		}
+		if( parseInt(theForm.fw_time4.value) > parseInt(theForm.fw_time5.value)){
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "到店时间错误!"; 
+			return false;
+		}
+		
+		
+var flag = false;		
+var allRadio = theForm.elements["payment"];
+for(var i = 0;i < allRadio.length;i++){
+   if(allRadio[i].checked){flag = true;}
+}
+if (!flag){
+ document.getElementById('light').style.display='block';
+ document.getElementById('lightc').innerHTML = "请选择支付方式!"; 
+ return false;
+}
+		
+		
+		
+		//theform.submit();
+		document.getElementById("forms").submit();
+	}
+
+  </script>
+   <!----- content ------>
+   <form action="xd.php?act=add" method="post" enctype="multipart/form-data" name="formUser" id="forms">
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4 bg-c8"></div>
+         <div class="ub ub-ver ubt bc-border2 serv">
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">姓&emsp;&emsp;名：</div>
+               <div class="ub ub-f1 h0"><input name="name" type="text" class="ub ub-f1 h0" id="name"></div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">性&emsp;&emsp;别：</div>
+               <div class="ub ub-f1 h0 ub-ac">  
+  <a class="fs03 sex sexbg" onclick="changeAtt(this)" href="javascript:;">先生<input style="display:none" id="sex" type="radio" name="sex" value="1" checked /></a> 
+  <a class="fs03 sex" onclick="changeAtt(this)"  href="javascript:;">女士<input style="display:none" id="sex" type="radio" name="sex" value="2"  /></a> 
+               </div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">联系电话：</div>
+               <div class="ub ub-f1 h0"><input name="tel" type="text" class="ub ub-f1 h0" id="tel"></div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">选择服务：</div>
+               <div class="ub ub-f1 h0 ub-ac">
+               <select name="fwfl_id" id="fwfl_id" class="ub ub-f1 h0 select"  onchange="Selectfw(this.value)">
+               <option value="">请选择</option>
+               {foreach from=$fwfl_list item=fwfl}
+               <option value="{$fwfl.name},{$fwfl.price}">{$fwfl.name}</option>
+               {/foreach}
+               </select>                
+               </div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">灯具类型：</div>
+               <div class="ub ub-f1 h0 ub-ac">
+               <select name="fwdj_id" id="fwdj_id" class="ub ub-f1 h0 select"  onchange="Selectdj(this.value)">
+               <option value="">请选择</option>
+               {foreach from=$fwdj_list item=fwdj}
+               <option value="{$fwdj.name},{$fwdj.price}">{$fwdj.name}</option>
+               {/foreach}
+               </select>    
+               </div>
+            </div>
+            <div class="ub ub-f1 ub-ac h2 bg-c3 ubb bc-border2">
+               <div class="ub ub-ac ub-f1 fs02 c1 m-l3">
+               <span id="fwfl"></span> - <span id="fwdj"></span><input type="hidden" name="fw1" id="fw1"><input type="hidden" name="fw2" id="fw2"><input type="hidden" name="price1" id="price1"><input type="hidden" name="price2" id="price2">
+               </div>
+               <div class="ub fs02 c1 m-r1">服务费：￥<span id="price"></span></div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">预约时间：</div>
+               <div class="ub ub-f1 h3 ub-ac ubb bc-border2 m-r1">
+                  <div class="ub ub-f1 c14 fs03 m-r"><select name="fw_time1" class="ub ub-f1 h0" id="fw_time1"><option value="2016">2016</option></select>年</div>
+                  <div class="ub ub-f1 c14 fs03 m-r"><select name="fw_time2" class="ub ub-f1 h0" id="fw_time2">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option></select>月</div>
+                  <div class="ub ub-f1 c14 fs03"><select name="fw_time3" class="ub ub-f1 h0" id="fw_time3">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                  </select>日</div>
+               </div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r"></div>
+               <div class="ub ub-f1 h0 ub-ac">
+                  <div class="ub ub-f1 c14 fs03 m-r"><select name="fw_time4" class="ub ub-f1 h0" id="fw_time4">
+                  <option value="08:00">08:00</option>
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="12:00">12:00</option>
+                  <option value="13:00">13:00</option>
+                  <option value="14:00">14:00</option>
+                  <option value="15:00">15:00</option>
+                  <option value="16:00">16:00</option>
+                 </select></div>
+                  <div class="ub c14 fs03 m-r">至</div>
+                  <div class="ub ub-f1 c14 fs03 m-r"><select name="fw_time5" class="ub ub-f1 h0" id="fw_time5">
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="12:00">12:00</option>
+                  <option value="13:00">13:00</option>
+                  <option value="14:00">14:00</option>
+                  <option value="15:00">15:00</option>
+                  <option value="16:00">16:00</option>
+                  <option value="17:00">17:00</option>
+                 </select></div>
+               </div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 ubb bc-border2">
+               <div class="ub ub-pc w2 fs03 c14 p-l p-r">备注留言：</div>
+               <div class="ub ub-f1 m-r"><textarea name="desc" class="ub ub-f1 h0 p-t1" id="desc" ></textarea></div>
+            </div>
+            <div class="ub ub-f1 ub-ac h3 p-t1 p-b1">
+                <a  href="javascript:;" class="ub img01 m-l3" style="position:relative" id="localImag1"><img id="preview1" src="images/img04.png" width="100%" height="100%" /><input type="file" style="width:100%; height:100%; position: absolute; top:0px; left:0px;  filter:alpha(opacity:0); opacity:0;" name="pic1" id="pic1" onchange="javascript:setImagePreview(1);" accept="image/*" ></a>
+                <a  href="javascript:;" class="ub img01 m-l3" style="position:relative" id="localImag2"><img id="preview2" src="images/img04.png" width="100%" height="100%" /><input type="file" style="width:100%; height:100%; position: absolute; top:0px; left:0px;  filter:alpha(opacity:0); opacity:0;" name="pic2" id="pic2" onchange="javascript:setImagePreview(2);" accept="image/*" ></a>
+                <a  href="javascript:;" class="ub img01 m-l3" style="position:relative" id="localImag3"><img id="preview3" src="images/img04.png" width="100%" height="100%" /><input type="file" style="width:100%; height:100%; position: absolute; top:0px; left:0px;  filter:alpha(opacity:0); opacity:0;" name="pic3" id="pic3" onchange="javascript:setImagePreview(3);" accept="image/*" ></a>
+                <a  href="javascript:;" class="ub img01 m-l3" style="position:relative" id="localImag4"><img id="preview4" src="images/img04.png" width="100%" height="100%" /><input type="file" style="width:100%; height:100%; position: absolute; top:0px; left:0px;  filter:alpha(opacity:0); opacity:0;" name="pic4" id="pic4" onchange="javascript:setImagePreview(4);" accept="image/*" ></a>
+            </div>
+            <div class="ub ub-f1 ub-ver h3 ubb ubt bc-border2">
+                <div class="ub ub-f1 bg1"></div>
+                <div class="ub p-t p-b ub-ac">
+                   <div class="ub ub-f1 ub-ver m-l3 ub-pc">
+                     <div class="ub ub-ac">
+                        <div class="fs03 c3 m-r3 ub ub-ac"><div class="ub ub-img icon13 m-r2"></div><div class="ub">{$consignee.consignee|escape}</div></div>
+                        <div class="fs03 c3 ub ub-ac"><div class="ub fa fa-mobile c6 m-r2" style="font-size: 22px;"></div><div class="ub">{$consignee.tel}</div></div>
+                     </div>
+                     <div class="ub c14 fs03 ub-ac p-t"><div class="ub fa fa-map-marker c6 m-r2" style="font-size: 18px;"></div><div class="ub">{$consignee.addressd|escape}</div></div>
+                   </div>
+                   <a href="buy.php?act=checkout&bak=xd" class="ub ub-ac c1 bg-c3 fs03 m-r gg">更改</a>
+                </div>
+                <div class="ub ub-f1 bg1" style="background-position: bottom left;"></div>              
+            </div>
+            <div class="ub ub-f1 ub-ver h3 p-t p-b1 m-l3">
+                <div class="fs03 c3">选择支付方式</div> 
+                <div class="ub ub-f1 m-t3">
+                <!-- {foreach from=$payment_list item=payment} -->
+                <a class="fs03 sex" onclick="changeAtt(this)" href="javascript:;">{$payment.pay_name}<input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if}  style="display:none"/></a>
+                <!-- {/foreach} -->             
+                </div>
+                <!--<div class="ub ub-f1 m-t3 ub-ac check">
+                   <div class="ub"><input name="fp" type="checkbox" id="fp" value="1" checked/></div>
+                   <div class="ub c3 fs02">需要提供发票</div>
+                </div> -->         
+            </div>
+         </div>
+         <div class="ub ub-f1 footerserv bg-c9 ub-ac">
+            <div class="ub ub-f1 m-l3 c1 fs03">服务费：￥<span id="prices"></span></div>
+           <div class="ub btn4 h0"><span class="h0 bg-c2 c1 fs04 p-l1 p-r1" style="line-height:45px; display:block" onClick="check(formUser)"/>提交预约</span></div>
+         </div>
+      </div>
+      </form>
+   <!----- content end ------>
+<div class="clear" style="height: 40px;"></div>
+{include file='foot.dwt'}
+</body>
+</html>

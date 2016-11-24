@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+{include file='heard.dwt'}
+{include file='heardt.dwt'}
+
+    
+<!--评论表单 end-->
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         
+         
+         
+         <div class="h4 bg-c8"></div>
+         <ul>
+           {foreach from=$comment_data item=comment}
+           <li class="ub ub-f1 ub-ver p-l3 p-r3 ubb bc-border2 p-b1">
+               <div class="ub h3 ub-ac p-t4 p-b4">
+                  <div class="ub img14"><img src="{if $comment.user_img}../{$comment.user_img}{else}images/t18.png{/if}" width="100%" height="100%" style=" border-radius:100%;"></div>
+                  <div class="ub ub-f1 c5 fs03 m-l3"><b><!-- {if $comment.username} -->{$comment.username|escape:html}<!-- {else} -->匿名用户<!-- {/if} --></b></div>
+                  <div class="fs01 c20">{$comment.add_time}</div>
+               </div>
+               <div class="ub fs02 lh1 c13">{$comment.content}</div>
+           </li>
+           {/foreach}
+         </ul>
+         {if $pagebar}
+         <div class="ub ub-f1 ub-ac p-t2 p-b3 bg-c8">
+                  <div class="ub ub-f1 ubb bc-border3 m-r1"></div>
+                  <div class="ub fs01 c7">{$pagebar}</div>
+                  <div class="ub ub-f1 ubb bc-border3 m-l1"></div>
+         </div>
+         {/if}
+      
+         <div class="h4 bg-c8"></div>
+         
+      
+      
+      </div>
+   <!----- content end ------>
+<script type="text/javascript">
+//<![CDATA[
+var cmt_empty_content = "您没有输入评论的内容";
+
+/**
+ * 提交评论信息
+*/
+function submitComment(frm)
+{
+  var cmt = new Object;
+
+  cmt.content = frm.elements['content'].value;
+   if (cmt.content.length == 0)
+   {
+      //alert(cmt_empty_content);
+	  document.getElementById('light').style.display='block';
+	  document.getElementById('lightc').innerHTML = cmt_empty_content;   
+      return false;
+   }
+}
+//]]>
+</script> 
+<script type="text/javascript">
+		var global_loading=document.getElementById("global_loading");
+		global_loading.parentNode.removeChild(global_loading);
+</script>
+{include file='foot.dwt'}	
+</body>
+</html>

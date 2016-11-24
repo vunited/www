@@ -1,0 +1,13 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- {if $brand_list} -->
+            <div class="container">
+               <span class="title4"></span>
+               <div class="tj">
+                  <!-- {foreach from=$brand_list item=brand name="brand_foreach"} -->
+                  {if $smarty.foreach.brand_foreach.index <= 11}
+                  <a href="brand.php?id={$brand.brand_id}"><img src="data/brandlogo/{$brand.brand_logo}" width="158" height="68" /></a>
+                  {/if}
+                  <!-- {/foreach} -->
+               </div>
+            </div>
+<!-- {/if} -->

@@ -1,0 +1,135 @@
+<!--搜索页-->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+<body class="bg-c8">
+{include file='heard.dwt'}
+
+
+   <!----- 标题 ------>
+      <div class="nav-t h2 bg-c1 ubb bc-border2">
+          <div class="ub ub-f1">
+             <a href="javascript:history.go(-1);" class="ub ub-ac ub-pc back">
+               <b class="ub fa fa-angle-left c9" style="font-size: 35px;"></b>
+             </a>
+             <div class="ub ub-f1 ub-ac c3 fs05 ub-pc">
+                 {$cat_name}<span class="c17">（分类）</span>
+             </div>
+              <a href="javascript:click_a('shaixuan');" class="ub ub-ac" id="sx">
+               <div class="sx fs03 m-r4" >筛选</div>
+             </a>
+             <div class="sxnav ub-ver ub-f1" id="shaixuan" style="display:none">
+                <div class="sxlist bg-c1"> 
+
+ 			<!--{if $brands.1}-->
+                    <div class="sx1">
+                       <span class="sxtitle">品牌</span>
+                       <ul class="fs03">
+                       <!--{foreach from=$brands item=brand}-->
+                       <!-- {if $brand.selected} -->
+                       <li><a class="sx1bg">{$brand.brand_name}</a></li>
+                       <!-- {else} -->
+                       <li><a href="{$brand.url}">{$brand.brand_name}</a></li>
+                       <!-- {/if} -->
+                       <!--{/foreach}-->
+                       </ul>
+                    </div>
+			<!--{/if}-->
+                    
+            <!--{foreach from=$filter_attr_list item=filter_attr}-->
+            <div class="sx1">
+			<span class="sxtitle">{$filter_attr.filter_attr_name|escape:html} :</span>
+            <ul class="fs03">
+			<!--{foreach from=$filter_attr.attr_list item=attr}-->
+				<!-- {if $attr.selected} -->
+				<li><a class="sx1bg">{$attr.attr_value}</a></li>
+				<!-- {else} -->
+				<li><a href="{$attr.url}">{$attr.attr_value}</a></li>
+				<!-- {/if} -->
+			<!--{/foreach}-->
+			</ul>
+            </div>
+            <!--{/foreach}-->
+                    
+			<!--{if $price_grade.1}-->
+                    <div class="sx1">
+                       <span class="sxtitle">价格</span>
+                       <ul class="fs03">
+                          <!--{foreach from=$price_grade item=grade}-->
+                          <!-- {if $grade.selected} -->
+                          <li><a class="sx1bg">{$grade.price_range}</a></li>
+                          <!-- {else} -->
+                          <li><a href="{$grade.url}">{$grade.price_range}</a></li>
+                          <!-- {/if} -->
+                          <!--{/foreach}-->
+                       </ul>
+                    </div>
+			<!--{/if}-->
+                    
+                    
+                </div>
+             </div>
+          </div>
+      </div>
+   <!----- 标题结束 ------>
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <!-- {if $brand_info} -->
+         <div class="ub ub-f1 bg-c1 p-l3 p-r3 p-t2 p-b3 ub-ver">
+            <div class="ub ub-f1 p-b3">
+               <div class="ub fs04 c3 bb">品牌介绍</div>
+               <div class="ub ub-pe ub-f1 ub-ac">
+                  <div class="ub img13"><img src="../data/brandlogo/{$brand_info.brand_logo}" height="100%" /></div>
+               </div>
+            </div>
+            <div class="ub fs02 c13 lh1">{$brand_info.brand_desc}</div>
+         </div>
+         <!-- {/if} -->
+         <div class="h4 bg-c8"></div>
+         <!---- 商品列表 ----->
+            <ul class="prolist1">
+              {foreach from=$goods_list item=goods name=goodsit}
+              <li class="m-t2">
+                 <div class="ub ub-ver ub-f1 m-l m-r bg-c1 h0 re">
+                    <a href="{$goods.url}" class="img05"><img src="{if strpos($goods.goods_thumb,'ttp')>0}{else}../{/if}{$goods.goods_thumb}" width="100%" height="100%" /></a>
+                    <a href="{$goods.url}" class="fs02 c3 p-l2">{$goods.name|truncate:9}</a>
+                    <span class="fs04 c6 p-l2 p-t3">{$goods.shop_price}</span>
+                    <div class="ub img6">
+                       {if $goods.brand_id}<div class="ub ub-img1 img8"></div>{/if}
+                       {if $goods.is_new}<div class="ub ub-img1 img7"></div>{/if}
+                    </div>
+                 </div>
+              </li>
+              {/foreach}
+            </ul>
+         <!---- 商品列表结束 ------>
+         
+         <div class="ub ub-f1 ub-ac p-t2 p-b3">
+                  {if $pagebar}
+                  <div class="ub ub-f1 ubb bc-border3 m-r1"></div>                  
+                  <div class="ub fs01 c7">{$pagebar}</div>                  
+                  <div class="ub ub-f1 ubb bc-border3 m-l1"></div>
+                  {/if}
+         </div>
+         
+         <div class="ub ub-f1">
+            {foreach from=get_advlist_position_name('内页广告_wap',0,1) item=ad}
+            <a href="{$ad.url}"><img width="100%" src="{$ad.image}"/></a>
+            {/foreach}
+         </div>      
+      </div>
+   <!----- content end ------>
+{include file='foot.dwt'}
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<title>{$titleh} - {$shop_name}</title>
+<link rel="stylesheet" href="css/zyit.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/js.css" />
+<link rel="stylesheet" href="fonts/font-awesome.min.css">
+</head>
+
+<body>
+{include file='heard.dwt'}
+<script type="text/javascript">
+	function submit(obj){
+		obj.submit();
+	}
+	function Isyx(yx){
+	 var reyx= /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+	 return(reyx.test(yx));
+	}
+	function IsMobile(mobile){
+	 var reg = /^1[3|4|5|7|8]\d{9}$/; //手机号码不是合法号码
+	 return(reg.test(mobile));
+	}	
+	function check(theForm){
+		if(theForm.email.value == ""){
+			//alert("请输入Email!");theForm.email.focus();
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "请输入Email!"; 
+			return false;
+		}
+		if(!Isyx(theForm.email.value)){ 
+			//alert("请输入正确的Email地址!");theForm.email.focus();
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "请输入正确的Email地址!"; 
+			return false; 
+		} 
+		if(!IsMobile(theForm.extend_field5.value)){ 
+			//alert("请输入正确的Email地址!");theForm.email.focus();
+			document.getElementById('light').style.display='block';
+            document.getElementById('lightc').innerHTML = "请输入正确的手机号码!"; 
+			return false; 
+		} 
+		<!-- {foreach from=$extend_info_list item=field} -->
+		<!-- {if $field.is_need} -->
+			<!-- {if $field.id eq 6} -->
+				if(theForm.sel_question.value == 0){
+					//alert("请选择提示问题!");theForm.sel_question.focus();
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "请选择提示问题!"; 
+					return false;
+				}
+				if(theForm.passwd_answer.value == ""){
+					//alert("请输入问题答案!");theForm.passwd_answer.focus();
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "请输入问题答案!"; 
+					return false;
+				}
+			<!-- {else} -->
+				if(theForm.extend_field{$field.id}.value == ""){
+					//alert("请输入{$field.reg_field_name}!");theForm.extend_field{$field.id}.focus();
+					document.getElementById('light').style.display='block';
+					document.getElementById('lightc').innerHTML = "请输入{$field.reg_field_name}!"; 
+					return false;
+				}
+			<!-- {/if} -->
+		<!-- {/if} -->
+		<!-- {/foreach} -->
+		theform.submit();
+	}
+	
+	
+	
+function setImagePreview(a) {
+var docObj=document.getElementById("pic"+a); 
+var imgObjPreview=document.getElementById("preview"+a);
+if(docObj.files &&docObj.files[0])
+{
+//火狐下，直接设img属性
+imgObjPreview.style.display = 'block';
+imgObjPreview.style.width = '100px';
+imgObjPreview.style.height = '100px'; 
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+ 
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+}
+else
+{
+//IE下，使用滤镜
+docObj.select();
+var imgSrc = document.selection.createRange().text;
+var localImagId = document.getElementById("localImag"+a);
+//必须设置初始大小
+localImagId.style.width = "100px";
+localImagId.style.height = "100px";
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+try{
+localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+}
+catch(e)
+{
+alert("您上传的图片格式不正确，请重新选择!");
+return false;
+}
+imgObjPreview.style.display = 'none';
+document.selection.empty();
+}
+return true;
+}
+ 
+</script>
+<form onSubmit="javascript:return check(formEdit);" id="formEdit" name="formEdit" action="user.php?act=act_edit_profile"  enctype="multipart/form-data"  method="post">
+   <!----- 标题 ------>
+      <div class="nav-t h2 bg-c1 ubb bc-border2">
+          <div class="ub ub-f1">
+             <a href="javascript:history.go(-1);" class="ub ub-ac ub-pc back">
+               <b class="ub fa fa-angle-left c9" style="font-size: 35px;"></b>
+             </a>
+             <div class="ub ub-f1 ub-ac c3 fs05">
+                 {$titleh}
+             </div>
+             <div class="ub ub-ac">
+               <input type="submit" class="ub ub-ac fs02 btn1 c1 bg-c2" value="保存">
+             </div>
+          </div>
+      </div>
+   <!----- 标题结束 ------>
+
+
+		<!-- 用户资料修改 -->
+
+
+
+   <!----- content ------>
+      <div class="ub ub-ver m-t4 ubt bc-border2">
+         <div class="h4"></div>
+         
+            <div style=" width:100px; height:100px; margin:auto;">
+                        <a  href="javascript:;" style="position:relative;" id="localImag1">
+                        <!-- {if $profile.user_img} 如果上传了图片-->             
+                            <img id="preview1" src="../{$profile.user_img}" width="100" height="100" style=" border-radius:100%;" />
+						<!-- {else} 如果没有上传图片-->    
+						    <img id="preview1" src="images/t18.png" width="100" height="100" />
+                        <!-- {/if}-->
+                        <input type="file" style="width:100px; height:100px; position: absolute; top:-85px; left:0px; filter:alpha(opacity:0); opacity:0;" name="pic1" id="pic1" onchange="javascript:setImagePreview(1);" accept="image/*" ></a>
+            </div>  
+                        
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3 ubb bc-border2">
+            <div class="fs04 c10" style="width:110px;">出生日期</div>
+            {html_select_date field_order=YMD prefix=birthday start_year=-60 end_year=+1 display_days=true month_format=%m day_value_format=%02d time=$profile.birthday}
+         </div> 
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3 ubb bc-border2">
+            <div class="fs04 c10" style="width:110px;">性别</div>
+            <input type="radio" name="sex" value="0" {if $profile.sex==0}checked="checked"{/if} />保密&nbsp;&nbsp;
+            <input type="radio" name="sex" value="1" {if $profile.sex==1}checked="checked"{/if} />男&nbsp;&nbsp;
+            <input type="radio" name="sex" value="2" {if $profile.sex==2}checked="checked"{/if} />女
+         </div>
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3 ubb bc-border2">
+            <div class="fs04 c10" style="width:110px;">邮箱</div>
+            <input name="email" type="text" value="{$profile.email}" class="ub ub-f1 h3" />
+         </div>   
+         
+        {foreach from=$extend_info_list item=field}
+		<!-- {if $field.id eq 6} -->
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3 ubb bc-border2">
+            <div class="fs04 c10" style="width:110px;">密码提示问题</div>
+            <select id='sel_question' name='sel_question'>
+            <option value='0'>请选择密码提示问题</option>
+            {html_options options=$passwd_questions selected=$profile.passwd_question}
+            </select>
+         </div>  
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3">
+            <div class="fs04 c10" style="width:110px;">密码问题答案</div>
+            <input name="passwd_answer" type="text" value="{$profile.passwd_answer}" class="ub ub-f1 h3" />
+         </div>
+	<!-- {elseif $field.id eq 5} -->
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3 ubb bc-border2">
+            <div class="fs04 c10" style="width:110px;">手机</div>
+			<input id="extend_field5" name="extend_field5" type="text" class="ub ub-f1 h3" value="{$field.content}"/>
+         </div> 
+    <!-- {else} -->        
+         <div class="ub ub-f1 h3 ub-ac bg-c1 p-l3 p-r3 ubb bc-border2">
+            <div class="fs04 c10" style="width:110px;">{$field.reg_field_name}<!-- {if $field.is_need} --><font class="red"> *</font><!-- {/if} --></div>
+			<input id="extend_field{$field.id}" name="extend_field{$field.id}" type="text" class="ub ub-f1 h3" value="{$field.content}"/>
+         </div>            
+		<!-- {/if} -->
+		{/foreach}
+        
+         
+          
+      </div>
+   <!----- content end ------>
+</form>
+
+
+		
+
+		
+{include file='foot.dwt'}
+</body>
+</html>

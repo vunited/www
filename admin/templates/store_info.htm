@@ -1,0 +1,176 @@
+<!-- $Id: brand_info.htm 14216 2008-03-10 02:27:21Z testyang $ -->
+{include file="pageheader.htm"}
+{insert_scripts files="../js/region.js"}
+<script type="text/javascript">
+region.isAdmin=true;
+</script>
+<div class="main-div">
+<form method="post" action="store.php" name="theForm" enctype="multipart/form-data" onsubmit="return validate()">
+<table cellspacing="1" cellpadding="3" width="100%">
+  <tr>
+    <td class="label">{$lang.brand_name}</td>
+    <td><input type="text" name="brand_name" maxlength="60" value="{$brand.name}" />{$lang.require_field}</td>
+  </tr>
+  <tr>
+    <td class="label"><a href="javascript:showNotice('warn_brandlogo');" title="{$lang.form_notice}">
+        <img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.brand_logo}</td>
+    <td><input type="file" name="brand_logo" id="logo" size="45">{if $brand.store_logo neq ""}<input type="button" value="{$lang.drop_store_logo}" onclick="if (confirm('{$lang.confirm_drop_logo}'))location.href='brand.php?act=drop_logo&id={$brand.brand_id}'">{/if}
+    <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="warn_brandlogo">
+    {if $brand.store_logo eq ''}
+    {$lang.up_brandlogo}
+    {else}
+    {$lang.warn_brandlogo}
+    {/if}
+    </span>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.brand_desc}</td>
+    <td><textarea  name="store_desc" cols="60" rows="4"  >{$brand.store_desc}</textarea></td>
+  </tr>
+  <tr>
+    <td class="label">所在地区</td>
+    <td><select name="country" id="selCountries" onChange="region.changed(this, 1, 'selProvinces')">
+        <option value="0" selected="true">{$lang.select_please}</option>
+        {foreach from=$country_list item=country}
+        <option value="{$country.region_id}" {if $brand.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
+        {/foreach}
+      </select> <select name="province" id="selProvinces" onChange="region.changed(this, 2, 'selCities')">
+        <option value="0">{$lang.select_please}</option>
+        {foreach from=$province_list item=province}
+        <option value="{$province.region_id}" {if $brand.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
+        {/foreach}
+      </select> <select name="city" id="selCities" onchange="region.changed(this, 3, 'selDistricts')">
+          <option value="0">{$lang.select_please}</option>
+          <!-- {foreach from=$city_list item=city} -->
+          <option value="{$city.region_id}" {if $brand.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
+          <!-- {/foreach} -->
+        </select>
+        <select name="district" id="selDistricts">
+          <option value="0">{$lang.select_please}</option>
+          <!-- {foreach from=$district_list item=district} -->
+          <option value="{$district.region_id}" {if $brand.district eq $district.region_id}selected{/if}>{$district.region_name}</option>
+          <!-- {/foreach} -->
+        </select></td>
+  </tr>
+  <tr>
+    <td class="label">地址</td>
+    <td><input type="text" name="address" maxlength="60" size="40" value="{$brand.address}" /></td>
+  </tr>
+  <tr>
+    <td class="label">地图位置</td>
+    <td>
+      <input type="text" name="position" maxlength="60" size="40" value="{$brand.position}" />
+      <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">地图坐标拾取工具</a></td>
+  </tr>
+  <tr>
+    <td class="label">电话</td>
+    <td><input type="text" name="tel" maxlength="60" size="40" value="{$brand.tel}" /></td>
+  </tr>
+  <tr>
+    <td class="label">营业时间</td>
+    <td><input type="text" name="yssj" maxlength="60" size="40" value="{$brand.yssj}" /></td>
+  </tr>
+  <tr>
+    <td class="label">公交线路</td>
+    <td><input type="text" name="gjxl" maxlength="60" size="40" value="{$brand.gjxl}" /></td>
+  </tr>
+  <tr>
+    <td class="label">地铁线路</td>
+    <td><input type="text" name="dtxl" maxlength="60" size="40" value="{$brand.dtxl}" /></td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.sort_order}</td>
+    <td><input type="text" name="sort_order" maxlength="40" size="15" value="{$brand.sort_order}" /></td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.is_show}</td>
+    <td><input type="radio" name="is_show" value="1" {if $brand.is_show eq 1}checked="checked"{/if} /> {$lang.yes}
+        <input type="radio" name="is_show" value="0" {if $brand.is_show eq 0}checked="checked"{/if} /> {$lang.no}</td>
+  </tr>
+  <tr>
+    <td class="label">店主会员</td>
+    <td><select name="user_id">
+      {html_options options=$parent_ids selected=$brand.user_id}
+    </select></td>
+  </tr>
+</table>
+
+
+<table cellspacing="1" cellpadding="3" width="100%">
+  <tr>
+    <td align="center">
+      <input type="submit" class="button" value="{$lang.button_submit}" />
+      <input type="reset" class="button" value="{$lang.button_reset}" />
+      <input type="hidden" name="act" value="{$form_action}" />
+      <input type="hidden" name="old_brandname" value="{$brand.name}" />
+      <input type="hidden" name="id" value="{$brand.store_id}" />
+      <input type="hidden" name="old_brandlogo" value="{$brand.store_logo}">
+      </td>
+  </tr>
+ </table>
+</form> 
+</div>
+{insert_scripts files="../js/utils.js,validator.js"}
+{literal}
+<script language="JavaScript">
+<!--
+document.forms['theForm'].elements['brand_name'].focus();
+onload = function()
+{
+    // 开始检查订单
+    startCheckOrder();
+}
+/**
+ * 检查表单输入的数据
+ */
+function validate()
+{
+    validator = new Validator("theForm");
+    validator.required("brand_name",  no_brandname);
+    validator.isNumber("sort_order", require_num, true);
+    return validator.passed();
+}
+
+
+function addImg(obj)
+  {
+      var src  = obj.parentNode.parentNode;
+      var idx  = rowindex(src);
+      var tbl  = document.getElementById('gallery-table');
+      var row  = tbl.insertRow(idx + 1);
+      var cell = row.insertCell(-1);
+      cell.innerHTML = src.cells[0].innerHTML.replace(/(.*)(addImg)(.*)(\[)(\+)/i, "$1removeImg$3$4-");
+  }
+
+  /**
+   * 鍒犻櫎鍥剧墖涓婁紶
+   */
+  function removeImg(obj)
+  {
+      var row = rowindex(obj.parentNode.parentNode);
+      var tbl = document.getElementById('gallery-table');
+
+      tbl.deleteRow(row);
+  }
+
+  /**
+   * 鍒犻櫎鍥剧墖
+   */
+  function dropImg(imgId)
+  {
+    Ajax.call('store.php?is_ajax=1&act=drop_image', "img_id="+imgId, dropImgResponse, "GET", "JSON");
+  }
+
+  function dropImgResponse(result)
+  {
+      if (result.error == 0)
+      {
+          document.getElementById('gallery_' + result.content).style.display = 'none';
+      }
+  }
+
+//-->
+</script>
+{/literal}
+{include file="pagefooter.htm"}
